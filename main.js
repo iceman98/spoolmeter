@@ -50242,7 +50242,7 @@ var DebugNfcComponent = _DebugNfcComponent;
 
 // src/environments/environment.ts
 var environment = {
-  isDev: true
+  isDev: false
 };
 
 // src/app/classes/emulated-ndef-reader.ts
