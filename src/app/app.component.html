@@ -2,4 +2,5 @@
 <router-outlet />
 
 <button (click)="scan()">Scan</button>
-<textarea [(ngModel)]="logs" style="height: 500px; width: 500px"></textarea>
+
+<app-debug-nfc *ngIf="environment.isDev"></app-debug-nfc>
