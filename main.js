@@ -63648,9 +63648,9 @@ function TagCardComponent_Conditional_0_Conditional_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", ctx_r3.spool.id, " ");
   }
 }
-function TagCardComponent_Conditional_0_For_12_Template(rf, ctx) {
+function TagCardComponent_Conditional_0_For_16_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 9);
+    \u0275\u0275elementStart(0, "mat-option", 10);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -63661,9 +63661,9 @@ function TagCardComponent_Conditional_0_For_12_Template(rf, ctx) {
     \u0275\u0275textInterpolate(brand_r8);
   }
 }
-function TagCardComponent_Conditional_0_For_20_Template(rf, ctx) {
+function TagCardComponent_Conditional_0_For_24_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 9);
+    \u0275\u0275elementStart(0, "mat-option", 10);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -63681,122 +63681,134 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275template(3, TagCardComponent_Conditional_0_Conditional_3_Template, 1, 2)(4, TagCardComponent_Conditional_0_Conditional_4_Template, 1, 1);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(5, "mat-card-content")(6, "mat-form-field")(7, "mat-label");
-    \u0275\u0275text(8, "Brand");
+    \u0275\u0275text(8, "Name");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "mat-autocomplete", null, 0);
-    \u0275\u0275repeaterCreate(11, TagCardComponent_Conditional_0_For_12_Template, 2, 2, "mat-option", 9, \u0275\u0275repeaterTrackByIdentity);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "input", 1);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_13_listener($event) {
+    \u0275\u0275elementStart(9, "input", 0);
+    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_9_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r18 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r18.spool.brand = $event);
+      return \u0275\u0275resetView(ctx_r18.spool.name = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(14, "mat-form-field")(15, "mat-label");
-    \u0275\u0275text(16, "Material");
+    \u0275\u0275elementStart(10, "mat-form-field")(11, "mat-label");
+    \u0275\u0275text(12, "Brand");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "mat-autocomplete", null, 2);
-    \u0275\u0275repeaterCreate(19, TagCardComponent_Conditional_0_For_20_Template, 2, 2, "mat-option", 9, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(13, "mat-autocomplete", null, 1);
+    \u0275\u0275repeaterCreate(15, TagCardComponent_Conditional_0_For_16_Template, 2, 2, "mat-option", 10, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(21, "input", 3);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_21_listener($event) {
+    \u0275\u0275elementStart(17, "input", 2);
+    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_17_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r20 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r20.spool.material = $event);
+      return \u0275\u0275resetView(ctx_r20.spool.brand = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(22, "mat-form-field")(23, "ngx-colors", 4);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_ngx_colors_ngModelChange_23_listener($event) {
+    \u0275\u0275elementStart(18, "mat-form-field")(19, "mat-label");
+    \u0275\u0275text(20, "Material");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(21, "mat-autocomplete", null, 3);
+    \u0275\u0275repeaterCreate(23, TagCardComponent_Conditional_0_For_24_Template, 2, 2, "mat-option", 10, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(25, "input", 4);
+    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_25_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r21 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r21.spool.color = $event);
+      return \u0275\u0275resetView(ctx_r21.spool.material = $event);
     });
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(24, "mat-label");
-    \u0275\u0275text(25, "Color");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(26, "input", 5);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_26_listener($event) {
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(26, "mat-form-field")(27, "ngx-colors", 5);
+    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_ngx_colors_ngModelChange_27_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r22 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r22.spool.color = $event);
     });
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(27, "mat-form-field")(28, "mat-label");
-    \u0275\u0275text(29, "Spool weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(28, "mat-label");
+    \u0275\u0275text(29, "Color");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(30, "input", 6);
     \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_30_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r23 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r23.spool.spoolWeight = $event);
+      return \u0275\u0275resetView(ctx_r23.spool.color = $event);
     });
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(31, "mat-form-field")(32, "mat-label");
-    \u0275\u0275text(33, "Filament weight (initial)");
+    \u0275\u0275text(33, "Spool weight");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(34, "input", 6);
+    \u0275\u0275elementStart(34, "input", 7);
     \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_34_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r24 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r24.spool.initialFilamentWeight = $event);
+      return \u0275\u0275resetView(ctx_r24.spool.spoolWeight = $event);
     });
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(35, "mat-form-field")(36, "mat-label");
-    \u0275\u0275text(37, "Filament weight (remaining)");
+    \u0275\u0275text(37, "Filament weight (initial)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(38, "input", 6);
+    \u0275\u0275elementStart(38, "input", 7);
     \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_38_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r25 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r25.spool.remainingFilamentWeight = $event);
+      return \u0275\u0275resetView(ctx_r25.spool.initialFilamentWeight = $event);
     });
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(39, "mat-form-field")(40, "mat-label");
-    \u0275\u0275text(41, "Flow calibration factor (K)");
+    \u0275\u0275text(41, "Filament weight (remaining)");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(42, "input", 7);
     \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_42_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r26 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r26.spool.flowFactor = $event);
+      return \u0275\u0275resetView(ctx_r26.spool.remainingFilamentWeight = $event);
     });
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(43, "mat-form-field")(44, "mat-label");
-    \u0275\u0275text(45, "Temperature (\xBAC)");
+    \u0275\u0275text(45, "Flow calibration factor (K)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(46, "input", 6);
+    \u0275\u0275elementStart(46, "input", 8);
     \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_46_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r27 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r27.spool.temperature = $event);
+      return \u0275\u0275resetView(ctx_r27.spool.flowFactor = $event);
     });
-    \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(47, "mat-card-actions")(48, "button", 8);
-    \u0275\u0275listener("click", function TagCardComponent_Conditional_0_Template_button_click_48_listener() {
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(47, "mat-form-field")(48, "mat-label");
+    \u0275\u0275text(49, "Temperature (\xBAC)");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(50, "input", 7);
+    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_50_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r28 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r28.update());
+      return \u0275\u0275resetView(ctx_r28.spool.temperature = $event);
     });
-    \u0275\u0275text(49, "Update");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(50, "button", 8);
-    \u0275\u0275listener("click", function TagCardComponent_Conditional_0_Template_button_click_50_listener() {
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(51, "mat-card-actions")(52, "button", 9);
+    \u0275\u0275listener("click", function TagCardComponent_Conditional_0_Template_button_click_52_listener() {
       \u0275\u0275restoreView(_r19);
       const ctx_r29 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r29.remove());
+      return \u0275\u0275resetView(ctx_r29.update());
     });
-    \u0275\u0275text(51, "Remove");
+    \u0275\u0275text(53, "Update");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(54, "button", 9);
+    \u0275\u0275listener("click", function TagCardComponent_Conditional_0_Template_button_click_54_listener() {
+      \u0275\u0275restoreView(_r19);
+      const ctx_r30 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r30.remove());
+    });
+    \u0275\u0275text(55, "Remove");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    const _r4 = \u0275\u0275reference(10);
-    const _r6 = \u0275\u0275reference(18);
+    const _r4 = \u0275\u0275reference(14);
+    const _r6 = \u0275\u0275reference(22);
     const ctx_r0 = \u0275\u0275nextContext();
     \u0275\u0275advance(3);
     \u0275\u0275conditional(3, ctx_r0.spool.name ? 3 : 4);
-    \u0275\u0275advance(8);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngModel", ctx_r0.spool.name);
+    \u0275\u0275advance(6);
     \u0275\u0275repeater(ctx_r0.brands);
     \u0275\u0275advance(2);
     \u0275\u0275property("matAutocomplete", _r4)("ngModel", ctx_r0.spool.brand);
@@ -63852,9 +63864,9 @@ var _TagCardComponent = class _TagCardComponent {
 _TagCardComponent.\u0275fac = function TagCardComponent_Factory(t) {
   return new (t || _TagCardComponent)();
 };
-_TagCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TagCardComponent, selectors: [["app-tag-card"]], inputs: { spool: "spool" }, outputs: { cardRemoved: "cardRemoved", saveTag: "saveTag" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", 3, "click"], [3, "value"]], template: function TagCardComponent_Template(rf, ctx) {
+_TagCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TagCardComponent, selectors: [["app-tag-card"]], inputs: { spool: "spool" }, outputs: { cardRemoved: "cardRemoved", saveTag: "saveTag" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", 3, "click"], [3, "value"]], template: function TagCardComponent_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, TagCardComponent_Conditional_0_Template, 52, 13, "mat-card")(1, TagCardComponent_Conditional_1_Template, 2, 0);
+    \u0275\u0275template(0, TagCardComponent_Conditional_0_Template, 56, 14, "mat-card")(1, TagCardComponent_Conditional_1_Template, 2, 0);
   }
   if (rf & 2) {
     \u0275\u0275conditional(0, ctx.spool ? 0 : 1);
@@ -63977,7 +63989,7 @@ var _NfcService = class _NfcService {
     let message = this.converter.spoolToMessage(spool);
     const source = {
       records: message.records.map((r) => {
-        return { recordType: r.recordType, data: r.data };
+        return r;
       })
     };
     this.writing = true;
@@ -63993,7 +64005,7 @@ var _NfcService = class _NfcService {
     }
     if (this.writing && !this.written && this.writingTo && this.writingBody) {
       if (tag.serialNumber === this.writingTo) {
-        this.ndef.write(this.writingBody).then(() => {
+        this.ndef.write(this.writingBody, { overwrite: true }).then(() => {
           this.written = true;
           this.writeSubject?.next();
           this.writeSubject?.complete();
