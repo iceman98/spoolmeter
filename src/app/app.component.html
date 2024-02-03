@@ -1,7 +1,10 @@
-
-<router-outlet />
+<router-outlet/>
 
 <button (click)="scan()">Scan</button>
-<label>{{status}}</label>
+<label>{{ status }}</label>
+
+@for (spool of spools; track spool.id) {
+  <app-tag-card [spool]="spool" (cardRemoved)="removeSpool(spool.id)" (saveTag)="updateSpool(spool)"></app-tag-card>
+}
 
 <app-debug-nfc *ngIf="environment.isDev"></app-debug-nfc>

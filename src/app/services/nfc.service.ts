@@ -4,6 +4,7 @@ import {Spool} from "../model/spool";
 import {NfcEmulatorService} from "./nfc-emulator.service";
 import {EmulatedNdefReader} from "../classes/emulated-ndef-reader";
 import {environment} from "../../environments/environment";
+import {MessageConverter} from "../classes/message-converter";
 
 
 @Injectable({
@@ -15,12 +16,21 @@ export class NfcService {
   private reading = false;
   private read = false;
 
-  private subject?: AsyncSubject<Spool>;
+  private writing = false;
+  private written = false;
+
+  private writingTo?: string;
+  private writingBody?: NDEFMessageInit;
+
+  private converter = new MessageConverter();
+
+  private readSubject?: AsyncSubject<Spool>;
+  private writeSubject?: AsyncSubject<void>;
 
   constructor(private nfcEmulator: NfcEmulatorService) {
     // @ts-ignore
     this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
-    this.ndef.onreading = tag => this.handleReading(tag);
+    this.ndef.onreading = tag => this.handleReadWrite(tag);
     this.ndef.onreadingerror = err => this.handleError(err);
 
     this.ndef.scan()
@@ -33,7 +43,7 @@ export class NfcService {
   }
 
   public readSpool(timeout: number): Observable<Spool> {
-    this.subject = new AsyncSubject<Spool>();
+    this.readSubject = new AsyncSubject<Spool>();
 
     if (!this.reading) {
       this.reading = true;
@@ -41,24 +51,59 @@ export class NfcService {
       setTimeout(() => {
         if (!this.read) {
           console.warn("Timeout!");
-          this.subject?.error("Read timed out");
+          this.readSubject?.error("Read timed out");
         }
         this.reading = false;
         this.read = false;
       }, timeout);
     } else {
       console.warn("Read in progress!")
-      this.subject.error("Already reading");
+      this.readSubject.error("Already reading");
     }
 
-    return this.subject;
+    return this.readSubject;
   }
 
-  handleReading(tag: NDEFReadingEvent) {
+  public updateSpool(spool: Spool): Observable<void> {
+    this.writeSubject = new AsyncSubject<void>();
+
+    let message = this.converter.spoolToMessage(spool);
+
+    const source: NDEFMessageInit = {
+      records: message.records.map(r => {
+        return {recordType: r.recordType, data: r.data} as NDEFRecordInit
+      })
+    };
+
+    this.writing = true;
+    this.writingTo = spool.id;
+    this.writingBody = source;
+
+    return this.writeSubject;
+  }
+
+  handleReadWrite(tag: NDEFReadingEvent) {
     if (this.reading && !this.read) {
       this.read = true;
-      this.subject?.next({id: tag.serialNumber});
-      this.subject?.complete();
+      this.readSubject?.next(this.converter.messageToSpool(tag.serialNumber, tag.message));
+      this.readSubject?.complete();
+    }
+
+    if (this.writing && !this.written && this.writingTo && this.writingBody) {
+      if (tag.serialNumber === this.writingTo) {
+        this.ndef.write(this.writingBody)
+          .then(() => {
+            this.written = true;
+            this.writeSubject?.next();
+            this.writeSubject?.complete();
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally();
+      } else {
+        console.log("This is not the tag we are waiting for");
+      }
     }
   }
 
