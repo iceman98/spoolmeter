@@ -13,7 +13,7 @@ export class NfcEmulatorService {
   private converter = new MessageConverter();
 
   private tags: Map<string, NDEFMessage> = new Map<string, NDEFMessage>(Object.entries({
-    "empty!": {records: []},
+    "empty!": this.converter.spoolToMessage({id: "empty!"}),
     "red": this.converter.spoolToMessage({id: "red", color: "#ff0000"})
   }));
 

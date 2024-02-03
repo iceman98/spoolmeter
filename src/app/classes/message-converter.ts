@@ -1,5 +1,4 @@
 import {Spool} from "../model/spool";
-import {environment} from "../../environments/environment";
 
 export class MessageConverter {
 
@@ -64,7 +63,7 @@ export class MessageConverter {
   }
 
   private getAsString(message: NDEFMessage, key: string): string | undefined {
-    let value = message.records.filter(r => r.recordType === key);
+    let value = message.records.filter(r => r.id === key);
     if (value.length) {
       return this.decoder.decode(value[0].data);
     } else {
@@ -73,7 +72,7 @@ export class MessageConverter {
   }
 
   private getAsNumber(message: NDEFMessage, key: string): number | undefined {
-    let value = message.records.filter(r => r.recordType === key);
+    let value = message.records.filter(r => r.id === key);
     if (value.length) {
       return Number.parseFloat(this.decoder.decode(value[0].data));
     } else {
@@ -82,7 +81,7 @@ export class MessageConverter {
   }
 
   private getRecord(key: string, value: string): NDEFRecord {
-    return {recordType: key, data: new DataView(this.encoder.encode(value).buffer)};
+    return {recordType: "text", id: key, data: new DataView(this.encoder.encode(value).buffer)};
   }
 
   private getMessage(records: NDEFRecord[]): NDEFMessage {
