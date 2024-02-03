@@ -51524,7 +51524,7 @@ var MessageConverter = class {
     return this.getMessage(records);
   }
   getAsString(message, key) {
-    let value = message.records.filter((r) => r.recordType === key);
+    let value = message.records.filter((r) => r.id === key);
     if (value.length) {
       return this.decoder.decode(value[0].data);
     } else {
@@ -51532,7 +51532,7 @@ var MessageConverter = class {
     }
   }
   getAsNumber(message, key) {
-    let value = message.records.filter((r) => r.recordType === key);
+    let value = message.records.filter((r) => r.id === key);
     if (value.length) {
       return Number.parseFloat(this.decoder.decode(value[0].data));
     } else {
@@ -51540,7 +51540,7 @@ var MessageConverter = class {
     }
   }
   getRecord(key, value) {
-    return { recordType: key, data: new DataView(this.encoder.encode(value).buffer) };
+    return { recordType: "text", id: key, data: new DataView(this.encoder.encode(value).buffer) };
   }
   getMessage(records) {
     return { records };
@@ -51554,7 +51554,7 @@ var _NfcEmulatorService = class _NfcEmulatorService {
     this.errorSubject = new Subject();
     this.converter = new MessageConverter();
     this.tags = new Map(Object.entries({
-      "empty!": { records: [] },
+      "empty!": this.converter.spoolToMessage({ id: "empty!" }),
       "red": this.converter.spoolToMessage({ id: "red", color: "#ff0000" })
     }));
   }
