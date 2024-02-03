@@ -50250,21 +50250,33 @@ var EmulatedNdefReader = class {
   constructor(emulatorService) {
     this.emulatorService = emulatorService;
     this.state = "idle";
-    emulatorService.getEvents().subscribe(this.handleTap);
-    emulatorService.getErrors().subscribe(this.handleError);
+    this.onreading = (e) => null;
+    this.onreadingerror = (e) => null;
+    emulatorService.getEvents().subscribe({ next: (tag) => this.handleTap(tag) });
+    emulatorService.getErrors().subscribe({ next: (err) => this.handleError(err) });
   }
-  scan(options) {
-    if (options) {
-      options.signal.onabort = (event) => {
-        this.state = "idle";
-      };
-    }
+  addEventListener(type, callback, options) {
+    throw new Error("Method not implemented.");
+  }
+  dispatchEvent(event) {
+    throw new Error("Method not implemented.");
+  }
+  removeEventListener(type, callback, options) {
+    throw new Error("Method not implemented.");
+  }
+  scan() {
     if (this.state !== "idle") {
       return Promise.reject("Already scanning!");
     } else {
       this.state = "scanning";
       return Promise.resolve();
     }
+  }
+  write(message, options) {
+    return Promise.resolve();
+  }
+  makeReadOnly(options) {
+    return Promise.resolve();
   }
   handleTap(event) {
     if (this.state === "scanning" && this.onreading) {
@@ -50273,7 +50285,7 @@ var EmulatedNdefReader = class {
   }
   handleError(err) {
     if (this.state === "scanning" && this.onreadingerror) {
-      this.onreadingerror(err);
+      this.onreadingerror(new Event("error scanning: " + err.message));
     }
   }
 };
@@ -50282,50 +50294,45 @@ var EmulatedNdefReader = class {
 var _NfcService = class _NfcService {
   constructor(nfcEmulator) {
     this.nfcEmulator = nfcEmulator;
-    this.abortController = new AbortController();
-    this.status = "idle";
+    this.reading = false;
+    this.read = false;
+    this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
+    this.ndef.onreading = (tag) => this.handleReading(tag);
+    this.ndef.onreadingerror = (err) => this.handleError(err);
+    this.ndef.scan().then(() => {
+      console.log("Starting scan...");
+    }).catch((e) => {
+      console.log("Scan could not be started: " + e.type);
+    });
   }
   readSpool(timeout) {
-    const subject = new AsyncSubject();
-    const ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
-    if (this.status !== "idle") {
-      this.error(subject, "Already scanning/reading");
+    this.subject = new AsyncSubject();
+    if (!this.reading) {
+      this.reading = true;
+      this.read = false;
+      setTimeout(() => {
+        if (!this.read) {
+          console.warn("Timeout!");
+          this.subject?.error("Read timed out");
+        }
+        this.reading = false;
+        this.read = false;
+      }, timeout);
+    } else {
+      console.warn("Read in progress!");
+      this.subject.error("Already reading");
     }
-    ndef.onreadingerror = (event) => {
-      this.error(subject, "Tag cannot be read");
-    };
-    ndef.onreading = (event) => {
-      this.success(subject, this.getSpool(event.serialNumber, event.message), "Tag read!");
-    };
-    ndef.scan({ signal: this.abortController.signal }).then(() => {
-      console.log("Scan started successfully.");
-    }).catch((error) => {
-      this.error(subject, `Error! Scan failed to start: ${error}.`);
-    });
-    setTimeout(() => {
-      this.abortController.abort("Timeout");
-    }, timeout);
-    return subject;
+    return this.subject;
   }
-  getSpool(serialNumber, message) {
-    return {
-      id: serialNumber,
-      brand: "ERYONE",
-      color: "red",
-      material: "PLA",
-      spoolWeight: 110,
-      filamentWeight: 1e3,
-      remainingWeight: 1e3
-    };
+  handleReading(tag) {
+    if (this.reading && !this.read) {
+      this.read = true;
+      this.subject?.next({ id: tag.serialNumber });
+      this.subject?.complete();
+    }
   }
-  error(subject, message) {
-    console.log(message);
-    subject.error(message);
-  }
-  success(subject, spool, message) {
-    console.log(message, spool);
-    subject.next(spool);
-    subject.complete();
+  handleError(error) {
+    console.error("Could not read tag: " + error.type);
   }
 };
 _NfcService.\u0275fac = function NfcService_Factory(t) {
@@ -50335,7 +50342,7 @@ _NfcService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _
 var NfcService = _NfcService;
 
 // src/app/app.component.ts
-function AppComponent_app_debug_nfc_3_Template(rf, ctx) {
+function AppComponent_app_debug_nfc_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "app-debug-nfc");
   }
@@ -50344,16 +50351,27 @@ var _AppComponent = class _AppComponent {
   constructor(nfcService) {
     this.nfcService = nfcService;
     this.title = "spoolmeter";
+    this.status = "idle";
     this.environment = environment;
   }
   scan() {
-    this.nfcService.readSpool(5e3).subscribe();
+    this.status = "scanning";
+    this.nfcService.readSpool(5e3).subscribe({
+      next: (spool) => {
+        this.status = "Read spool: " + spool.id;
+        console.log(this.status);
+      },
+      error: (err) => {
+        this.status = "Could not read spool: " + err;
+        console.log(this.status);
+      }
+    });
   }
 };
 _AppComponent.\u0275fac = function AppComponent_Factory(t) {
   return new (t || _AppComponent)(\u0275\u0275directiveInject(NfcService));
 };
-_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 4, vars: 1, consts: [[3, "click"], [4, "ngIf"]], template: function AppComponent_Template(rf, ctx) {
+_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 6, vars: 2, consts: [[3, "click"], [4, "ngIf"]], template: function AppComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "router-outlet");
     \u0275\u0275elementStart(1, "button", 0);
@@ -50362,10 +50380,15 @@ _AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _A
     });
     \u0275\u0275text(2, "Scan");
     \u0275\u0275elementEnd();
-    \u0275\u0275template(3, AppComponent_app_debug_nfc_3_Template, 1, 0, "app-debug-nfc", 1);
+    \u0275\u0275elementStart(3, "label");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(5, AppComponent_app_debug_nfc_5_Template, 1, 0, "app-debug-nfc", 1);
   }
   if (rf & 2) {
-    \u0275\u0275advance(3);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(ctx.status);
+    \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx.environment.isDev);
   }
 }, dependencies: [RouterOutlet, FormsModule, DebugNfcComponent, NgIf], styles: ["\n\n/*# sourceMappingURL=app.component.css.map */"] });
