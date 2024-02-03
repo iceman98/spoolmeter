@@ -2,5 +2,6 @@
 <router-outlet />
 
 <button (click)="scan()">Scan</button>
+<label>{{status}}</label>
 
 <app-debug-nfc *ngIf="environment.isDev"></app-debug-nfc>

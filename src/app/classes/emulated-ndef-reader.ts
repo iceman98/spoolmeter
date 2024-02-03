@@ -1,43 +1,55 @@
 import {NfcEmulatorService} from "../services/nfc-emulator.service";
 
-export class EmulatedNdefReader {
-
-  constructor(private emulatorService: NfcEmulatorService) {
-    emulatorService.getEvents().subscribe(this.handleTap);
-    emulatorService.getErrors().subscribe(this.handleError);
-  }
-
-  public onreadingerror?: (event: any) => void;
-  public onreading?: (event: any) => void;
+export class EmulatedNdefReader implements NDEFReader {
 
   private state: "idle" | "scanning" | "writing" = "idle";
 
-  public scan(options ?: NDEFScanOptions): Promise<any> {
+  constructor(private emulatorService: NfcEmulatorService) {
+    emulatorService.getEvents().subscribe({next: tag => this.handleTap(tag)});
+    emulatorService.getErrors().subscribe({next: err => this.handleError(err)});
+  }
 
-    if (options) {
-      options.signal.onabort = (event) => {
-        this.state = "idle";
-      }
-    }
+  public onreading: (this: this, event: NDEFReadingEvent) => any = (e: NDEFReadingEvent) => null;
+  public onreadingerror: (this: this, error: Event) => any = (e: Event) => null;
 
+  addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  dispatchEvent(event: Event): boolean {
+    throw new Error("Method not implemented.");
+  }
+
+  removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  public scan(): Promise<any> {
     if (this.state !== "idle") {
       return Promise.reject("Already scanning!");
     } else {
       this.state = "scanning";
       return Promise.resolve();
     }
-
   }
 
-  public handleTap(event: NDEFReadingEvent): void {
+  public write(message: NDEFMessageSource, options?: NDEFWriteOptions): Promise<void> {
+    return Promise.resolve();
+  }
+
+  public makeReadOnly(options?: NDEFMakeReadOnlyOptions): Promise<void> {
+    return Promise.resolve();
+  }
+
+  private handleTap(event: NDEFReadingEvent): void {
     if (this.state === "scanning" && this.onreading) {
       this.onreading(event);
     }
   }
 
-  public handleError(err: Error): void {
+  private handleError(err: Error): void {
     if (this.state === "scanning" && this.onreadingerror) {
-      this.onreadingerror(err);
+      this.onreadingerror(new Event("error scanning: " + err.message));
     }
   }
 

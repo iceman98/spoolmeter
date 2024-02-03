@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AsyncSubject, Observable, Subject} from "rxjs";
+import {AsyncSubject, Observable} from "rxjs";
 import {Spool} from "../model/spool";
 import {NfcEmulatorService} from "./nfc-emulator.service";
 import {EmulatedNdefReader} from "../classes/emulated-ndef-reader";
@@ -11,63 +11,59 @@ import {environment} from "../../environments/environment";
 })
 export class NfcService {
 
-  private abortController = new AbortController();
-  private status: "idle" | "scanning" | "writing" = "idle";
+  private ndef: NDEFReader;
+  private reading = false;
+  private read = false;
+
+  private subject?: AsyncSubject<Spool>;
 
   constructor(private nfcEmulator: NfcEmulatorService) {
+    // @ts-ignore
+    this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
+    this.ndef.onreading = tag => this.handleReading(tag);
+    this.ndef.onreadingerror = err => this.handleError(err);
+
+    this.ndef.scan()
+      .then(() => {
+        console.log("Starting scan...");
+      })
+      .catch((e: Event) => {
+        console.log("Scan could not be started: " + e.type);
+      });
   }
 
   public readSpool(timeout: number): Observable<Spool> {
-    const subject = new AsyncSubject<Spool>();
+    this.subject = new AsyncSubject<Spool>();
 
-    const ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
-
-    if (this.status !== "idle") {
-      this.error(subject, "Already scanning/reading");
+    if (!this.reading) {
+      this.reading = true;
+      this.read = false;
+      setTimeout(() => {
+        if (!this.read) {
+          console.warn("Timeout!");
+          this.subject?.error("Read timed out");
+        }
+        this.reading = false;
+        this.read = false;
+      }, timeout);
+    } else {
+      console.warn("Read in progress!")
+      this.subject.error("Already reading");
     }
 
-    ndef.onreadingerror = (event: any) => {
-      this.error(subject, "Tag cannot be read");
-    };
-
-    ndef.onreading = (event: any) => {
-      this.success(subject, this.getSpool(event.serialNumber, event.message), "Tag read!");
-    };
-
-    ndef.scan({signal: this.abortController.signal}).then(() => {
-      console.log("Scan started successfully.");
-    }).catch((error) => {
-      this.error(subject, `Error! Scan failed to start: ${error}.`);
-    });
-
-    setTimeout(() => {
-      this.abortController.abort("Timeout");
-    }, timeout);
-
-    return subject;
+    return this.subject;
   }
 
-  private getSpool(serialNumber: string, message: NDEFMessage): Spool {
-    return {
-      id: serialNumber,
-      brand: "ERYONE",
-      color: "red",
-      material: "PLA",
-      spoolWeight: 110,
-      filamentWeight: 1000,
-      remainingWeight: 1000
-    };
+  handleReading(tag: NDEFReadingEvent) {
+    if (this.reading && !this.read) {
+      this.read = true;
+      this.subject?.next({id: tag.serialNumber});
+      this.subject?.complete();
+    }
   }
 
-  private error(subject: Subject<Spool>, message: string) {
-    console.log(message);
-    subject.error(message);
-  }
-
-  private success(subject: Subject<Spool>, spool: Spool, message: string) {
-    console.log(message, spool);
-    subject.next(spool);
-    subject.complete();
+  handleError(error: Event) {
+    console.error("Could not read tag: " + error.type);
   }
 
 }
