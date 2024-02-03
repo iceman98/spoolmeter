@@ -51463,11 +51463,6 @@ var MatButtonModule = _MatButtonModule;
   }], null, null);
 })();
 
-// src/environments/environment.ts
-var environment = {
-  isDev: false
-};
-
 // src/app/classes/message-converter.ts
 var MessageConverter = class {
   constructor() {
@@ -51545,18 +51540,10 @@ var MessageConverter = class {
     }
   }
   getRecord(key, value) {
-    if (environment.isDev) {
-      return { recordType: key, data: new DataView(this.encoder.encode(value).buffer) };
-    } else {
-      return new NDEFRecord({ recordType: key, data: value });
-    }
+    return { recordType: key, data: new DataView(this.encoder.encode(value).buffer) };
   }
   getMessage(records) {
-    if (environment.isDev) {
-      return { records };
-    } else {
-      return new NDEFMessage({ records });
-    }
+    return { records };
   }
 };
 
@@ -51659,6 +51646,11 @@ var DebugNfcComponent = _DebugNfcComponent;
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DebugNfcComponent, { className: "DebugNfcComponent", filePath: "src/app/components/debug-nfc/debug-nfc.component.ts", lineNumber: 22 });
 })();
+
+// src/environments/environment.ts
+var environment = {
+  isDev: false
+};
 
 // node_modules/@angular/cdk/fesm2022/observers/private.mjs
 var loopLimitExceededErrorHandler = (e) => {
