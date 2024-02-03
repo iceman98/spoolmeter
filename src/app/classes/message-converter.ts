@@ -82,19 +82,11 @@ export class MessageConverter {
   }
 
   private getRecord(key: string, value: string): NDEFRecord {
-    if (environment.isDev) {
-      return {recordType: key, data: new DataView(this.encoder.encode(value).buffer)};
-    } else {
-      return new NDEFRecord({recordType: key, data: value});
-    }
+    return {recordType: key, data: new DataView(this.encoder.encode(value).buffer)};
   }
 
   private getMessage(records: NDEFRecord[]): NDEFMessage {
-    if (environment.isDev) {
-      return {records: records};
-    } else {
-      return new NDEFMessage({records: records});
-    }
+    return {records: records};
   }
 
 }
