@@ -8,7 +8,6 @@ import {MatSelectionList} from "@angular/material/list";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput, MatInputModule} from "@angular/material/input";
-import {NgxMatColorPickerModule} from "@angular-material-components/color-picker";
 import {NgxColorsModule} from "ngx-colors";
 
 @Component({
@@ -30,7 +29,6 @@ import {NgxColorsModule} from "ngx-colors";
     MatAutocompleteTrigger,
     MatOption,
     MatLabel,
-    NgxMatColorPickerModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
