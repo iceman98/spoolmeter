@@ -71,7 +71,7 @@ export class NfcService {
 
     const source: NDEFMessageInit = {
       records: message.records.map(r => {
-        return {recordType: r.recordType, data: r.data} as NDEFRecordInit
+        return r as NDEFRecordInit
       })
     };
 
@@ -91,7 +91,7 @@ export class NfcService {
 
     if (this.writing && !this.written && this.writingTo && this.writingBody) {
       if (tag.serialNumber === this.writingTo) {
-        this.ndef.write(this.writingBody)
+        this.ndef.write(this.writingBody, {overwrite: true})
           .then(() => {
             this.written = true;
             this.writeSubject?.next();

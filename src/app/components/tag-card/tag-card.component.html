@@ -12,6 +12,11 @@
     <mat-card-content>
 
       <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input type="text" matInput [(ngModel)]="spool.name">
+      </mat-form-field>
+
+      <mat-form-field>
         <mat-label>Brand</mat-label>
         <mat-autocomplete #brandAuto>
           @for (brand of brands; track brand) {
