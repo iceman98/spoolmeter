@@ -5,16 +5,26 @@ export class MessageConverter {
   private encoder = new TextEncoder();
   private decoder = new TextDecoder();
 
+  private readonly NAME_ID = "nm";
+  private readonly BRAND_ID = "br";
+  private readonly MATERIAL_ID = "ma";
+  private readonly COLOR_ID = "cl";
+  private readonly SPOOL_WEIGHT_ID = "sw";
+  private readonly INITIAL_FILAMENT_WEIGHT_ID = "if";
+  private readonly REMAINING_FILAMENT_ID = "rf";
+  private readonly FLOW_FACTOR_ID = "ff";
+  private readonly TEMPERATURE_ID = "te";
+
   public messageToSpool(id: string, message: NDEFMessage): Spool {
-    const name = this.getAsString(message, "name");
-    const brand = this.getAsString(message, "brand");
-    const material = this.getAsString(message, "material");
-    const color = this.getAsString(message, "color");
-    const initialFilamentWeight = this.getAsNumber(message, "filament");
-    const spoolWeight = this.getAsNumber(message, "spool");
-    const remainingFilamentWeight = this.getAsNumber(message, "remaining");
-    const flowFactor = this.getAsNumber(message, "factor");
-    const temperature = this.getAsNumber(message, "temperature");
+    const name = this.getAsString(message, this.NAME_ID);
+    const brand = this.getAsString(message, this.BRAND_ID);
+    const material = this.getAsString(message, this.MATERIAL_ID);
+    const color = this.getAsString(message, this.COLOR_ID);
+    const initialFilamentWeight = this.getAsNumber(message, this.INITIAL_FILAMENT_WEIGHT_ID);
+    const spoolWeight = this.getAsNumber(message, this.SPOOL_WEIGHT_ID);
+    const remainingFilamentWeight = this.getAsNumber(message, this.REMAINING_FILAMENT_ID);
+    const flowFactor = this.getAsNumber(message, this.FLOW_FACTOR_ID);
+    const temperature = this.getAsNumber(message, this.TEMPERATURE_ID);
 
     return {
       id,
@@ -33,32 +43,33 @@ export class MessageConverter {
   public spoolToMessage(spool: Spool): NDEFMessage {
     const records: NDEFRecord[] = [];
     if (spool.name) {
-      records.push(this.getRecord("name", spool.name));
+      records.push(this.getRecord(this.NAME_ID, spool.name));
     }
     if (spool.brand) {
-      records.push(this.getRecord("brand", spool.brand));
+      records.push(this.getRecord(this.BRAND_ID, spool.brand));
     }
     if (spool.material) {
-      records.push(this.getRecord("material", spool.material));
+      records.push(this.getRecord(this.MATERIAL_ID, spool.material));
     }
     if (spool.color) {
-      records.push(this.getRecord("color", spool.color));
+      records.push(this.getRecord(this.COLOR_ID, spool.color));
     }
     if (spool.initialFilamentWeight) {
-      records.push(this.getRecord("filament", spool.initialFilamentWeight.toString()));
+      records.push(this.getRecord(this.INITIAL_FILAMENT_WEIGHT_ID, spool.initialFilamentWeight.toString()));
     }
     if (spool.spoolWeight) {
-      records.push(this.getRecord("spool", spool.spoolWeight.toString()));
+      records.push(this.getRecord(this.SPOOL_WEIGHT_ID, spool.spoolWeight.toString()));
     }
     if (spool.remainingFilamentWeight) {
-      records.push(this.getRecord("remaining", spool.remainingFilamentWeight.toString()));
+      records.push(this.getRecord(this.REMAINING_FILAMENT_ID, spool.remainingFilamentWeight.toString()));
     }
     if (spool.flowFactor) {
-      records.push(this.getRecord("factor", spool.flowFactor.toString()));
+      records.push(this.getRecord(this.FLOW_FACTOR_ID, spool.flowFactor.toString()));
     }
     if (spool.temperature) {
-      records.push(this.getRecord("temperature", spool.temperature.toString()));
+      records.push(this.getRecord(this.TEMPERATURE_ID, spool.temperature.toString()));
     }
+
     return this.getMessage(records);
   }
 
