@@ -2,7 +2,7 @@ import {NfcEmulatorService} from "../services/nfc-emulator.service";
 
 export class EmulatedNdefReader implements NDEFReader {
 
-  private state: "idle" | "scanning" | "writing" = "idle";
+  private state: "idle" | "scanning" = "idle";
 
   constructor(private emulatorService: NfcEmulatorService) {
     emulatorService.getEvents().subscribe({next: tag => this.handleTap(tag)});
@@ -25,11 +25,11 @@ export class EmulatedNdefReader implements NDEFReader {
   }
 
   public scan(): Promise<any> {
-    if (this.state !== "idle") {
-      return Promise.reject("Already scanning!");
-    } else {
+    if (this.state === "idle") {
       this.state = "scanning";
       return Promise.resolve();
+    } else {
+      return Promise.reject(new Error("Already scanning!"));
     }
   }
 
