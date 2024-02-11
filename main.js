@@ -66918,28 +66918,28 @@ var matDialogAnimations = {
   ])
 };
 
-// src/app/components/tag-card/spool-modal.ts
-function SpoolModal_Conditional_0_Conditional_3_Template(rf, ctx) {
+// src/app/components/edit-dialog/edit-dialog.component.ts
+function EditDialog_Conditional_0_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate2(" ", ctx_r2.spool.name, " - (", ctx_r2.spool.id, ") ");
+    \u0275\u0275textInterpolate1(" Editing ", ctx_r2.spool.name, " ");
   }
 }
-function SpoolModal_Conditional_0_Conditional_4_Template(rf, ctx) {
+function EditDialog_Conditional_0_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
   if (rf & 2) {
     const ctx_r3 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1(" ", ctx_r3.spool.id, " ");
+    \u0275\u0275textInterpolate1(" Editing ", ctx_r3.spool.id, " ");
   }
 }
-function SpoolModal_Conditional_0_For_16_Template(rf, ctx) {
+function EditDialog_Conditional_0_For_14_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 11);
+    \u0275\u0275elementStart(0, "mat-option", 12);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -66950,9 +66950,9 @@ function SpoolModal_Conditional_0_For_16_Template(rf, ctx) {
     \u0275\u0275textInterpolate(brand_r8);
   }
 }
-function SpoolModal_Conditional_0_For_24_Template(rf, ctx) {
+function EditDialog_Conditional_0_For_22_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 11);
+    \u0275\u0275elementStart(0, "mat-option", 12);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -66963,128 +66963,128 @@ function SpoolModal_Conditional_0_For_24_Template(rf, ctx) {
     \u0275\u0275textInterpolate(material_r13);
   }
 }
-function SpoolModal_Conditional_0_Template(rf, ctx) {
+function EditDialog_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r19 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
-    \u0275\u0275template(3, SpoolModal_Conditional_0_Conditional_3_Template, 1, 2)(4, SpoolModal_Conditional_0_Conditional_4_Template, 1, 1);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "mat-card-content")(6, "mat-form-field")(7, "mat-label");
-    \u0275\u0275text(8, "Name");
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275template(1, EditDialog_Conditional_0_Conditional_1_Template, 1, 1)(2, EditDialog_Conditional_0_Conditional_2_Template, 1, 1);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "input", 0);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_9_listener($event) {
+    \u0275\u0275elementStart(3, "mat-dialog-content")(4, "mat-form-field")(5, "mat-label");
+    \u0275\u0275text(6, "Name");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "input", 1);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_7_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r18 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r18.spool.name = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "mat-form-field")(11, "mat-label");
-    \u0275\u0275text(12, "Brand");
+    \u0275\u0275elementStart(8, "mat-form-field")(9, "mat-label");
+    \u0275\u0275text(10, "Brand");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "mat-autocomplete", null, 1);
-    \u0275\u0275repeaterCreate(15, SpoolModal_Conditional_0_For_16_Template, 2, 2, "mat-option", 11, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(11, "mat-autocomplete", null, 2);
+    \u0275\u0275repeaterCreate(13, EditDialog_Conditional_0_For_14_Template, 2, 2, "mat-option", 12, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "input", 2);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_17_listener($event) {
+    \u0275\u0275elementStart(15, "input", 3);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_15_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r20 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r20.spool.brand = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(18, "mat-form-field")(19, "mat-label");
-    \u0275\u0275text(20, "Material");
+    \u0275\u0275elementStart(16, "mat-form-field")(17, "mat-label");
+    \u0275\u0275text(18, "Material");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(21, "mat-autocomplete", null, 3);
-    \u0275\u0275repeaterCreate(23, SpoolModal_Conditional_0_For_24_Template, 2, 2, "mat-option", 11, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(19, "mat-autocomplete", null, 4);
+    \u0275\u0275repeaterCreate(21, EditDialog_Conditional_0_For_22_Template, 2, 2, "mat-option", 12, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(25, "input", 4);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_25_listener($event) {
+    \u0275\u0275elementStart(23, "input", 5);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_23_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r21 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r21.spool.material = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(26, "mat-form-field")(27, "ngx-colors", 5);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_ngx_colors_ngModelChange_27_listener($event) {
+    \u0275\u0275elementStart(24, "mat-form-field")(25, "ngx-colors", 6);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_ngx_colors_ngModelChange_25_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r22 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r22.spool.color = $event);
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(28, "mat-label");
-    \u0275\u0275text(29, "Color");
+    \u0275\u0275elementStart(26, "mat-label");
+    \u0275\u0275text(27, "Color");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(30, "input", 6);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_30_listener($event) {
+    \u0275\u0275elementStart(28, "input", 7);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_28_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r23 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r23.spool.color = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(31, "mat-form-field")(32, "mat-label");
-    \u0275\u0275text(33, "Spool weight");
+    \u0275\u0275elementStart(29, "mat-form-field")(30, "mat-label");
+    \u0275\u0275text(31, "Spool weight");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(34, "input", 7);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_34_listener($event) {
+    \u0275\u0275elementStart(32, "input", 8);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_32_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r24 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r24.spool.spoolWeight = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(35, "mat-form-field")(36, "mat-label");
-    \u0275\u0275text(37, "Filament weight (initial)");
+    \u0275\u0275elementStart(33, "mat-form-field")(34, "mat-label");
+    \u0275\u0275text(35, "Filament weight (initial)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(38, "input", 7);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_38_listener($event) {
+    \u0275\u0275elementStart(36, "input", 8);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_36_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r25 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r25.spool.initialFilamentWeight = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(39, "mat-form-field")(40, "mat-label");
-    \u0275\u0275text(41, "Filament weight (remaining)");
+    \u0275\u0275elementStart(37, "mat-form-field")(38, "mat-label");
+    \u0275\u0275text(39, "Filament weight (remaining)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(42, "input", 7);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_42_listener($event) {
+    \u0275\u0275elementStart(40, "input", 8);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_40_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r26 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r26.spool.remainingFilamentWeight = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(43, "mat-form-field")(44, "mat-label");
-    \u0275\u0275text(45, "Flow calibration factor (K)");
+    \u0275\u0275elementStart(41, "mat-form-field")(42, "mat-label");
+    \u0275\u0275text(43, "Flow calibration factor (K)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(46, "input", 8);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_46_listener($event) {
+    \u0275\u0275elementStart(44, "input", 9);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_44_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r27 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r27.spool.flowFactor = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(47, "mat-form-field")(48, "mat-label");
-    \u0275\u0275text(49, "Temperature (\xBAC)");
+    \u0275\u0275elementStart(45, "mat-form-field")(46, "mat-label");
+    \u0275\u0275text(47, "Temperature (\xBAC)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(50, "input", 7);
-    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_50_listener($event) {
+    \u0275\u0275elementStart(48, "input", 8);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_48_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r28 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r28.spool.temperature = $event);
     });
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(51, "mat-card-actions")(52, "button", 9);
-    \u0275\u0275text(53, "Cancel");
+    \u0275\u0275elementStart(49, "mat-dialog-actions")(50, "button", 10);
+    \u0275\u0275text(51, "Cancel");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(54, "button", 10);
-    \u0275\u0275text(55, "Update");
-    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(52, "button", 11);
+    \u0275\u0275text(53, "Update");
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const _r4 = \u0275\u0275reference(14);
-    const _r6 = \u0275\u0275reference(22);
+    const _r4 = \u0275\u0275reference(12);
+    const _r6 = \u0275\u0275reference(20);
     const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
-    \u0275\u0275conditional(3, ctx_r0.spool.name ? 3 : 4);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(1, ctx_r0.spool.name ? 1 : 2);
     \u0275\u0275advance(6);
     \u0275\u0275property("ngModel", ctx_r0.spool.name);
     \u0275\u0275advance(6);
@@ -67111,14 +67111,12 @@ function SpoolModal_Conditional_0_Template(rf, ctx) {
     \u0275\u0275property("ngModel", ctx_r0.spool.temperature);
   }
 }
-function SpoolModal_Conditional_1_Template(rf, ctx) {
+function EditDialog_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-card");
-    \u0275\u0275text(1, " No card ");
-    \u0275\u0275elementEnd();
+    \u0275\u0275text(0, " No card\n");
   }
 }
-var _SpoolModal = class _SpoolModal {
+var _EditDialog = class _EditDialog {
   constructor(data) {
     this.data = data;
     this.brands = [
@@ -67137,23 +67135,18 @@ var _SpoolModal = class _SpoolModal {
     console.log(this.spool);
   }
 };
-_SpoolModal.\u0275fac = function SpoolModal_Factory(t) {
-  return new (t || _SpoolModal)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
+_EditDialog.\u0275fac = function EditDialog_Factory(t) {
+  return new (t || _EditDialog)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
 };
-_SpoolModal.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolModal, selectors: [["app-spool-modal"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", "", "mat-dialog-close", "update"], [3, "value"]], template: function SpoolModal_Template(rf, ctx) {
+_EditDialog.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _EditDialog, selectors: [["app-edit-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["mat-dialog-title", ""], ["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", "", "mat-dialog-close", "update"], [3, "value"]], template: function EditDialog_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, SpoolModal_Conditional_0_Template, 56, 14, "mat-card")(1, SpoolModal_Conditional_1_Template, 2, 0);
+    \u0275\u0275template(0, EditDialog_Conditional_0_Template, 54, 14)(1, EditDialog_Conditional_1_Template, 1, 0);
   }
   if (rf & 2) {
     \u0275\u0275conditional(0, ctx.spool ? 0 : 1);
   }
 }, dependencies: [
-  MatCard,
-  MatCardHeader,
-  MatCardContent,
-  MatCardActions,
   MatButton,
-  MatCardTitle,
   MatFormField,
   MatAutocomplete,
   FormsModule,
@@ -67172,11 +67165,14 @@ _SpoolModal.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _Spo
   NgxColorsModule,
   NgxColorsComponent,
   NgxColorsTriggerDirective,
-  MatDialogClose
-], styles: ["\n\n/*# sourceMappingURL=spool-modal.css.map */"] });
-var SpoolModal = _SpoolModal;
+  MatDialogClose,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions
+], styles: ["\n\n/*# sourceMappingURL=edit-dialog.css.map */"] });
+var EditDialog = _EditDialog;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolModal, { className: "SpoolModal", filePath: "src/app/components/tag-card/spool-modal.ts", lineNumber: 42 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(EditDialog, { className: "EditDialog", filePath: "src/app/components/edit-dialog/edit-dialog.component.ts", lineNumber: 51 });
 })();
 
 // node_modules/@angular/material/fesm2022/toolbar.mjs
@@ -68535,14 +68531,16 @@ var _NfcService = class _NfcService {
     this.snackBar.open("Error reading tag, try again?", "Dismiss", { duration: 1e3 });
   }
   startScan() {
-    this.ndef.scan().then(() => {
-      this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
-      this.statusSubject.next("Scanning");
-    }).catch((e) => {
-      this.snackBar.open("Scan could not be started: " + e, "Dismiss", { duration: 1e3 });
-      console.log("Scan could not be started", e);
-      this.statusSubject.next("Error");
-    });
+    if (this.statusSubject.getValue() === "Idle") {
+      this.ndef.scan().then(() => {
+        this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
+        this.statusSubject.next("Scanning");
+      }).catch((e) => {
+        this.snackBar.open("Scan could not be started: " + e, "Dismiss", { duration: 1e3 });
+        console.log("Scan could not be started", e);
+        this.statusSubject.next("Error");
+      });
+    }
   }
 };
 _NfcService.\u0275fac = function NfcService_Factory(t) {
@@ -68663,7 +68661,7 @@ var _SpoolCardComponent = class _SpoolCardComponent {
   }
   edit() {
     const spool = __spreadValues({}, this.spool);
-    const dialog = this.dialog.open(SpoolModal, { data: { spool }, disableClose: true });
+    const dialog = this.dialog.open(EditDialog, { data: { spool }, disableClose: true });
     dialog.afterClosed().subscribe({
       next: (r) => {
         if (r === "update") {
