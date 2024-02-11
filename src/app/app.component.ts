@@ -17,11 +17,10 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatDialog} from "@angular/material/dialog";
 import {HelpDialogComponent} from "./components/help-dialog/help-dialog.component";
 import {MatCard, MatCardTitle} from "@angular/material/card";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {SpoolCardComponent} from "./components/spool-card/spool-card.component";
 import {WriteDialogComponent} from "./components/write-dialog/write-dialog.component";
 import {PermissionDialogComponent} from "./components/permission-dialog/permission-dialog.component";
-import {Utils} from "./classes/utils";
+import {ToastService} from "./services/toast.service";
 
 @Component({
   selector: 'app-root',
@@ -36,16 +35,16 @@ export class AppComponent {
 
   protected environment = environment;
 
-  constructor(protected nfcService: NfcService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+  constructor(protected nfcService: NfcService, private dialog: MatDialog, private toastService: ToastService) {
     this.nfcService.spool$().subscribe({
       next: spool => {
-        Utils.showToast(this.snackBar, "Scanned spool tag " + spool.id, "Dismiss", 1000);
+        this.toastService.showToast("Scanned spool tag " + spool.id, 1000);
         if (!this.spoolScanned(spool)) {
           this.spools.push(spool);
         }
       },
       error: err => {
-        Utils.showToast(this.snackBar, "Error scanning tag, try again?", "Dismiss", 1000);
+        this.toastService.showToast("Error scanning tag, try again?", 1000);
         console.log(err);
       }
     });
@@ -79,13 +78,13 @@ export class AppComponent {
       error: e => {
         console.log(e);
         dialog.close();
-        Utils.showToast(this.snackBar, "Could not write tag", "Dismiss", 2000);
+        this.toastService.showToast("Could not write tag", 2000);
       },
       complete: () => {
         dialog.close();
         const index = this.spools.findIndex(s => s.id === spool.id);
         this.spools[index] = spool;
-        Utils.showToast(this.snackBar, "Spool updated", "Dismiss", 1000);
+        this.toastService.showToast("Spool updated", 1000);
       }
     });
   }

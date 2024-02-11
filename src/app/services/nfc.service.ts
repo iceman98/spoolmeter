@@ -5,9 +5,8 @@ import {NfcEmulatorService} from "./nfc-emulator.service";
 import {EmulatedNdefReader} from "../classes/emulated-ndef-reader";
 import {environment} from "../../environments/environment";
 import {MessageConverter} from "../classes/message-converter";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {EngineStatus} from "../model/engine-status";
-import {Utils} from "../classes/utils";
+import {ToastService} from "./toast.service";
 
 
 @Injectable({
@@ -23,7 +22,7 @@ export class NfcService {
   private readSubject = new Subject<Spool>();
   private writing?: { id: string, message: NDEFMessageInit, subject: AsyncSubject<void> };
 
-  constructor(private nfcEmulator: NfcEmulatorService, private snackBar: MatSnackBar) {
+  constructor(private nfcEmulator: NfcEmulatorService, private toastService: ToastService) {
     // @ts-ignore
     this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
     this.ndef.onreading = tag => this.handleReadWrite(tag);
@@ -74,24 +73,24 @@ export class NfcService {
           })
           .finally();
       } else {
-        Utils.showToast(this.snackBar, "Not the correct tag, try again", "Dismiss", 1000);
+        this.toastService.showToast("Not the correct tag, try again", 1000);
       }
     }
   }
 
   handleError(error: Event) {
     console.log(error);
-    Utils.showToast(this.snackBar, "Error reading tag, try again?", "Dismiss", 1000);
+    this.toastService.showToast("Error reading tag, try again?", 1000);
   }
 
   public startScan() {
     this.ndef.scan()
       .then(() => {
-        Utils.showToast(this.snackBar, "Starting scan...", "Dismiss", 1000);
+        this.toastService.showToast("Starting scan...", 1000);
         this.statusSubject.next("reading");
       })
       .catch((e: Event) => {
-        Utils.showToast(this.snackBar, "Scan could not be started: " + e, "Dismiss", 1000);
+        this.toastService.showToast("Scan could not be started: " + e, 1000);
         console.log("Scan could not be started", e);
         this.statusSubject.next("error");
       });
