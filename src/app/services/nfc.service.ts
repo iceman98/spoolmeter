@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {AsyncSubject, BehaviorSubject, Observable, of, Subject, throwError} from "rxjs";
+import {AsyncSubject, BehaviorSubject, Observable, Subject, throwError} from "rxjs";
 import {Spool} from "../model/spool";
 import {NfcEmulatorService} from "./nfc-emulator.service";
 import {EmulatedNdefReader} from "../classes/emulated-ndef-reader";
 import {environment} from "../../environments/environment";
 import {MessageConverter} from "../classes/message-converter";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {EngineStatus} from "../model/engine-status";
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class NfcService {
   private ndef: NDEFReader;
   private converter = new MessageConverter();
 
-  private statusSubject = new BehaviorSubject("Idle");
+  private statusSubject = new BehaviorSubject<EngineStatus>("idle");
 
   private readSubject = new Subject<Spool>();
   private writing?: { id: string, message: NDEFMessageInit, subject: AsyncSubject<void> };
@@ -33,13 +34,13 @@ export class NfcService {
     return this.readSubject;
   }
 
-  public status$(): Observable<string> {
+  public status$(): Observable<EngineStatus> {
     return this.statusSubject;
   }
 
   public updateSpool(spool: Spool): Observable<void> {
     if (!this.writing) {
-      this.statusSubject.next("Writing");
+      this.statusSubject.next("writing");
 
       this.writing = {
         id: spool.id,
@@ -62,7 +63,7 @@ export class NfcService {
       if (tag.serialNumber === this.writing.id) {
         this.ndef.write(this.writing.message, {overwrite: true})
           .then(() => {
-            this.statusSubject.next("Reading");
+            this.statusSubject.next("reading");
             this.writing?.subject.complete();
             this.writing = undefined;
           })
@@ -86,12 +87,12 @@ export class NfcService {
     this.ndef.scan()
       .then(() => {
         this.snackBar.open("Starting scan...", "Dismiss", {duration: 1000});
-        this.statusSubject.next("Scanning");
+        this.statusSubject.next("reading");
       })
       .catch((e: Event) => {
         this.snackBar.open("Scan could not be started: " + e, "Dismiss", {duration: 1000});
         console.log("Scan could not be started", e);
-        this.statusSubject.next("Error");
+        this.statusSubject.next("error");
       });
   }
 
