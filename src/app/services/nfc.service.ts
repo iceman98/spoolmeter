@@ -26,17 +26,7 @@ export class NfcService {
     this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
     this.ndef.onreading = tag => this.handleReadWrite(tag);
     this.ndef.onreadingerror = err => this.handleError(err);
-
-    this.ndef.scan()
-      .then(() => {
-        this.snackBar.open("Starting scan...", "Dismiss", {duration: 1000});
-        this.statusSubject.next("Scanning");
-      })
-      .catch((e: Event) => {
-        this.snackBar.open("Scan could not be started: " + e.type, "Dismiss", {duration: 1000});
-        console.log("Scan could not be started: " + e.type);
-        this.statusSubject.next("Error");
-      });
+    this.startScan();
   }
 
   public spool$(): Observable<Spool> {
@@ -90,6 +80,19 @@ export class NfcService {
   handleError(error: Event) {
     console.log(error);
     this.snackBar.open("Error reading tag, try again?", "Dismiss", {duration: 1000});
+  }
+
+  public startScan() {
+    this.ndef.scan()
+      .then(() => {
+        this.snackBar.open("Starting scan...", "Dismiss", {duration: 1000});
+        this.statusSubject.next("Scanning");
+      })
+      .catch((e: Event) => {
+        this.snackBar.open("Scan could not be started: " + e, "Dismiss", {duration: 1000});
+        console.log("Scan could not be started", e);
+        this.statusSubject.next("Error");
+      });
   }
 
 }
