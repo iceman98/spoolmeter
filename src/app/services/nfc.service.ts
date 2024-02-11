@@ -83,18 +83,16 @@ export class NfcService {
   }
 
   public startScan() {
-    if (this.statusSubject.getValue() === "Idle") {
-      this.ndef.scan()
-        .then(() => {
-          this.snackBar.open("Starting scan...", "Dismiss", {duration: 1000});
-          this.statusSubject.next("Scanning");
-        })
-        .catch((e: Event) => {
-          this.snackBar.open("Scan could not be started: " + e, "Dismiss", {duration: 1000});
-          console.log("Scan could not be started", e);
-          this.statusSubject.next("Error");
-        });
-    }
+    this.ndef.scan()
+      .then(() => {
+        this.snackBar.open("Starting scan...", "Dismiss", {duration: 1000});
+        this.statusSubject.next("Scanning");
+      })
+      .catch((e: Event) => {
+        this.snackBar.open("Scan could not be started: " + e, "Dismiss", {duration: 1000});
+        console.log("Scan could not be started", e);
+        this.statusSubject.next("Error");
+      });
   }
 
 }
