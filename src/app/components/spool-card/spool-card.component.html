@@ -14,10 +14,12 @@
       }
     </mat-card-content>
 
-    <mat-card-actions>
-      <button mat-button (click)="edit()">Edit</button>
-      <button mat-button (click)="remove()">Remove</button>
-    </mat-card-actions>
+    @if (!readOnly) {
+      <mat-card-actions>
+        <button mat-button (click)="edit()">Edit</button>
+        <button mat-button (click)="remove()">Remove</button>
+      </mat-card-actions>
+    }
 
   </mat-card>
 }

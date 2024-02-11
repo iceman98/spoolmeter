@@ -13,6 +13,7 @@ import {
 import {NgIf} from "@angular/common";
 import {Spool} from "../../model/spool";
 import {MatIcon} from "@angular/material/icon";
+import {SpoolCardComponent} from "../spool-card/spool-card.component";
 
 @Component({
   selector: 'app-write-dialog',
@@ -26,7 +27,8 @@ import {MatIcon} from "@angular/material/icon";
     MatDialogContent,
     MatDialogTitle,
     NgIf,
-    MatIcon
+    MatIcon,
+    SpoolCardComponent
   ],
   templateUrl: './write-dialog.component.html',
   styleUrl: './write-dialog.component.sass'

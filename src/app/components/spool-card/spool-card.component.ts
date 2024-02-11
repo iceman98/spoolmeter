@@ -40,6 +40,9 @@ export class SpoolCardComponent {
   @Input()
   spool: Spool | undefined;
 
+  @Input()
+  readOnly = false;
+
   @Output()
   cardRemoved = new EventEmitter<void>();
 

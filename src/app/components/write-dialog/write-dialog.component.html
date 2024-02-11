@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Writing...</h2>
 <mat-dialog-content>
   Please tap this spool's tag with your phone:
-  {{spool.brand}} {{spool.material}} <mat-icon style="color:{{spool.color}};">gesture</mat-icon>
+  <app-spool-card [readOnly]="true" [spool]="spool"></app-spool-card>
   <mat-spinner></mat-spinner>
   @if (environment.isDev) {
     <app-debug-nfc></app-debug-nfc>
