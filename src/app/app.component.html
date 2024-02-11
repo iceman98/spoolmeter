@@ -1,10 +1,29 @@
-<router-outlet/>
+<mat-toolbar color="primary">
+  <span>Spool-meter</span>
+  <span class="spacer"></span>
+  <span style="font-size: small">{{ nfcService.status$()|async }}</span>
+  <button mat-button (click)="showHelp()">
+    <mat-icon>help</mat-icon>
+  </button>
+</mat-toolbar>
 
-<button (click)="scan()">Scan</button>
-<label>{{ status }}</label>
+<mat-card>
+  <mat-card-title>
+    <mat-icon>radar</mat-icon>
+    <span>Scanned spools:</span>
+  </mat-card-title>
 
-@for (spool of spools; track spool.id) {
-  <app-tag-card [spool]="spool" (cardRemoved)="removeSpool(spool.id)" (saveTag)="updateSpool(spool)"></app-tag-card>
-}
+  @if (spools.length) {
+    <mat-grid-list cols="2">
+      @for (spool of spools; track spool.id) {
+        <mat-grid-tile>
+          <app-spool-card [spool]="spool" (cardRemoved)="removeSpool(spool.id)" (cardUpdated)="updateSpool($event)"></app-spool-card>
+        </mat-grid-tile>
+      }
+    </mat-grid-list>
+  } @else {
+    <h2>There are no scanned spools yet, tap a spool tag to populate this list</h2>
+  }
+</mat-card>
 
 <app-debug-nfc *ngIf="environment.isDev"></app-debug-nfc>
