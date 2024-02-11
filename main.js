@@ -68531,16 +68531,14 @@ var _NfcService = class _NfcService {
     this.snackBar.open("Error reading tag, try again?", "Dismiss", { duration: 1e3 });
   }
   startScan() {
-    if (this.statusSubject.getValue() === "Idle") {
-      this.ndef.scan().then(() => {
-        this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
-        this.statusSubject.next("Scanning");
-      }).catch((e) => {
-        this.snackBar.open("Scan could not be started: " + e, "Dismiss", { duration: 1e3 });
-        console.log("Scan could not be started", e);
-        this.statusSubject.next("Error");
-      });
-    }
+    this.ndef.scan().then(() => {
+      this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
+      this.statusSubject.next("Scanning");
+    }).catch((e) => {
+      this.snackBar.open("Scan could not be started: " + e, "Dismiss", { duration: 1e3 });
+      console.log("Scan could not be started", e);
+      this.statusSubject.next("Error");
+    });
   }
 };
 _NfcService.\u0275fac = function NfcService_Factory(t) {
@@ -68555,7 +68553,12 @@ var _HelpDialogComponent = class _HelpDialogComponent {
     this.nfcService = nfcService;
   }
   scan() {
-    this.nfcService.startScan();
+    const reader = new NDEFReader();
+    const abort = new AbortController();
+    reader.scan({ signal: abort.signal }).then(() => {
+      abort.abort();
+      this.nfcService.startScan();
+    });
   }
 };
 _HelpDialogComponent.\u0275fac = function HelpDialogComponent_Factory(t) {
