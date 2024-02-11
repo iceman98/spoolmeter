@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {Spool} from "../model/spool";
 import {MessageConverter} from "../classes/message-converter";
 
@@ -11,6 +11,12 @@ export class NfcEmulatorService {
   private touchSubject = new Subject<NDEFReadingEvent>();
   private errorSubject = new Subject<Error>();
   private converter = new MessageConverter();
+
+  private spools = new BehaviorSubject<Spool[]>([]);
+
+  constructor() {
+    this.updateSpools();
+  }
 
   private tags: Map<string, NDEFMessage> = new Map<string, NDEFMessage>(Object.entries({
     "empty!": this.converter.spoolToMessage({id: "empty!"}),
@@ -36,15 +42,28 @@ export class NfcEmulatorService {
     this.errorSubject.next(new Error(message))
   }
 
-  public getSpools(): Spool[] {
+  public spools$(): Observable<Spool[]> {
+    return this.spools;
+  }
+
+  public addSpool(spool: Spool) {
+    this.tags.set(spool.id, this.converter.spoolToMessage(spool));
+    this.updateSpools();
+  }
+
+  protected updateSpools() {
     const spools: Spool[] = [];
 
     this.tags.forEach((message, id) => {
       spools.push(this.converter.messageToSpool(id, message));
     });
 
-    return spools;
+    this.spools.next(spools);
   }
 
+  public remove(id: string) {
+    this.tags.delete(id);
+    this.updateSpools();
+  }
 
 }
