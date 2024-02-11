@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/spool-wizard/spool-wizard.component.sass"],
+  "sourcesContent": [".column\n  display: flex\n  flex-direction: column\n  align-items: flex-start\n\n.padded\n  padding: 5px 0 5px 0\n\n.symbol\n  padding: 0 50px 20px 50px\n  font-size: large\n  font-weight: bold\n\n.locked\n  color: red\n\n.unlocked\n  color: green\n"],
+  "mappings": ";AAAA,CAAA;AACE,WAAA;AACA,kBAAA;AACA,eAAA;;AAEF,CAAA;AACE,WAAA,IAAA,EAAA,IAAA;;AAEF,CAAA;AACE,WAAA,EAAA,KAAA,KAAA;AACA,aAAA;AACA,eAAA;;AAEF,CAAA;AACE,SAAA;;AAEF,CAAA;AACE,SAAA;;",
+  "names": []
+}
