@@ -19,8 +19,23 @@ export class NfcEmulatorService {
   }
 
   private tags: Map<string, NDEFMessage> = new Map<string, NDEFMessage>(Object.entries({
-    "empty!": this.converter.spoolToMessage({id: "empty!"}),
-    "red": this.converter.spoolToMessage({id: "red", color: "#ff0000"})
+    "{new}": this.converter.spoolToMessage({id: "{new}"}),
+    "{empty}": this.converter.spoolToMessage({id: "{empty}", signature: "ic_v1"}),
+    "{named}": this.converter.spoolToMessage({id: "{named}", signature: "ic_v1", name: "named"}),
+    "{colored}": this.converter.spoolToMessage({id: "{colored}", signature: "ic_v1", color: "#ff0000"}),
+    "{complete}": this.converter.spoolToMessage({
+      id: "{complete}",
+      signature: "ic_v1",
+      name: "complete",
+      brand: "JAYO",
+      material: "PLA+",
+      color: "#ff0000",
+      temperature: 220,
+      flowFactor: 0.02,
+      spoolWeight: 120,
+      initialFilamentWeight: 1100,
+      remainingFilamentWeight: 750
+    }),
   }));
 
   public getEvents(): Observable<NDEFReadingEvent> {

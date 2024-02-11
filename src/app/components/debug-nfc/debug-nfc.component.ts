@@ -42,7 +42,7 @@ export class DebugNfcComponent {
   }
 
   protected create() {
-    this.nfcEmulator.addSpool({id: crypto.randomUUID()});
+    this.nfcEmulator.addSpool({id: "{" + crypto.randomUUID() + "}"});
   }
 
 }
