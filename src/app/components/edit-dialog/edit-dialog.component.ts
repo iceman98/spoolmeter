@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {Spool} from "../../model/spool";
@@ -16,6 +16,7 @@ import {
   MatDialogContent,
   MatDialogTitle
 } from "@angular/material/dialog";
+import {BRANDS, MATERIALS} from "../../model/data";
 
 @Component({
   selector: 'app-edit-dialog',
@@ -56,17 +57,9 @@ export class EditDialog {
 
   protected spool: Spool;
 
-  brands = [
-    "JAYO",
-    "eSUN",
-    "Amazon Basics"
-  ];
+  brands = BRANDS;
 
-  materials = [
-    "PLA",
-    "PLA+",
-    "HS-PLA"
-  ];
+  materials = MATERIALS;
 
   protected update() {
     console.log(this.spool);
