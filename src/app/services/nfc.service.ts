@@ -7,6 +7,7 @@ import {environment} from "../../environments/environment";
 import {MessageConverter} from "../classes/message-converter";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {EngineStatus} from "../model/engine-status";
+import {Utils} from "../classes/utils";
 
 
 @Injectable({
@@ -73,24 +74,24 @@ export class NfcService {
           })
           .finally();
       } else {
-        this.snackBar.open("Not the correct tag, try again", "Dismiss", {duration: 1000});
+        Utils.showToast(this.snackBar, "Not the correct tag, try again", "Dismiss", 1000);
       }
     }
   }
 
   handleError(error: Event) {
     console.log(error);
-    this.snackBar.open("Error reading tag, try again?", "Dismiss", {duration: 1000});
+    Utils.showToast(this.snackBar, "Error reading tag, try again?", "Dismiss", 1000);
   }
 
   public startScan() {
     this.ndef.scan()
       .then(() => {
-        this.snackBar.open("Starting scan...", "Dismiss", {duration: 1000});
+        Utils.showToast(this.snackBar, "Starting scan...", "Dismiss", 1000);
         this.statusSubject.next("reading");
       })
       .catch((e: Event) => {
-        this.snackBar.open("Scan could not be started: " + e, "Dismiss", {duration: 1000});
+        Utils.showToast(this.snackBar, "Scan could not be started: " + e, "Dismiss", 1000);
         console.log("Scan could not be started", e);
         this.statusSubject.next("error");
       });

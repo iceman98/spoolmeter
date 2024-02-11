@@ -21,6 +21,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {SpoolCardComponent} from "./components/spool-card/spool-card.component";
 import {WriteDialogComponent} from "./components/write-dialog/write-dialog.component";
 import {PermissionDialogComponent} from "./components/permission-dialog/permission-dialog.component";
+import {Utils} from "./classes/utils";
 
 @Component({
   selector: 'app-root',
@@ -38,13 +39,13 @@ export class AppComponent {
   constructor(protected nfcService: NfcService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.nfcService.spool$().subscribe({
       next: spool => {
-        this.snackBar.open("Scanned spool tag " + spool.id, "Dismiss", {duration: 1000});
+        Utils.showToast(this.snackBar, "Scanned spool tag " + spool.id, "Dismiss", 1000);
         if (!this.spoolScanned(spool)) {
           this.spools.push(spool);
         }
       },
       error: err => {
-        this.snackBar.open("Error scanning tag, try again?", "Dismiss", {duration: 1000});
+        Utils.showToast(this.snackBar, "Error scanning tag, try again?", "Dismiss", 1000);
         console.log(err);
       }
     });
@@ -78,13 +79,13 @@ export class AppComponent {
       error: e => {
         console.log(e);
         dialog.close();
-        this.snackBar.open("Could not write tag", "Dismiss", {duration: 2000});
+        Utils.showToast(this.snackBar, "Could not write tag", "Dismiss", 2000);
       },
       complete: () => {
         dialog.close();
         const index = this.spools.findIndex(s => s.id === spool.id);
         this.spools[index] = spool;
-        this.snackBar.open("Spool updated", "Dismiss", {duration: 1000});
+        Utils.showToast(this.snackBar, "Spool updated", "Dismiss", 1000);
       }
     });
   }
