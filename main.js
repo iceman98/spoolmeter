@@ -38681,6 +38681,9 @@ var BrowserAnimationsModule = _BrowserAnimationsModule;
     }]
   }], null, null);
 })();
+function provideAnimations() {
+  return [...BROWSER_ANIMATIONS_PROVIDERS];
+}
 var _NoopAnimationsModule = class _NoopAnimationsModule {
 };
 _NoopAnimationsModule.\u0275fac = function NoopAnimationsModule_Factory(t) {
@@ -38703,15 +38706,12 @@ var NoopAnimationsModule = _NoopAnimationsModule;
     }]
   }], null, null);
 })();
-function provideNoopAnimations() {
-  return [...BROWSER_NOOP_ANIMATIONS_PROVIDERS];
-}
 
 // src/app/app.config.ts
 var appConfig = {
   providers: [
     provideRouter(routes),
-    provideNoopAnimations(),
+    provideAnimations(),
     provideHttpClient(),
     importProvidersFrom(AbortController)
   ]
@@ -45709,6 +45709,22 @@ var BreakpointObserver = _BreakpointObserver;
 function splitQueries(queries) {
   return queries.map((query2) => query2.split(",")).reduce((a1, a2) => a1.concat(a2)).map((query2) => query2.trim());
 }
+var Breakpoints = {
+  XSmall: "(max-width: 599.98px)",
+  Small: "(min-width: 600px) and (max-width: 959.98px)",
+  Medium: "(min-width: 960px) and (max-width: 1279.98px)",
+  Large: "(min-width: 1280px) and (max-width: 1919.98px)",
+  XLarge: "(min-width: 1920px)",
+  Handset: "(max-width: 599.98px) and (orientation: portrait), (max-width: 959.98px) and (orientation: landscape)",
+  Tablet: "(min-width: 600px) and (max-width: 839.98px) and (orientation: portrait), (min-width: 960px) and (max-width: 1279.98px) and (orientation: landscape)",
+  Web: "(min-width: 840px) and (orientation: portrait), (min-width: 1280px) and (orientation: landscape)",
+  HandsetPortrait: "(max-width: 599.98px) and (orientation: portrait)",
+  TabletPortrait: "(min-width: 600px) and (max-width: 839.98px) and (orientation: portrait)",
+  WebPortrait: "(min-width: 840px) and (orientation: portrait)",
+  HandsetLandscape: "(max-width: 959.98px) and (orientation: landscape)",
+  TabletLandscape: "(min-width: 960px) and (max-width: 1279.98px) and (orientation: landscape)",
+  WebLandscape: "(min-width: 1280px) and (orientation: landscape)"
+};
 
 // node_modules/@angular/cdk/fesm2022/a11y.mjs
 var ID_DELIMITER = " ";
@@ -48545,6 +48561,23 @@ var MatLine = _MatLine;
     }]
   }], null, null);
 })();
+function setLines(lines, element, prefix = "mat") {
+  lines.changes.pipe(startWith(lines)).subscribe(({
+    length
+  }) => {
+    setClass(element, `${prefix}-2-line`, false);
+    setClass(element, `${prefix}-3-line`, false);
+    setClass(element, `${prefix}-multi-line`, false);
+    if (length === 2 || length === 3) {
+      setClass(element, `${prefix}-${length}-line`, true);
+    } else if (length > 3) {
+      setClass(element, `${prefix}-multi-line`, true);
+    }
+  });
+}
+function setClass(element, className, isAdd) {
+  element.nativeElement.classList.toggle(className, isAdd);
+}
 var _MatLineModule = class _MatLineModule {
 };
 _MatLineModule.\u0275fac = function MatLineModule_Factory(t) {
@@ -51463,22 +51496,1632 @@ var MatButtonModule = _MatButtonModule;
   }], null, null);
 })();
 
+// node_modules/@angular/material/fesm2022/grid-list.mjs
+var _c04 = ["*"];
+var _c14 = [[["", "mat-grid-avatar", ""], ["", "matGridAvatar", ""]], [["", "mat-line", ""], ["", "matLine", ""]], "*"];
+var _c24 = ["[mat-grid-avatar], [matGridAvatar]", "[mat-line], [matLine]", "*"];
+var _c34 = ".mat-grid-list{display:block;position:relative}.mat-grid-tile{display:block;position:absolute;overflow:hidden}.mat-grid-tile .mat-grid-tile-header,.mat-grid-tile .mat-grid-tile-footer{display:flex;align-items:center;height:48px;color:#fff;background:rgba(0,0,0,.38);overflow:hidden;padding:0 16px;position:absolute;left:0;right:0}.mat-grid-tile .mat-grid-tile-header>*,.mat-grid-tile .mat-grid-tile-footer>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-tile-header.mat-2-line,.mat-grid-tile .mat-grid-tile-footer.mat-2-line{height:68px}.mat-grid-tile .mat-grid-list-text{display:flex;flex-direction:column;flex:auto;box-sizing:border-box;overflow:hidden}.mat-grid-tile .mat-grid-list-text>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-list-text:empty{display:none}.mat-grid-tile .mat-grid-tile-header{top:0}.mat-grid-tile .mat-grid-tile-footer{bottom:0}.mat-grid-tile .mat-grid-avatar{padding-right:16px}[dir=rtl] .mat-grid-tile .mat-grid-avatar{padding-right:0;padding-left:16px}.mat-grid-tile .mat-grid-avatar:empty{display:none}.mat-grid-tile-header{font-size:var(--mat-grid-list-tile-header-primary-text-size)}.mat-grid-tile-header .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-header .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-header-secondary-text-size)}.mat-grid-tile-footer{font-size:var(--mat-grid-list-tile-footer-primary-text-size)}.mat-grid-tile-footer .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-footer .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-footer-secondary-text-size)}.mat-grid-tile-content{top:0;left:0;right:0;bottom:0;position:absolute;display:flex;align-items:center;justify-content:center;height:100%;padding:0;margin:0}";
+var TileCoordinator = class {
+  constructor() {
+    this.columnIndex = 0;
+    this.rowIndex = 0;
+  }
+  /** Gets the total number of rows occupied by tiles */
+  get rowCount() {
+    return this.rowIndex + 1;
+  }
+  /**
+   * Gets the total span of rows occupied by tiles.
+   * Ex: A list with 1 row that contains a tile with rowspan 2 will have a total rowspan of 2.
+   */
+  get rowspan() {
+    const lastRowMax = Math.max(...this.tracker);
+    return lastRowMax > 1 ? this.rowCount + lastRowMax - 1 : this.rowCount;
+  }
+  /**
+   * Updates the tile positions.
+   * @param numColumns Amount of columns in the grid.
+   * @param tiles Tiles to be positioned.
+   */
+  update(numColumns, tiles) {
+    this.columnIndex = 0;
+    this.rowIndex = 0;
+    this.tracker = new Array(numColumns);
+    this.tracker.fill(0, 0, this.tracker.length);
+    this.positions = tiles.map((tile) => this._trackTile(tile));
+  }
+  /** Calculates the row and col position of a tile. */
+  _trackTile(tile) {
+    const gapStartIndex = this._findMatchingGap(tile.colspan);
+    this._markTilePosition(gapStartIndex, tile);
+    this.columnIndex = gapStartIndex + tile.colspan;
+    return new TilePosition(this.rowIndex, gapStartIndex);
+  }
+  /** Finds the next available space large enough to fit the tile. */
+  _findMatchingGap(tileCols) {
+    if (tileCols > this.tracker.length && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error(`mat-grid-list: tile with colspan ${tileCols} is wider than grid with cols="${this.tracker.length}".`);
+    }
+    let gapStartIndex = -1;
+    let gapEndIndex = -1;
+    do {
+      if (this.columnIndex + tileCols > this.tracker.length) {
+        this._nextRow();
+        gapStartIndex = this.tracker.indexOf(0, this.columnIndex);
+        gapEndIndex = this._findGapEndIndex(gapStartIndex);
+        continue;
+      }
+      gapStartIndex = this.tracker.indexOf(0, this.columnIndex);
+      if (gapStartIndex == -1) {
+        this._nextRow();
+        gapStartIndex = this.tracker.indexOf(0, this.columnIndex);
+        gapEndIndex = this._findGapEndIndex(gapStartIndex);
+        continue;
+      }
+      gapEndIndex = this._findGapEndIndex(gapStartIndex);
+      this.columnIndex = gapStartIndex + 1;
+    } while (gapEndIndex - gapStartIndex < tileCols || gapEndIndex == 0);
+    return Math.max(gapStartIndex, 0);
+  }
+  /** Move "down" to the next row. */
+  _nextRow() {
+    this.columnIndex = 0;
+    this.rowIndex++;
+    for (let i = 0; i < this.tracker.length; i++) {
+      this.tracker[i] = Math.max(0, this.tracker[i] - 1);
+    }
+  }
+  /**
+   * Finds the end index (exclusive) of a gap given the index from which to start looking.
+   * The gap ends when a non-zero value is found.
+   */
+  _findGapEndIndex(gapStartIndex) {
+    for (let i = gapStartIndex + 1; i < this.tracker.length; i++) {
+      if (this.tracker[i] != 0) {
+        return i;
+      }
+    }
+    return this.tracker.length;
+  }
+  /** Update the tile tracker to account for the given tile in the given space. */
+  _markTilePosition(start, tile) {
+    for (let i = 0; i < tile.colspan; i++) {
+      this.tracker[start + i] = tile.rowspan;
+    }
+  }
+};
+var TilePosition = class {
+  constructor(row, col) {
+    this.row = row;
+    this.col = col;
+  }
+};
+var MAT_GRID_LIST = new InjectionToken("MAT_GRID_LIST");
+var _MatGridTile = class _MatGridTile {
+  constructor(_element, _gridList) {
+    this._element = _element;
+    this._gridList = _gridList;
+    this._rowspan = 1;
+    this._colspan = 1;
+  }
+  /** Amount of rows that the grid tile takes up. */
+  get rowspan() {
+    return this._rowspan;
+  }
+  set rowspan(value) {
+    this._rowspan = Math.round(coerceNumberProperty(value));
+  }
+  /** Amount of columns that the grid tile takes up. */
+  get colspan() {
+    return this._colspan;
+  }
+  set colspan(value) {
+    this._colspan = Math.round(coerceNumberProperty(value));
+  }
+  /**
+   * Sets the style of the grid-tile element.  Needs to be set manually to avoid
+   * "Changed after checked" errors that would occur with HostBinding.
+   */
+  _setStyle(property, value) {
+    this._element.nativeElement.style[property] = value;
+  }
+};
+_MatGridTile.\u0275fac = function MatGridTile_Factory(t) {
+  return new (t || _MatGridTile)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(MAT_GRID_LIST, 8));
+};
+_MatGridTile.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatGridTile,
+  selectors: [["mat-grid-tile"]],
+  hostAttrs: [1, "mat-grid-tile"],
+  hostVars: 2,
+  hostBindings: function MatGridTile_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275attribute("rowspan", ctx.rowspan)("colspan", ctx.colspan);
+    }
+  },
+  inputs: {
+    rowspan: "rowspan",
+    colspan: "colspan"
+  },
+  exportAs: ["matGridTile"],
+  standalone: true,
+  features: [\u0275\u0275StandaloneFeature],
+  ngContentSelectors: _c04,
+  decls: 2,
+  vars: 0,
+  consts: [[1, "mat-grid-tile-content"]],
+  template: function MatGridTile_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef();
+      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275projection(1);
+      \u0275\u0275elementEnd();
+    }
+  },
+  styles: [".mat-grid-list{display:block;position:relative}.mat-grid-tile{display:block;position:absolute;overflow:hidden}.mat-grid-tile .mat-grid-tile-header,.mat-grid-tile .mat-grid-tile-footer{display:flex;align-items:center;height:48px;color:#fff;background:rgba(0,0,0,.38);overflow:hidden;padding:0 16px;position:absolute;left:0;right:0}.mat-grid-tile .mat-grid-tile-header>*,.mat-grid-tile .mat-grid-tile-footer>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-tile-header.mat-2-line,.mat-grid-tile .mat-grid-tile-footer.mat-2-line{height:68px}.mat-grid-tile .mat-grid-list-text{display:flex;flex-direction:column;flex:auto;box-sizing:border-box;overflow:hidden}.mat-grid-tile .mat-grid-list-text>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-list-text:empty{display:none}.mat-grid-tile .mat-grid-tile-header{top:0}.mat-grid-tile .mat-grid-tile-footer{bottom:0}.mat-grid-tile .mat-grid-avatar{padding-right:16px}[dir=rtl] .mat-grid-tile .mat-grid-avatar{padding-right:0;padding-left:16px}.mat-grid-tile .mat-grid-avatar:empty{display:none}.mat-grid-tile-header{font-size:var(--mat-grid-list-tile-header-primary-text-size)}.mat-grid-tile-header .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-header .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-header-secondary-text-size)}.mat-grid-tile-footer{font-size:var(--mat-grid-list-tile-footer-primary-text-size)}.mat-grid-tile-footer .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-footer .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-footer-secondary-text-size)}.mat-grid-tile-content{top:0;left:0;right:0;bottom:0;position:absolute;display:flex;align-items:center;justify-content:center;height:100%;padding:0;margin:0}"],
+  encapsulation: 2,
+  changeDetection: 0
+});
+var MatGridTile = _MatGridTile;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridTile, [{
+    type: Component,
+    args: [{
+      selector: "mat-grid-tile",
+      exportAs: "matGridTile",
+      host: {
+        "class": "mat-grid-tile",
+        // Ensures that the "rowspan" and "colspan" input value is reflected in
+        // the DOM. This is needed for the grid-tile harness.
+        "[attr.rowspan]": "rowspan",
+        "[attr.colspan]": "colspan"
+      },
+      encapsulation: ViewEncapsulation$1.None,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      standalone: true,
+      template: '<div class="mat-grid-tile-content">\n  <ng-content></ng-content>\n</div>\n',
+      styles: [".mat-grid-list{display:block;position:relative}.mat-grid-tile{display:block;position:absolute;overflow:hidden}.mat-grid-tile .mat-grid-tile-header,.mat-grid-tile .mat-grid-tile-footer{display:flex;align-items:center;height:48px;color:#fff;background:rgba(0,0,0,.38);overflow:hidden;padding:0 16px;position:absolute;left:0;right:0}.mat-grid-tile .mat-grid-tile-header>*,.mat-grid-tile .mat-grid-tile-footer>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-tile-header.mat-2-line,.mat-grid-tile .mat-grid-tile-footer.mat-2-line{height:68px}.mat-grid-tile .mat-grid-list-text{display:flex;flex-direction:column;flex:auto;box-sizing:border-box;overflow:hidden}.mat-grid-tile .mat-grid-list-text>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-list-text:empty{display:none}.mat-grid-tile .mat-grid-tile-header{top:0}.mat-grid-tile .mat-grid-tile-footer{bottom:0}.mat-grid-tile .mat-grid-avatar{padding-right:16px}[dir=rtl] .mat-grid-tile .mat-grid-avatar{padding-right:0;padding-left:16px}.mat-grid-tile .mat-grid-avatar:empty{display:none}.mat-grid-tile-header{font-size:var(--mat-grid-list-tile-header-primary-text-size)}.mat-grid-tile-header .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-header .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-header-secondary-text-size)}.mat-grid-tile-footer{font-size:var(--mat-grid-list-tile-footer-primary-text-size)}.mat-grid-tile-footer .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-footer .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-footer-secondary-text-size)}.mat-grid-tile-content{top:0;left:0;right:0;bottom:0;position:absolute;display:flex;align-items:center;justify-content:center;height:100%;padding:0;margin:0}"]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [MAT_GRID_LIST]
+    }]
+  }], {
+    rowspan: [{
+      type: Input
+    }],
+    colspan: [{
+      type: Input
+    }]
+  });
+})();
+var _MatGridTileText = class _MatGridTileText {
+  constructor(_element) {
+    this._element = _element;
+  }
+  ngAfterContentInit() {
+    setLines(this._lines, this._element);
+  }
+};
+_MatGridTileText.\u0275fac = function MatGridTileText_Factory(t) {
+  return new (t || _MatGridTileText)(\u0275\u0275directiveInject(ElementRef));
+};
+_MatGridTileText.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatGridTileText,
+  selectors: [["mat-grid-tile-header"], ["mat-grid-tile-footer"]],
+  contentQueries: function MatGridTileText_ContentQueries(rf, ctx, dirIndex) {
+    if (rf & 1) {
+      \u0275\u0275contentQuery(dirIndex, MatLine, 5);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._lines = _t);
+    }
+  },
+  standalone: true,
+  features: [\u0275\u0275StandaloneFeature],
+  ngContentSelectors: _c24,
+  decls: 4,
+  vars: 0,
+  consts: [[1, "mat-grid-list-text"]],
+  template: function MatGridTileText_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef(_c14);
+      \u0275\u0275projection(0);
+      \u0275\u0275elementStart(1, "div", 0);
+      \u0275\u0275projection(2, 1);
+      \u0275\u0275elementEnd();
+      \u0275\u0275projection(3, 2);
+    }
+  },
+  encapsulation: 2,
+  changeDetection: 0
+});
+var MatGridTileText = _MatGridTileText;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridTileText, [{
+    type: Component,
+    args: [{
+      selector: "mat-grid-tile-header, mat-grid-tile-footer",
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation$1.None,
+      standalone: true,
+      template: '<ng-content select="[mat-grid-avatar], [matGridAvatar]"></ng-content>\n<div class="mat-grid-list-text"><ng-content select="[mat-line], [matLine]"></ng-content></div>\n<ng-content></ng-content>\n'
+    }]
+  }], () => [{
+    type: ElementRef
+  }], {
+    _lines: [{
+      type: ContentChildren,
+      args: [MatLine, {
+        descendants: true
+      }]
+    }]
+  });
+})();
+var _MatGridAvatarCssMatStyler = class _MatGridAvatarCssMatStyler {
+};
+_MatGridAvatarCssMatStyler.\u0275fac = function MatGridAvatarCssMatStyler_Factory(t) {
+  return new (t || _MatGridAvatarCssMatStyler)();
+};
+_MatGridAvatarCssMatStyler.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatGridAvatarCssMatStyler,
+  selectors: [["", "mat-grid-avatar", ""], ["", "matGridAvatar", ""]],
+  hostAttrs: [1, "mat-grid-avatar"],
+  standalone: true
+});
+var MatGridAvatarCssMatStyler = _MatGridAvatarCssMatStyler;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridAvatarCssMatStyler, [{
+    type: Directive,
+    args: [{
+      selector: "[mat-grid-avatar], [matGridAvatar]",
+      host: {
+        "class": "mat-grid-avatar"
+      },
+      standalone: true
+    }]
+  }], null, null);
+})();
+var _MatGridTileHeaderCssMatStyler = class _MatGridTileHeaderCssMatStyler {
+};
+_MatGridTileHeaderCssMatStyler.\u0275fac = function MatGridTileHeaderCssMatStyler_Factory(t) {
+  return new (t || _MatGridTileHeaderCssMatStyler)();
+};
+_MatGridTileHeaderCssMatStyler.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatGridTileHeaderCssMatStyler,
+  selectors: [["mat-grid-tile-header"]],
+  hostAttrs: [1, "mat-grid-tile-header"],
+  standalone: true
+});
+var MatGridTileHeaderCssMatStyler = _MatGridTileHeaderCssMatStyler;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridTileHeaderCssMatStyler, [{
+    type: Directive,
+    args: [{
+      selector: "mat-grid-tile-header",
+      host: {
+        "class": "mat-grid-tile-header"
+      },
+      standalone: true
+    }]
+  }], null, null);
+})();
+var _MatGridTileFooterCssMatStyler = class _MatGridTileFooterCssMatStyler {
+};
+_MatGridTileFooterCssMatStyler.\u0275fac = function MatGridTileFooterCssMatStyler_Factory(t) {
+  return new (t || _MatGridTileFooterCssMatStyler)();
+};
+_MatGridTileFooterCssMatStyler.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatGridTileFooterCssMatStyler,
+  selectors: [["mat-grid-tile-footer"]],
+  hostAttrs: [1, "mat-grid-tile-footer"],
+  standalone: true
+});
+var MatGridTileFooterCssMatStyler = _MatGridTileFooterCssMatStyler;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridTileFooterCssMatStyler, [{
+    type: Directive,
+    args: [{
+      selector: "mat-grid-tile-footer",
+      host: {
+        "class": "mat-grid-tile-footer"
+      },
+      standalone: true
+    }]
+  }], null, null);
+})();
+var cssCalcAllowedValue = /^-?\d+((\.\d+)?[A-Za-z%$]?)+$/;
+var TileStyler = class {
+  constructor() {
+    this._rows = 0;
+    this._rowspan = 0;
+  }
+  /**
+   * Adds grid-list layout info once it is available. Cannot be processed in the constructor
+   * because these properties haven't been calculated by that point.
+   *
+   * @param gutterSize Size of the grid's gutter.
+   * @param tracker Instance of the TileCoordinator.
+   * @param cols Amount of columns in the grid.
+   * @param direction Layout direction of the grid.
+   */
+  init(gutterSize, tracker, cols, direction) {
+    this._gutterSize = normalizeUnits(gutterSize);
+    this._rows = tracker.rowCount;
+    this._rowspan = tracker.rowspan;
+    this._cols = cols;
+    this._direction = direction;
+  }
+  /**
+   * Computes the amount of space a single 1x1 tile would take up (width or height).
+   * Used as a basis for other calculations.
+   * @param sizePercent Percent of the total grid-list space that one 1x1 tile would take up.
+   * @param gutterFraction Fraction of the gutter size taken up by one 1x1 tile.
+   * @return The size of a 1x1 tile as an expression that can be evaluated via CSS calc().
+   */
+  getBaseTileSize(sizePercent, gutterFraction) {
+    return `(${sizePercent}% - (${this._gutterSize} * ${gutterFraction}))`;
+  }
+  /**
+   * Gets The horizontal or vertical position of a tile, e.g., the 'top' or 'left' property value.
+   * @param offset Number of tiles that have already been rendered in the row/column.
+   * @param baseSize Base size of a 1x1 tile (as computed in getBaseTileSize).
+   * @return Position of the tile as a CSS calc() expression.
+   */
+  getTilePosition(baseSize, offset) {
+    return offset === 0 ? "0" : calc(`(${baseSize} + ${this._gutterSize}) * ${offset}`);
+  }
+  /**
+   * Gets the actual size of a tile, e.g., width or height, taking rowspan or colspan into account.
+   * @param baseSize Base size of a 1x1 tile (as computed in getBaseTileSize).
+   * @param span The tile's rowspan or colspan.
+   * @return Size of the tile as a CSS calc() expression.
+   */
+  getTileSize(baseSize, span) {
+    return `(${baseSize} * ${span}) + (${span - 1} * ${this._gutterSize})`;
+  }
+  /**
+   * Sets the style properties to be applied to a tile for the given row and column index.
+   * @param tile Tile to which to apply the styling.
+   * @param rowIndex Index of the tile's row.
+   * @param colIndex Index of the tile's column.
+   */
+  setStyle(tile, rowIndex, colIndex) {
+    let percentWidthPerTile = 100 / this._cols;
+    let gutterWidthFractionPerTile = (this._cols - 1) / this._cols;
+    this.setColStyles(tile, colIndex, percentWidthPerTile, gutterWidthFractionPerTile);
+    this.setRowStyles(tile, rowIndex, percentWidthPerTile, gutterWidthFractionPerTile);
+  }
+  /** Sets the horizontal placement of the tile in the list. */
+  setColStyles(tile, colIndex, percentWidth, gutterWidth) {
+    let baseTileWidth = this.getBaseTileSize(percentWidth, gutterWidth);
+    let side = this._direction === "rtl" ? "right" : "left";
+    tile._setStyle(side, this.getTilePosition(baseTileWidth, colIndex));
+    tile._setStyle("width", calc(this.getTileSize(baseTileWidth, tile.colspan)));
+  }
+  /**
+   * Calculates the total size taken up by gutters across one axis of a list.
+   */
+  getGutterSpan() {
+    return `${this._gutterSize} * (${this._rowspan} - 1)`;
+  }
+  /**
+   * Calculates the total size taken up by tiles across one axis of a list.
+   * @param tileHeight Height of the tile.
+   */
+  getTileSpan(tileHeight) {
+    return `${this._rowspan} * ${this.getTileSize(tileHeight, 1)}`;
+  }
+  /**
+   * Calculates the computed height and returns the correct style property to set.
+   * This method can be implemented by each type of TileStyler.
+   * @docs-private
+   */
+  getComputedHeight() {
+    return null;
+  }
+};
+var FixedTileStyler = class extends TileStyler {
+  constructor(fixedRowHeight) {
+    super();
+    this.fixedRowHeight = fixedRowHeight;
+  }
+  init(gutterSize, tracker, cols, direction) {
+    super.init(gutterSize, tracker, cols, direction);
+    this.fixedRowHeight = normalizeUnits(this.fixedRowHeight);
+    if (!cssCalcAllowedValue.test(this.fixedRowHeight) && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error(`Invalid value "${this.fixedRowHeight}" set as rowHeight.`);
+    }
+  }
+  setRowStyles(tile, rowIndex) {
+    tile._setStyle("top", this.getTilePosition(this.fixedRowHeight, rowIndex));
+    tile._setStyle("height", calc(this.getTileSize(this.fixedRowHeight, tile.rowspan)));
+  }
+  getComputedHeight() {
+    return ["height", calc(`${this.getTileSpan(this.fixedRowHeight)} + ${this.getGutterSpan()}`)];
+  }
+  reset(list) {
+    list._setListStyle(["height", null]);
+    if (list._tiles) {
+      list._tiles.forEach((tile) => {
+        tile._setStyle("top", null);
+        tile._setStyle("height", null);
+      });
+    }
+  }
+};
+var RatioTileStyler = class extends TileStyler {
+  constructor(value) {
+    super();
+    this._parseRatio(value);
+  }
+  setRowStyles(tile, rowIndex, percentWidth, gutterWidth) {
+    let percentHeightPerTile = percentWidth / this.rowHeightRatio;
+    this.baseTileHeight = this.getBaseTileSize(percentHeightPerTile, gutterWidth);
+    tile._setStyle("marginTop", this.getTilePosition(this.baseTileHeight, rowIndex));
+    tile._setStyle("paddingTop", calc(this.getTileSize(this.baseTileHeight, tile.rowspan)));
+  }
+  getComputedHeight() {
+    return ["paddingBottom", calc(`${this.getTileSpan(this.baseTileHeight)} + ${this.getGutterSpan()}`)];
+  }
+  reset(list) {
+    list._setListStyle(["paddingBottom", null]);
+    list._tiles.forEach((tile) => {
+      tile._setStyle("marginTop", null);
+      tile._setStyle("paddingTop", null);
+    });
+  }
+  _parseRatio(value) {
+    const ratioParts = value.split(":");
+    if (ratioParts.length !== 2 && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error(`mat-grid-list: invalid ratio given for row-height: "${value}"`);
+    }
+    this.rowHeightRatio = parseFloat(ratioParts[0]) / parseFloat(ratioParts[1]);
+  }
+};
+var FitTileStyler = class extends TileStyler {
+  setRowStyles(tile, rowIndex) {
+    let percentHeightPerTile = 100 / this._rowspan;
+    let gutterHeightPerTile = (this._rows - 1) / this._rows;
+    let baseTileHeight = this.getBaseTileSize(percentHeightPerTile, gutterHeightPerTile);
+    tile._setStyle("top", this.getTilePosition(baseTileHeight, rowIndex));
+    tile._setStyle("height", calc(this.getTileSize(baseTileHeight, tile.rowspan)));
+  }
+  reset(list) {
+    if (list._tiles) {
+      list._tiles.forEach((tile) => {
+        tile._setStyle("top", null);
+        tile._setStyle("height", null);
+      });
+    }
+  }
+};
+function calc(exp) {
+  return `calc(${exp})`;
+}
+function normalizeUnits(value) {
+  return value.match(/([A-Za-z%]+)$/) ? value : `${value}px`;
+}
+var MAT_FIT_MODE = "fit";
+var _MatGridList = class _MatGridList {
+  constructor(_element, _dir) {
+    this._element = _element;
+    this._dir = _dir;
+    this._gutter = "1px";
+  }
+  /** Amount of columns in the grid list. */
+  get cols() {
+    return this._cols;
+  }
+  set cols(value) {
+    this._cols = Math.max(1, Math.round(coerceNumberProperty(value)));
+  }
+  /** Size of the grid list's gutter in pixels. */
+  get gutterSize() {
+    return this._gutter;
+  }
+  set gutterSize(value) {
+    this._gutter = `${value == null ? "" : value}`;
+  }
+  /** Set internal representation of row height from the user-provided value. */
+  get rowHeight() {
+    return this._rowHeight;
+  }
+  set rowHeight(value) {
+    const newValue = `${value == null ? "" : value}`;
+    if (newValue !== this._rowHeight) {
+      this._rowHeight = newValue;
+      this._setTileStyler(this._rowHeight);
+    }
+  }
+  ngOnInit() {
+    this._checkCols();
+    this._checkRowHeight();
+  }
+  /**
+   * The layout calculation is fairly cheap if nothing changes, so there's little cost
+   * to run it frequently.
+   */
+  ngAfterContentChecked() {
+    this._layoutTiles();
+  }
+  /** Throw a friendly error if cols property is missing */
+  _checkCols() {
+    if (!this.cols && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error(`mat-grid-list: must pass in number of columns. Example: <mat-grid-list cols="3">`);
+    }
+  }
+  /** Default to equal width:height if rowHeight property is missing */
+  _checkRowHeight() {
+    if (!this._rowHeight) {
+      this._setTileStyler("1:1");
+    }
+  }
+  /** Creates correct Tile Styler subtype based on rowHeight passed in by user */
+  _setTileStyler(rowHeight) {
+    if (this._tileStyler) {
+      this._tileStyler.reset(this);
+    }
+    if (rowHeight === MAT_FIT_MODE) {
+      this._tileStyler = new FitTileStyler();
+    } else if (rowHeight && rowHeight.indexOf(":") > -1) {
+      this._tileStyler = new RatioTileStyler(rowHeight);
+    } else {
+      this._tileStyler = new FixedTileStyler(rowHeight);
+    }
+  }
+  /** Computes and applies the size and position for all children grid tiles. */
+  _layoutTiles() {
+    if (!this._tileCoordinator) {
+      this._tileCoordinator = new TileCoordinator();
+    }
+    const tracker = this._tileCoordinator;
+    const tiles = this._tiles.filter((tile) => !tile._gridList || tile._gridList === this);
+    const direction = this._dir ? this._dir.value : "ltr";
+    this._tileCoordinator.update(this.cols, tiles);
+    this._tileStyler.init(this.gutterSize, tracker, this.cols, direction);
+    tiles.forEach((tile, index) => {
+      const pos = tracker.positions[index];
+      this._tileStyler.setStyle(tile, pos.row, pos.col);
+    });
+    this._setListStyle(this._tileStyler.getComputedHeight());
+  }
+  /** Sets style on the main grid-list element, given the style name and value. */
+  _setListStyle(style2) {
+    if (style2) {
+      this._element.nativeElement.style[style2[0]] = style2[1];
+    }
+  }
+};
+_MatGridList.\u0275fac = function MatGridList_Factory(t) {
+  return new (t || _MatGridList)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(Directionality, 8));
+};
+_MatGridList.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatGridList,
+  selectors: [["mat-grid-list"]],
+  contentQueries: function MatGridList_ContentQueries(rf, ctx, dirIndex) {
+    if (rf & 1) {
+      \u0275\u0275contentQuery(dirIndex, MatGridTile, 5);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._tiles = _t);
+    }
+  },
+  hostAttrs: [1, "mat-grid-list"],
+  hostVars: 1,
+  hostBindings: function MatGridList_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275attribute("cols", ctx.cols);
+    }
+  },
+  inputs: {
+    cols: "cols",
+    gutterSize: "gutterSize",
+    rowHeight: "rowHeight"
+  },
+  exportAs: ["matGridList"],
+  standalone: true,
+  features: [\u0275\u0275ProvidersFeature([{
+    provide: MAT_GRID_LIST,
+    useExisting: _MatGridList
+  }]), \u0275\u0275StandaloneFeature],
+  ngContentSelectors: _c04,
+  decls: 2,
+  vars: 0,
+  template: function MatGridList_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef();
+      \u0275\u0275elementStart(0, "div");
+      \u0275\u0275projection(1);
+      \u0275\u0275elementEnd();
+    }
+  },
+  styles: [_c34],
+  encapsulation: 2,
+  changeDetection: 0
+});
+var MatGridList = _MatGridList;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridList, [{
+    type: Component,
+    args: [{
+      selector: "mat-grid-list",
+      exportAs: "matGridList",
+      host: {
+        "class": "mat-grid-list",
+        // Ensures that the "cols" input value is reflected in the DOM. This is
+        // needed for the grid-list harness.
+        "[attr.cols]": "cols"
+      },
+      providers: [{
+        provide: MAT_GRID_LIST,
+        useExisting: MatGridList
+      }],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation$1.None,
+      standalone: true,
+      template: "<div>\n  <ng-content></ng-content>\n</div>",
+      styles: [".mat-grid-list{display:block;position:relative}.mat-grid-tile{display:block;position:absolute;overflow:hidden}.mat-grid-tile .mat-grid-tile-header,.mat-grid-tile .mat-grid-tile-footer{display:flex;align-items:center;height:48px;color:#fff;background:rgba(0,0,0,.38);overflow:hidden;padding:0 16px;position:absolute;left:0;right:0}.mat-grid-tile .mat-grid-tile-header>*,.mat-grid-tile .mat-grid-tile-footer>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-tile-header.mat-2-line,.mat-grid-tile .mat-grid-tile-footer.mat-2-line{height:68px}.mat-grid-tile .mat-grid-list-text{display:flex;flex-direction:column;flex:auto;box-sizing:border-box;overflow:hidden}.mat-grid-tile .mat-grid-list-text>*{margin:0;padding:0;font-weight:normal;font-size:inherit}.mat-grid-tile .mat-grid-list-text:empty{display:none}.mat-grid-tile .mat-grid-tile-header{top:0}.mat-grid-tile .mat-grid-tile-footer{bottom:0}.mat-grid-tile .mat-grid-avatar{padding-right:16px}[dir=rtl] .mat-grid-tile .mat-grid-avatar{padding-right:0;padding-left:16px}.mat-grid-tile .mat-grid-avatar:empty{display:none}.mat-grid-tile-header{font-size:var(--mat-grid-list-tile-header-primary-text-size)}.mat-grid-tile-header .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-header .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-header-secondary-text-size)}.mat-grid-tile-footer{font-size:var(--mat-grid-list-tile-footer-primary-text-size)}.mat-grid-tile-footer .mat-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;box-sizing:border-box}.mat-grid-tile-footer .mat-line:nth-child(n+2){font-size:var(--mat-grid-list-tile-footer-secondary-text-size)}.mat-grid-tile-content{top:0;left:0;right:0;bottom:0;position:absolute;display:flex;align-items:center;justify-content:center;height:100%;padding:0;margin:0}"]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: Directionality,
+    decorators: [{
+      type: Optional
+    }]
+  }], {
+    _tiles: [{
+      type: ContentChildren,
+      args: [MatGridTile, {
+        descendants: true
+      }]
+    }],
+    cols: [{
+      type: Input
+    }],
+    gutterSize: [{
+      type: Input
+    }],
+    rowHeight: [{
+      type: Input
+    }]
+  });
+})();
+var _MatGridListModule = class _MatGridListModule {
+};
+_MatGridListModule.\u0275fac = function MatGridListModule_Factory(t) {
+  return new (t || _MatGridListModule)();
+};
+_MatGridListModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatGridListModule
+});
+_MatGridListModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  imports: [MatLineModule, MatCommonModule, MatLineModule, MatCommonModule]
+});
+var MatGridListModule = _MatGridListModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatGridListModule, [{
+    type: NgModule,
+    args: [{
+      imports: [MatLineModule, MatCommonModule, MatGridList, MatGridTile, MatGridTileText, MatGridTileHeaderCssMatStyler, MatGridTileFooterCssMatStyler, MatGridAvatarCssMatStyler],
+      exports: [MatGridList, MatGridTile, MatGridTileText, MatLineModule, MatCommonModule, MatGridTileHeaderCssMatStyler, MatGridTileFooterCssMatStyler, MatGridAvatarCssMatStyler]
+    }]
+  }], null, null);
+})();
+
+// node_modules/@angular/material/fesm2022/icon.mjs
+var _c05 = ["*"];
+var policy2;
+function getPolicy2() {
+  if (policy2 === void 0) {
+    policy2 = null;
+    if (typeof window !== "undefined") {
+      const ttWindow = window;
+      if (ttWindow.trustedTypes !== void 0) {
+        policy2 = ttWindow.trustedTypes.createPolicy("angular#components", {
+          createHTML: (s) => s
+        });
+      }
+    }
+  }
+  return policy2;
+}
+function trustedHTMLFromString2(html) {
+  return getPolicy2()?.createHTML(html) || html;
+}
+function getMatIconNameNotFoundError(iconName) {
+  return Error(`Unable to find icon with the name "${iconName}"`);
+}
+function getMatIconNoHttpProviderError() {
+  return Error("Could not find HttpClient provider for use with Angular Material icons. Please include the HttpClientModule from @angular/common/http in your app imports.");
+}
+function getMatIconFailedToSanitizeUrlError(url) {
+  return Error(`The URL provided to MatIconRegistry was not trusted as a resource URL via Angular's DomSanitizer. Attempted URL was "${url}".`);
+}
+function getMatIconFailedToSanitizeLiteralError(literal) {
+  return Error(`The literal provided to MatIconRegistry was not trusted as safe HTML by Angular's DomSanitizer. Attempted literal was "${literal}".`);
+}
+var SvgIconConfig = class {
+  constructor(url, svgText, options) {
+    this.url = url;
+    this.svgText = svgText;
+    this.options = options;
+  }
+};
+var _MatIconRegistry = class _MatIconRegistry {
+  constructor(_httpClient, _sanitizer, document2, _errorHandler) {
+    this._httpClient = _httpClient;
+    this._sanitizer = _sanitizer;
+    this._errorHandler = _errorHandler;
+    this._svgIconConfigs = /* @__PURE__ */ new Map();
+    this._iconSetConfigs = /* @__PURE__ */ new Map();
+    this._cachedIconsByUrl = /* @__PURE__ */ new Map();
+    this._inProgressUrlFetches = /* @__PURE__ */ new Map();
+    this._fontCssClassesByAlias = /* @__PURE__ */ new Map();
+    this._resolvers = [];
+    this._defaultFontSetClass = ["material-icons", "mat-ligature-font"];
+    this._document = document2;
+  }
+  /**
+   * Registers an icon by URL in the default namespace.
+   * @param iconName Name under which the icon should be registered.
+   * @param url
+   */
+  addSvgIcon(iconName, url, options) {
+    return this.addSvgIconInNamespace("", iconName, url, options);
+  }
+  /**
+   * Registers an icon using an HTML string in the default namespace.
+   * @param iconName Name under which the icon should be registered.
+   * @param literal SVG source of the icon.
+   */
+  addSvgIconLiteral(iconName, literal, options) {
+    return this.addSvgIconLiteralInNamespace("", iconName, literal, options);
+  }
+  /**
+   * Registers an icon by URL in the specified namespace.
+   * @param namespace Namespace in which the icon should be registered.
+   * @param iconName Name under which the icon should be registered.
+   * @param url
+   */
+  addSvgIconInNamespace(namespace, iconName, url, options) {
+    return this._addSvgIconConfig(namespace, iconName, new SvgIconConfig(url, null, options));
+  }
+  /**
+   * Registers an icon resolver function with the registry. The function will be invoked with the
+   * name and namespace of an icon when the registry tries to resolve the URL from which to fetch
+   * the icon. The resolver is expected to return a `SafeResourceUrl` that points to the icon,
+   * an object with the icon URL and icon options, or `null` if the icon is not supported. Resolvers
+   * will be invoked in the order in which they have been registered.
+   * @param resolver Resolver function to be registered.
+   */
+  addSvgIconResolver(resolver) {
+    this._resolvers.push(resolver);
+    return this;
+  }
+  /**
+   * Registers an icon using an HTML string in the specified namespace.
+   * @param namespace Namespace in which the icon should be registered.
+   * @param iconName Name under which the icon should be registered.
+   * @param literal SVG source of the icon.
+   */
+  addSvgIconLiteralInNamespace(namespace, iconName, literal, options) {
+    const cleanLiteral = this._sanitizer.sanitize(SecurityContext.HTML, literal);
+    if (!cleanLiteral) {
+      throw getMatIconFailedToSanitizeLiteralError(literal);
+    }
+    const trustedLiteral = trustedHTMLFromString2(cleanLiteral);
+    return this._addSvgIconConfig(namespace, iconName, new SvgIconConfig("", trustedLiteral, options));
+  }
+  /**
+   * Registers an icon set by URL in the default namespace.
+   * @param url
+   */
+  addSvgIconSet(url, options) {
+    return this.addSvgIconSetInNamespace("", url, options);
+  }
+  /**
+   * Registers an icon set using an HTML string in the default namespace.
+   * @param literal SVG source of the icon set.
+   */
+  addSvgIconSetLiteral(literal, options) {
+    return this.addSvgIconSetLiteralInNamespace("", literal, options);
+  }
+  /**
+   * Registers an icon set by URL in the specified namespace.
+   * @param namespace Namespace in which to register the icon set.
+   * @param url
+   */
+  addSvgIconSetInNamespace(namespace, url, options) {
+    return this._addSvgIconSetConfig(namespace, new SvgIconConfig(url, null, options));
+  }
+  /**
+   * Registers an icon set using an HTML string in the specified namespace.
+   * @param namespace Namespace in which to register the icon set.
+   * @param literal SVG source of the icon set.
+   */
+  addSvgIconSetLiteralInNamespace(namespace, literal, options) {
+    const cleanLiteral = this._sanitizer.sanitize(SecurityContext.HTML, literal);
+    if (!cleanLiteral) {
+      throw getMatIconFailedToSanitizeLiteralError(literal);
+    }
+    const trustedLiteral = trustedHTMLFromString2(cleanLiteral);
+    return this._addSvgIconSetConfig(namespace, new SvgIconConfig("", trustedLiteral, options));
+  }
+  /**
+   * Defines an alias for CSS class names to be used for icon fonts. Creating an matIcon
+   * component with the alias as the fontSet input will cause the class name to be applied
+   * to the `<mat-icon>` element.
+   *
+   * If the registered font is a ligature font, then don't forget to also include the special
+   * class `mat-ligature-font` to allow the usage via attribute. So register like this:
+   *
+   * ```ts
+   * iconRegistry.registerFontClassAlias('f1', 'font1 mat-ligature-font');
+   * ```
+   *
+   * And use like this:
+   *
+   * ```html
+   * <mat-icon fontSet="f1" fontIcon="home"></mat-icon>
+   * ```
+   *
+   * @param alias Alias for the font.
+   * @param classNames Class names override to be used instead of the alias.
+   */
+  registerFontClassAlias(alias, classNames = alias) {
+    this._fontCssClassesByAlias.set(alias, classNames);
+    return this;
+  }
+  /**
+   * Returns the CSS class name associated with the alias by a previous call to
+   * registerFontClassAlias. If no CSS class has been associated, returns the alias unmodified.
+   */
+  classNameForFontAlias(alias) {
+    return this._fontCssClassesByAlias.get(alias) || alias;
+  }
+  /**
+   * Sets the CSS classes to be used for icon fonts when an `<mat-icon>` component does not
+   * have a fontSet input value, and is not loading an icon by name or URL.
+   */
+  setDefaultFontSetClass(...classNames) {
+    this._defaultFontSetClass = classNames;
+    return this;
+  }
+  /**
+   * Returns the CSS classes to be used for icon fonts when an `<mat-icon>` component does not
+   * have a fontSet input value, and is not loading an icon by name or URL.
+   */
+  getDefaultFontSetClass() {
+    return this._defaultFontSetClass;
+  }
+  /**
+   * Returns an Observable that produces the icon (as an `<svg>` DOM element) from the given URL.
+   * The response from the URL may be cached so this will not always cause an HTTP request, but
+   * the produced element will always be a new copy of the originally fetched icon. (That is,
+   * it will not contain any modifications made to elements previously returned).
+   *
+   * @param safeUrl URL from which to fetch the SVG icon.
+   */
+  getSvgIconFromUrl(safeUrl) {
+    const url = this._sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeUrl);
+    if (!url) {
+      throw getMatIconFailedToSanitizeUrlError(safeUrl);
+    }
+    const cachedIcon = this._cachedIconsByUrl.get(url);
+    if (cachedIcon) {
+      return of(cloneSvg(cachedIcon));
+    }
+    return this._loadSvgIconFromConfig(new SvgIconConfig(safeUrl, null)).pipe(tap((svg) => this._cachedIconsByUrl.set(url, svg)), map((svg) => cloneSvg(svg)));
+  }
+  /**
+   * Returns an Observable that produces the icon (as an `<svg>` DOM element) with the given name
+   * and namespace. The icon must have been previously registered with addIcon or addIconSet;
+   * if not, the Observable will throw an error.
+   *
+   * @param name Name of the icon to be retrieved.
+   * @param namespace Namespace in which to look for the icon.
+   */
+  getNamedSvgIcon(name, namespace = "") {
+    const key = iconKey(namespace, name);
+    let config2 = this._svgIconConfigs.get(key);
+    if (config2) {
+      return this._getSvgFromConfig(config2);
+    }
+    config2 = this._getIconConfigFromResolvers(namespace, name);
+    if (config2) {
+      this._svgIconConfigs.set(key, config2);
+      return this._getSvgFromConfig(config2);
+    }
+    const iconSetConfigs = this._iconSetConfigs.get(namespace);
+    if (iconSetConfigs) {
+      return this._getSvgFromIconSetConfigs(name, iconSetConfigs);
+    }
+    return throwError(getMatIconNameNotFoundError(key));
+  }
+  ngOnDestroy() {
+    this._resolvers = [];
+    this._svgIconConfigs.clear();
+    this._iconSetConfigs.clear();
+    this._cachedIconsByUrl.clear();
+  }
+  /**
+   * Returns the cached icon for a SvgIconConfig if available, or fetches it from its URL if not.
+   */
+  _getSvgFromConfig(config2) {
+    if (config2.svgText) {
+      return of(cloneSvg(this._svgElementFromConfig(config2)));
+    } else {
+      return this._loadSvgIconFromConfig(config2).pipe(map((svg) => cloneSvg(svg)));
+    }
+  }
+  /**
+   * Attempts to find an icon with the specified name in any of the SVG icon sets.
+   * First searches the available cached icons for a nested element with a matching name, and
+   * if found copies the element to a new `<svg>` element. If not found, fetches all icon sets
+   * that have not been cached, and searches again after all fetches are completed.
+   * The returned Observable produces the SVG element if possible, and throws
+   * an error if no icon with the specified name can be found.
+   */
+  _getSvgFromIconSetConfigs(name, iconSetConfigs) {
+    const namedIcon = this._extractIconWithNameFromAnySet(name, iconSetConfigs);
+    if (namedIcon) {
+      return of(namedIcon);
+    }
+    const iconSetFetchRequests = iconSetConfigs.filter((iconSetConfig) => !iconSetConfig.svgText).map((iconSetConfig) => {
+      return this._loadSvgIconSetFromConfig(iconSetConfig).pipe(catchError((err) => {
+        const url = this._sanitizer.sanitize(SecurityContext.RESOURCE_URL, iconSetConfig.url);
+        const errorMessage = `Loading icon set URL: ${url} failed: ${err.message}`;
+        this._errorHandler.handleError(new Error(errorMessage));
+        return of(null);
+      }));
+    });
+    return forkJoin(iconSetFetchRequests).pipe(map(() => {
+      const foundIcon = this._extractIconWithNameFromAnySet(name, iconSetConfigs);
+      if (!foundIcon) {
+        throw getMatIconNameNotFoundError(name);
+      }
+      return foundIcon;
+    }));
+  }
+  /**
+   * Searches the cached SVG elements for the given icon sets for a nested icon element whose "id"
+   * tag matches the specified name. If found, copies the nested element to a new SVG element and
+   * returns it. Returns null if no matching element is found.
+   */
+  _extractIconWithNameFromAnySet(iconName, iconSetConfigs) {
+    for (let i = iconSetConfigs.length - 1; i >= 0; i--) {
+      const config2 = iconSetConfigs[i];
+      if (config2.svgText && config2.svgText.toString().indexOf(iconName) > -1) {
+        const svg = this._svgElementFromConfig(config2);
+        const foundIcon = this._extractSvgIconFromSet(svg, iconName, config2.options);
+        if (foundIcon) {
+          return foundIcon;
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * Loads the content of the icon URL specified in the SvgIconConfig and creates an SVG element
+   * from it.
+   */
+  _loadSvgIconFromConfig(config2) {
+    return this._fetchIcon(config2).pipe(tap((svgText) => config2.svgText = svgText), map(() => this._svgElementFromConfig(config2)));
+  }
+  /**
+   * Loads the content of the icon set URL specified in the
+   * SvgIconConfig and attaches it to the config.
+   */
+  _loadSvgIconSetFromConfig(config2) {
+    if (config2.svgText) {
+      return of(null);
+    }
+    return this._fetchIcon(config2).pipe(tap((svgText) => config2.svgText = svgText));
+  }
+  /**
+   * Searches the cached element of the given SvgIconConfig for a nested icon element whose "id"
+   * tag matches the specified name. If found, copies the nested element to a new SVG element and
+   * returns it. Returns null if no matching element is found.
+   */
+  _extractSvgIconFromSet(iconSet, iconName, options) {
+    const iconSource = iconSet.querySelector(`[id="${iconName}"]`);
+    if (!iconSource) {
+      return null;
+    }
+    const iconElement = iconSource.cloneNode(true);
+    iconElement.removeAttribute("id");
+    if (iconElement.nodeName.toLowerCase() === "svg") {
+      return this._setSvgAttributes(iconElement, options);
+    }
+    if (iconElement.nodeName.toLowerCase() === "symbol") {
+      return this._setSvgAttributes(this._toSvgElement(iconElement), options);
+    }
+    const svg = this._svgElementFromString(trustedHTMLFromString2("<svg></svg>"));
+    svg.appendChild(iconElement);
+    return this._setSvgAttributes(svg, options);
+  }
+  /**
+   * Creates a DOM element from the given SVG string.
+   */
+  _svgElementFromString(str) {
+    const div = this._document.createElement("DIV");
+    div.innerHTML = str;
+    const svg = div.querySelector("svg");
+    if (!svg) {
+      throw Error("<svg> tag not found");
+    }
+    return svg;
+  }
+  /**
+   * Converts an element into an SVG node by cloning all of its children.
+   */
+  _toSvgElement(element) {
+    const svg = this._svgElementFromString(trustedHTMLFromString2("<svg></svg>"));
+    const attributes = element.attributes;
+    for (let i = 0; i < attributes.length; i++) {
+      const {
+        name,
+        value
+      } = attributes[i];
+      if (name !== "id") {
+        svg.setAttribute(name, value);
+      }
+    }
+    for (let i = 0; i < element.childNodes.length; i++) {
+      if (element.childNodes[i].nodeType === this._document.ELEMENT_NODE) {
+        svg.appendChild(element.childNodes[i].cloneNode(true));
+      }
+    }
+    return svg;
+  }
+  /**
+   * Sets the default attributes for an SVG element to be used as an icon.
+   */
+  _setSvgAttributes(svg, options) {
+    svg.setAttribute("fit", "");
+    svg.setAttribute("height", "100%");
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.setAttribute("focusable", "false");
+    if (options && options.viewBox) {
+      svg.setAttribute("viewBox", options.viewBox);
+    }
+    return svg;
+  }
+  /**
+   * Returns an Observable which produces the string contents of the given icon. Results may be
+   * cached, so future calls with the same URL may not cause another HTTP request.
+   */
+  _fetchIcon(iconConfig) {
+    const {
+      url: safeUrl,
+      options
+    } = iconConfig;
+    const withCredentials = options?.withCredentials ?? false;
+    if (!this._httpClient) {
+      throw getMatIconNoHttpProviderError();
+    }
+    if (safeUrl == null) {
+      throw Error(`Cannot fetch icon from URL "${safeUrl}".`);
+    }
+    const url = this._sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeUrl);
+    if (!url) {
+      throw getMatIconFailedToSanitizeUrlError(safeUrl);
+    }
+    const inProgressFetch = this._inProgressUrlFetches.get(url);
+    if (inProgressFetch) {
+      return inProgressFetch;
+    }
+    const req = this._httpClient.get(url, {
+      responseType: "text",
+      withCredentials
+    }).pipe(map((svg) => {
+      return trustedHTMLFromString2(svg);
+    }), finalize(() => this._inProgressUrlFetches.delete(url)), share());
+    this._inProgressUrlFetches.set(url, req);
+    return req;
+  }
+  /**
+   * Registers an icon config by name in the specified namespace.
+   * @param namespace Namespace in which to register the icon config.
+   * @param iconName Name under which to register the config.
+   * @param config Config to be registered.
+   */
+  _addSvgIconConfig(namespace, iconName, config2) {
+    this._svgIconConfigs.set(iconKey(namespace, iconName), config2);
+    return this;
+  }
+  /**
+   * Registers an icon set config in the specified namespace.
+   * @param namespace Namespace in which to register the icon config.
+   * @param config Config to be registered.
+   */
+  _addSvgIconSetConfig(namespace, config2) {
+    const configNamespace = this._iconSetConfigs.get(namespace);
+    if (configNamespace) {
+      configNamespace.push(config2);
+    } else {
+      this._iconSetConfigs.set(namespace, [config2]);
+    }
+    return this;
+  }
+  /** Parses a config's text into an SVG element. */
+  _svgElementFromConfig(config2) {
+    if (!config2.svgElement) {
+      const svg = this._svgElementFromString(config2.svgText);
+      this._setSvgAttributes(svg, config2.options);
+      config2.svgElement = svg;
+    }
+    return config2.svgElement;
+  }
+  /** Tries to create an icon config through the registered resolver functions. */
+  _getIconConfigFromResolvers(namespace, name) {
+    for (let i = 0; i < this._resolvers.length; i++) {
+      const result = this._resolvers[i](name, namespace);
+      if (result) {
+        return isSafeUrlWithOptions(result) ? new SvgIconConfig(result.url, null, result.options) : new SvgIconConfig(result, null);
+      }
+    }
+    return void 0;
+  }
+};
+_MatIconRegistry.\u0275fac = function MatIconRegistry_Factory(t) {
+  return new (t || _MatIconRegistry)(\u0275\u0275inject(HttpClient, 8), \u0275\u0275inject(DomSanitizer), \u0275\u0275inject(DOCUMENT2, 8), \u0275\u0275inject(ErrorHandler));
+};
+_MatIconRegistry.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+  token: _MatIconRegistry,
+  factory: _MatIconRegistry.\u0275fac,
+  providedIn: "root"
+});
+var MatIconRegistry = _MatIconRegistry;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatIconRegistry, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: HttpClient,
+    decorators: [{
+      type: Optional
+    }]
+  }, {
+    type: DomSanitizer
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [DOCUMENT2]
+    }]
+  }, {
+    type: ErrorHandler
+  }], null);
+})();
+function ICON_REGISTRY_PROVIDER_FACTORY(parentRegistry, httpClient, sanitizer, errorHandler2, document2) {
+  return parentRegistry || new MatIconRegistry(httpClient, sanitizer, document2, errorHandler2);
+}
+var ICON_REGISTRY_PROVIDER = {
+  // If there is already an MatIconRegistry available, use that. Otherwise, provide a new one.
+  provide: MatIconRegistry,
+  deps: [[new Optional(), new SkipSelf(), MatIconRegistry], [new Optional(), HttpClient], DomSanitizer, ErrorHandler, [new Optional(), DOCUMENT2]],
+  useFactory: ICON_REGISTRY_PROVIDER_FACTORY
+};
+function cloneSvg(svg) {
+  return svg.cloneNode(true);
+}
+function iconKey(namespace, name) {
+  return namespace + ":" + name;
+}
+function isSafeUrlWithOptions(value) {
+  return !!(value.url && value.options);
+}
+var MAT_ICON_DEFAULT_OPTIONS = new InjectionToken("MAT_ICON_DEFAULT_OPTIONS");
+var MAT_ICON_LOCATION = new InjectionToken("mat-icon-location", {
+  providedIn: "root",
+  factory: MAT_ICON_LOCATION_FACTORY
+});
+function MAT_ICON_LOCATION_FACTORY() {
+  const _document2 = inject(DOCUMENT2);
+  const _location = _document2 ? _document2.location : null;
+  return {
+    // Note that this needs to be a function, rather than a property, because Angular
+    // will only resolve it once, but we want the current path on each call.
+    getPathname: () => _location ? _location.pathname + _location.search : ""
+  };
+}
+var funcIriAttributes = ["clip-path", "color-profile", "src", "cursor", "fill", "filter", "marker", "marker-start", "marker-mid", "marker-end", "mask", "stroke"];
+var funcIriAttributeSelector = funcIriAttributes.map((attr) => `[${attr}]`).join(", ");
+var funcIriPattern = /^url\(['"]?#(.*?)['"]?\)$/;
+var _MatIcon = class _MatIcon {
+  /** Theme palette color of the icon. */
+  get color() {
+    return this._color || this._defaultColor;
+  }
+  set color(value) {
+    this._color = value;
+  }
+  /** Name of the icon in the SVG icon set. */
+  get svgIcon() {
+    return this._svgIcon;
+  }
+  set svgIcon(value) {
+    if (value !== this._svgIcon) {
+      if (value) {
+        this._updateSvgIcon(value);
+      } else if (this._svgIcon) {
+        this._clearSvgElement();
+      }
+      this._svgIcon = value;
+    }
+  }
+  /** Font set that the icon is a part of. */
+  get fontSet() {
+    return this._fontSet;
+  }
+  set fontSet(value) {
+    const newValue = this._cleanupFontValue(value);
+    if (newValue !== this._fontSet) {
+      this._fontSet = newValue;
+      this._updateFontIconClasses();
+    }
+  }
+  /** Name of an icon within a font set. */
+  get fontIcon() {
+    return this._fontIcon;
+  }
+  set fontIcon(value) {
+    const newValue = this._cleanupFontValue(value);
+    if (newValue !== this._fontIcon) {
+      this._fontIcon = newValue;
+      this._updateFontIconClasses();
+    }
+  }
+  constructor(_elementRef, _iconRegistry, ariaHidden, _location, _errorHandler, defaults2) {
+    this._elementRef = _elementRef;
+    this._iconRegistry = _iconRegistry;
+    this._location = _location;
+    this._errorHandler = _errorHandler;
+    this.inline = false;
+    this._previousFontSetClass = [];
+    this._currentIconFetch = Subscription.EMPTY;
+    if (defaults2) {
+      if (defaults2.color) {
+        this.color = this._defaultColor = defaults2.color;
+      }
+      if (defaults2.fontSet) {
+        this.fontSet = defaults2.fontSet;
+      }
+    }
+    if (!ariaHidden) {
+      _elementRef.nativeElement.setAttribute("aria-hidden", "true");
+    }
+  }
+  /**
+   * Splits an svgIcon binding value into its icon set and icon name components.
+   * Returns a 2-element array of [(icon set), (icon name)].
+   * The separator for the two fields is ':'. If there is no separator, an empty
+   * string is returned for the icon set and the entire value is returned for
+   * the icon name. If the argument is falsy, returns an array of two empty strings.
+   * Throws an error if the name contains two or more ':' separators.
+   * Examples:
+   *   `'social:cake' -> ['social', 'cake']
+   *   'penguin' -> ['', 'penguin']
+   *   null -> ['', '']
+   *   'a:b:c' -> (throws Error)`
+   */
+  _splitIconName(iconName) {
+    if (!iconName) {
+      return ["", ""];
+    }
+    const parts = iconName.split(":");
+    switch (parts.length) {
+      case 1:
+        return ["", parts[0]];
+      case 2:
+        return parts;
+      default:
+        throw Error(`Invalid icon name: "${iconName}"`);
+    }
+  }
+  ngOnInit() {
+    this._updateFontIconClasses();
+  }
+  ngAfterViewChecked() {
+    const cachedElements = this._elementsWithExternalReferences;
+    if (cachedElements && cachedElements.size) {
+      const newPath = this._location.getPathname();
+      if (newPath !== this._previousPath) {
+        this._previousPath = newPath;
+        this._prependPathToReferences(newPath);
+      }
+    }
+  }
+  ngOnDestroy() {
+    this._currentIconFetch.unsubscribe();
+    if (this._elementsWithExternalReferences) {
+      this._elementsWithExternalReferences.clear();
+    }
+  }
+  _usingFontIcon() {
+    return !this.svgIcon;
+  }
+  _setSvgElement(svg) {
+    this._clearSvgElement();
+    const path = this._location.getPathname();
+    this._previousPath = path;
+    this._cacheChildrenWithExternalReferences(svg);
+    this._prependPathToReferences(path);
+    this._elementRef.nativeElement.appendChild(svg);
+  }
+  _clearSvgElement() {
+    const layoutElement = this._elementRef.nativeElement;
+    let childCount = layoutElement.childNodes.length;
+    if (this._elementsWithExternalReferences) {
+      this._elementsWithExternalReferences.clear();
+    }
+    while (childCount--) {
+      const child = layoutElement.childNodes[childCount];
+      if (child.nodeType !== 1 || child.nodeName.toLowerCase() === "svg") {
+        child.remove();
+      }
+    }
+  }
+  _updateFontIconClasses() {
+    if (!this._usingFontIcon()) {
+      return;
+    }
+    const elem = this._elementRef.nativeElement;
+    const fontSetClasses = (this.fontSet ? this._iconRegistry.classNameForFontAlias(this.fontSet).split(/ +/) : this._iconRegistry.getDefaultFontSetClass()).filter((className) => className.length > 0);
+    this._previousFontSetClass.forEach((className) => elem.classList.remove(className));
+    fontSetClasses.forEach((className) => elem.classList.add(className));
+    this._previousFontSetClass = fontSetClasses;
+    if (this.fontIcon !== this._previousFontIconClass && !fontSetClasses.includes("mat-ligature-font")) {
+      if (this._previousFontIconClass) {
+        elem.classList.remove(this._previousFontIconClass);
+      }
+      if (this.fontIcon) {
+        elem.classList.add(this.fontIcon);
+      }
+      this._previousFontIconClass = this.fontIcon;
+    }
+  }
+  /**
+   * Cleans up a value to be used as a fontIcon or fontSet.
+   * Since the value ends up being assigned as a CSS class, we
+   * have to trim the value and omit space-separated values.
+   */
+  _cleanupFontValue(value) {
+    return typeof value === "string" ? value.trim().split(" ")[0] : value;
+  }
+  /**
+   * Prepends the current path to all elements that have an attribute pointing to a `FuncIRI`
+   * reference. This is required because WebKit browsers require references to be prefixed with
+   * the current path, if the page has a `base` tag.
+   */
+  _prependPathToReferences(path) {
+    const elements = this._elementsWithExternalReferences;
+    if (elements) {
+      elements.forEach((attrs, element) => {
+        attrs.forEach((attr) => {
+          element.setAttribute(attr.name, `url('${path}#${attr.value}')`);
+        });
+      });
+    }
+  }
+  /**
+   * Caches the children of an SVG element that have `url()`
+   * references that we need to prefix with the current path.
+   */
+  _cacheChildrenWithExternalReferences(element) {
+    const elementsWithFuncIri = element.querySelectorAll(funcIriAttributeSelector);
+    const elements = this._elementsWithExternalReferences = this._elementsWithExternalReferences || /* @__PURE__ */ new Map();
+    for (let i = 0; i < elementsWithFuncIri.length; i++) {
+      funcIriAttributes.forEach((attr) => {
+        const elementWithReference = elementsWithFuncIri[i];
+        const value = elementWithReference.getAttribute(attr);
+        const match2 = value ? value.match(funcIriPattern) : null;
+        if (match2) {
+          let attributes = elements.get(elementWithReference);
+          if (!attributes) {
+            attributes = [];
+            elements.set(elementWithReference, attributes);
+          }
+          attributes.push({
+            name: attr,
+            value: match2[1]
+          });
+        }
+      });
+    }
+  }
+  /** Sets a new SVG icon with a particular name. */
+  _updateSvgIcon(rawName) {
+    this._svgNamespace = null;
+    this._svgName = null;
+    this._currentIconFetch.unsubscribe();
+    if (rawName) {
+      const [namespace, iconName] = this._splitIconName(rawName);
+      if (namespace) {
+        this._svgNamespace = namespace;
+      }
+      if (iconName) {
+        this._svgName = iconName;
+      }
+      this._currentIconFetch = this._iconRegistry.getNamedSvgIcon(iconName, namespace).pipe(take(1)).subscribe((svg) => this._setSvgElement(svg), (err) => {
+        const errorMessage = `Error retrieving icon ${namespace}:${iconName}! ${err.message}`;
+        this._errorHandler.handleError(new Error(errorMessage));
+      });
+    }
+  }
+};
+_MatIcon.\u0275fac = function MatIcon_Factory(t) {
+  return new (t || _MatIcon)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(MatIconRegistry), \u0275\u0275injectAttribute("aria-hidden"), \u0275\u0275directiveInject(MAT_ICON_LOCATION), \u0275\u0275directiveInject(ErrorHandler), \u0275\u0275directiveInject(MAT_ICON_DEFAULT_OPTIONS, 8));
+};
+_MatIcon.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatIcon,
+  selectors: [["mat-icon"]],
+  hostAttrs: ["role", "img", 1, "mat-icon", "notranslate"],
+  hostVars: 10,
+  hostBindings: function MatIcon_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275attribute("data-mat-icon-type", ctx._usingFontIcon() ? "font" : "svg")("data-mat-icon-name", ctx._svgName || ctx.fontIcon)("data-mat-icon-namespace", ctx._svgNamespace || ctx.fontSet)("fontIcon", ctx._usingFontIcon() ? ctx.fontIcon : null);
+      \u0275\u0275classMap(ctx.color ? "mat-" + ctx.color : "");
+      \u0275\u0275classProp("mat-icon-inline", ctx.inline)("mat-icon-no-color", ctx.color !== "primary" && ctx.color !== "accent" && ctx.color !== "warn");
+    }
+  },
+  inputs: {
+    color: "color",
+    inline: [InputFlags.HasDecoratorInputTransform, "inline", "inline", booleanAttribute],
+    svgIcon: "svgIcon",
+    fontSet: "fontSet",
+    fontIcon: "fontIcon"
+  },
+  exportAs: ["matIcon"],
+  standalone: true,
+  features: [\u0275\u0275InputTransformsFeature, \u0275\u0275StandaloneFeature],
+  ngContentSelectors: _c05,
+  decls: 1,
+  vars: 0,
+  template: function MatIcon_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef();
+      \u0275\u0275projection(0);
+    }
+  },
+  styles: ["mat-icon,mat-icon.mat-primary,mat-icon.mat-accent,mat-icon.mat-warn{color:var(--mat-icon-color)}.mat-icon{-webkit-user-select:none;user-select:none;background-repeat:no-repeat;display:inline-block;fill:currentColor;height:24px;width:24px;overflow:hidden}.mat-icon.mat-icon-inline{font-size:inherit;height:inherit;line-height:inherit;width:inherit}.mat-icon.mat-ligature-font[fontIcon]::before{content:attr(fontIcon)}[dir=rtl] .mat-icon-rtl-mirror{transform:scale(-1, 1)}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon{display:block}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button .mat-icon{margin:auto}"],
+  encapsulation: 2,
+  changeDetection: 0
+});
+var MatIcon = _MatIcon;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatIcon, [{
+    type: Component,
+    args: [{
+      template: "<ng-content></ng-content>",
+      selector: "mat-icon",
+      exportAs: "matIcon",
+      host: {
+        "role": "img",
+        "class": "mat-icon notranslate",
+        "[class]": 'color ? "mat-" + color : ""',
+        "[attr.data-mat-icon-type]": '_usingFontIcon() ? "font" : "svg"',
+        "[attr.data-mat-icon-name]": "_svgName || fontIcon",
+        "[attr.data-mat-icon-namespace]": "_svgNamespace || fontSet",
+        "[attr.fontIcon]": "_usingFontIcon() ? fontIcon : null",
+        "[class.mat-icon-inline]": "inline",
+        "[class.mat-icon-no-color]": 'color !== "primary" && color !== "accent" && color !== "warn"'
+      },
+      encapsulation: ViewEncapsulation$1.None,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      standalone: true,
+      styles: ["mat-icon,mat-icon.mat-primary,mat-icon.mat-accent,mat-icon.mat-warn{color:var(--mat-icon-color)}.mat-icon{-webkit-user-select:none;user-select:none;background-repeat:no-repeat;display:inline-block;fill:currentColor;height:24px;width:24px;overflow:hidden}.mat-icon.mat-icon-inline{font-size:inherit;height:inherit;line-height:inherit;width:inherit}.mat-icon.mat-ligature-font[fontIcon]::before{content:attr(fontIcon)}[dir=rtl] .mat-icon-rtl-mirror{transform:scale(-1, 1)}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon{display:block}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button .mat-icon{margin:auto}"]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: MatIconRegistry
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Attribute,
+      args: ["aria-hidden"]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [MAT_ICON_LOCATION]
+    }]
+  }, {
+    type: ErrorHandler
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [MAT_ICON_DEFAULT_OPTIONS]
+    }]
+  }], {
+    color: [{
+      type: Input
+    }],
+    inline: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    svgIcon: [{
+      type: Input
+    }],
+    fontSet: [{
+      type: Input
+    }],
+    fontIcon: [{
+      type: Input
+    }]
+  });
+})();
+var _MatIconModule = class _MatIconModule {
+};
+_MatIconModule.\u0275fac = function MatIconModule_Factory(t) {
+  return new (t || _MatIconModule)();
+};
+_MatIconModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatIconModule
+});
+_MatIconModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  imports: [MatCommonModule, MatCommonModule]
+});
+var MatIconModule = _MatIconModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatIconModule, [{
+    type: NgModule,
+    args: [{
+      imports: [MatCommonModule, MatIcon],
+      exports: [MatIcon, MatCommonModule]
+    }]
+  }], null, null);
+})();
+
 // src/app/classes/message-converter.ts
 var MessageConverter = class {
   constructor() {
     this.encoder = new TextEncoder();
     this.decoder = new TextDecoder();
+    this.NAME_ID = "nm";
+    this.BRAND_ID = "br";
+    this.MATERIAL_ID = "ma";
+    this.COLOR_ID = "cl";
+    this.SPOOL_WEIGHT_ID = "sw";
+    this.INITIAL_FILAMENT_WEIGHT_ID = "if";
+    this.REMAINING_FILAMENT_ID = "rf";
+    this.FLOW_FACTOR_ID = "ff";
+    this.TEMPERATURE_ID = "te";
   }
   messageToSpool(id, message) {
-    const name = this.getAsString(message, "name");
-    const brand = this.getAsString(message, "brand");
-    const material = this.getAsString(message, "material");
-    const color = this.getAsString(message, "color");
-    const initialFilamentWeight = this.getAsNumber(message, "filament");
-    const spoolWeight = this.getAsNumber(message, "spool");
-    const remainingFilamentWeight = this.getAsNumber(message, "remaining");
-    const flowFactor = this.getAsNumber(message, "factor");
-    const temperature = this.getAsNumber(message, "temperature");
+    const name = this.getAsString(message, this.NAME_ID);
+    const brand = this.getAsString(message, this.BRAND_ID);
+    const material = this.getAsString(message, this.MATERIAL_ID);
+    const color = this.getAsString(message, this.COLOR_ID);
+    const initialFilamentWeight = this.getAsNumber(message, this.INITIAL_FILAMENT_WEIGHT_ID);
+    const spoolWeight = this.getAsNumber(message, this.SPOOL_WEIGHT_ID);
+    const remainingFilamentWeight = this.getAsNumber(message, this.REMAINING_FILAMENT_ID);
+    const flowFactor = this.getAsNumber(message, this.FLOW_FACTOR_ID);
+    const temperature = this.getAsNumber(message, this.TEMPERATURE_ID);
     return {
       id,
       name,
@@ -51495,31 +53138,31 @@ var MessageConverter = class {
   spoolToMessage(spool) {
     const records = [];
     if (spool.name) {
-      records.push(this.getRecord("name", spool.name));
+      records.push(this.getRecord(this.NAME_ID, spool.name));
     }
     if (spool.brand) {
-      records.push(this.getRecord("brand", spool.brand));
+      records.push(this.getRecord(this.BRAND_ID, spool.brand));
     }
     if (spool.material) {
-      records.push(this.getRecord("material", spool.material));
+      records.push(this.getRecord(this.MATERIAL_ID, spool.material));
     }
     if (spool.color) {
-      records.push(this.getRecord("color", spool.color));
+      records.push(this.getRecord(this.COLOR_ID, spool.color));
     }
     if (spool.initialFilamentWeight) {
-      records.push(this.getRecord("filament", spool.initialFilamentWeight.toString()));
+      records.push(this.getRecord(this.INITIAL_FILAMENT_WEIGHT_ID, spool.initialFilamentWeight.toString()));
     }
     if (spool.spoolWeight) {
-      records.push(this.getRecord("spool", spool.spoolWeight.toString()));
+      records.push(this.getRecord(this.SPOOL_WEIGHT_ID, spool.spoolWeight.toString()));
     }
     if (spool.remainingFilamentWeight) {
-      records.push(this.getRecord("remaining", spool.remainingFilamentWeight.toString()));
+      records.push(this.getRecord(this.REMAINING_FILAMENT_ID, spool.remainingFilamentWeight.toString()));
     }
     if (spool.flowFactor) {
-      records.push(this.getRecord("factor", spool.flowFactor.toString()));
+      records.push(this.getRecord(this.FLOW_FACTOR_ID, spool.flowFactor.toString()));
     }
     if (spool.temperature) {
-      records.push(this.getRecord("temperature", spool.temperature.toString()));
+      records.push(this.getRecord(this.TEMPERATURE_ID, spool.temperature.toString()));
     }
     return this.getMessage(records);
   }
@@ -51553,10 +53196,12 @@ var _NfcEmulatorService = class _NfcEmulatorService {
     this.touchSubject = new Subject();
     this.errorSubject = new Subject();
     this.converter = new MessageConverter();
+    this.spools = new BehaviorSubject([]);
     this.tags = new Map(Object.entries({
       "empty!": this.converter.spoolToMessage({ id: "empty!" }),
       "red": this.converter.spoolToMessage({ id: "red", color: "#ff0000" })
     }));
+    this.updateSpools();
   }
   getEvents() {
     return this.touchSubject;
@@ -51573,12 +53218,23 @@ var _NfcEmulatorService = class _NfcEmulatorService {
   readError(message) {
     this.errorSubject.next(new Error(message));
   }
-  getSpools() {
+  spools$() {
+    return this.spools;
+  }
+  addSpool(spool) {
+    this.tags.set(spool.id, this.converter.spoolToMessage(spool));
+    this.updateSpools();
+  }
+  updateSpools() {
     const spools = [];
     this.tags.forEach((message, id) => {
       spools.push(this.converter.messageToSpool(id, message));
     });
-    return spools;
+    this.spools.next(spools);
+  }
+  remove(id) {
+    this.tags.delete(id);
+    this.updateSpools();
   }
 };
 _NfcEmulatorService.\u0275fac = function NfcEmulatorService_Factory(t) {
@@ -51589,62 +53245,101 @@ var NfcEmulatorService = _NfcEmulatorService;
 
 // src/app/components/debug-nfc/debug-nfc.component.ts
 var _forTrack0 = ($index, $item) => $item.id;
-function DebugNfcComponent_For_1_Template(rf, ctx) {
+function DebugNfcComponent_For_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r7 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header");
-    \u0275\u0275text(2);
+    \u0275\u0275elementStart(0, "mat-grid-tile")(1, "mat-card")(2, "mat-card-header");
+    \u0275\u0275text(3);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "mat-card-content");
-    \u0275\u0275text(4);
+    \u0275\u0275elementStart(4, "mat-card-content");
+    \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "mat-card-actions")(6, "button", 0);
-    \u0275\u0275listener("click", function DebugNfcComponent_For_1_Template_button_click_6_listener() {
+    \u0275\u0275elementStart(6, "mat-card-actions")(7, "button", 1);
+    \u0275\u0275listener("click", function DebugNfcComponent_For_2_Template_button_click_7_listener() {
       const restoredCtx = \u0275\u0275restoreView(_r7);
-      const tag_r1 = restoredCtx.$implicit;
+      const spool_r1 = restoredCtx.$implicit;
       const ctx_r6 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r6.touch(tag_r1.id));
+      return \u0275\u0275resetView(ctx_r6.touch(spool_r1.id));
     });
-    \u0275\u0275text(7, "Touch");
-    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(8, "mat-icon");
+    \u0275\u0275text(9, "style");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(10, "button", 1);
+    \u0275\u0275listener("click", function DebugNfcComponent_For_2_Template_button_click_10_listener() {
+      const restoredCtx = \u0275\u0275restoreView(_r7);
+      const spool_r1 = restoredCtx.$implicit;
+      const ctx_r8 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r8.delete(spool_r1.id));
+    });
+    \u0275\u0275elementStart(11, "mat-icon");
+    \u0275\u0275text(12, "delete_forever");
+    \u0275\u0275elementEnd()()()()();
   }
   if (rf & 2) {
-    const tag_r1 = ctx.$implicit;
+    const spool_r1 = ctx.$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(spool_r1.id);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(tag_r1.id);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(tag_r1.material);
+    \u0275\u0275textInterpolate(spool_r1.material);
   }
 }
 var _DebugNfcComponent = class _DebugNfcComponent {
   constructor(nfcEmulator) {
     this.nfcEmulator = nfcEmulator;
-    this.tags = nfcEmulator.getSpools();
+    nfcEmulator.spools$();
   }
   touch(id) {
     this.nfcEmulator.touchTag(id);
+  }
+  error() {
+    this.nfcEmulator.readError("Invalid tag");
+  }
+  delete(id) {
+    this.nfcEmulator.remove(id);
+  }
+  create() {
+    this.nfcEmulator.addSpool({ id: crypto.randomUUID() });
   }
 };
 _DebugNfcComponent.\u0275fac = function DebugNfcComponent_Factory(t) {
   return new (t || _DebugNfcComponent)(\u0275\u0275directiveInject(NfcEmulatorService));
 };
-_DebugNfcComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DebugNfcComponent, selectors: [["app-debug-nfc"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 0, consts: [["mat-button", "", 3, "click"]], template: function DebugNfcComponent_Template(rf, ctx) {
+_DebugNfcComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DebugNfcComponent, selectors: [["app-debug-nfc"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 12, vars: 2, consts: [["cols", "4"], ["mat-button", "", 3, "click"]], template: function DebugNfcComponent_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, DebugNfcComponent_For_1_Template, 8, 2, "mat-card", null, _forTrack0);
+    \u0275\u0275elementStart(0, "mat-grid-list", 0);
+    \u0275\u0275repeaterCreate(1, DebugNfcComponent_For_2_Template, 13, 2, "mat-grid-tile", null, _forTrack0);
+    \u0275\u0275pipe(3, "async");
+    \u0275\u0275elementStart(4, "mat-grid-tile")(5, "mat-card")(6, "button", 1);
+    \u0275\u0275listener("click", function DebugNfcComponent_Template_button_click_6_listener() {
+      return ctx.error();
+    });
+    \u0275\u0275text(7, "Error");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(8, "mat-grid-tile")(9, "mat-card")(10, "button", 1);
+    \u0275\u0275listener("click", function DebugNfcComponent_Template_button_click_10_listener() {
+      return ctx.create();
+    });
+    \u0275\u0275text(11, "Create");
+    \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
-    \u0275\u0275repeater(ctx.tags);
+    \u0275\u0275advance();
+    \u0275\u0275repeater(\u0275\u0275pipeBind1(3, 0, ctx.nfcEmulator.spools$()));
   }
 }, dependencies: [
+  AsyncPipe,
   MatCard,
   MatCardHeader,
   MatCardContent,
   MatCardActions,
-  MatButton
+  MatButton,
+  MatGridList,
+  MatGridTile,
+  MatIcon
 ], styles: ["\n\n/*# sourceMappingURL=debug-nfc.component.css.map */"] });
 var DebugNfcComponent = _DebugNfcComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DebugNfcComponent, { className: "DebugNfcComponent", filePath: "src/app/components/debug-nfc/debug-nfc.component.ts", lineNumber: 22 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DebugNfcComponent, { className: "DebugNfcComponent", filePath: "src/app/components/debug-nfc/debug-nfc.component.ts", lineNumber: 26 });
 })();
 
 // src/environments/environment.ts
@@ -51759,10 +53454,10 @@ var SharedResizeObserver = _SharedResizeObserver;
 })();
 
 // node_modules/@angular/material/fesm2022/form-field.mjs
-var _c04 = ["notch"];
-var _c14 = ["matFormFieldNotchedOutline", ""];
-var _c24 = ["*"];
-var _c34 = ["textField"];
+var _c06 = ["notch"];
+var _c15 = ["matFormFieldNotchedOutline", ""];
+var _c25 = ["*"];
+var _c35 = ["textField"];
 var _c44 = ["iconPrefixContainer"];
 var _c53 = ["textPrefixContainer"];
 function MatFormField_ng_template_0_Conditional_0_Conditional_2_Template(rf, ctx) {
@@ -52337,7 +54032,7 @@ _MatFormFieldNotchedOutline.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineCompon
   selectors: [["div", "matFormFieldNotchedOutline", ""]],
   viewQuery: function MatFormFieldNotchedOutline_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c04, 5);
+      \u0275\u0275viewQuery(_c06, 5);
     }
     if (rf & 2) {
       let _t;
@@ -52356,8 +54051,8 @@ _MatFormFieldNotchedOutline.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineCompon
   },
   standalone: true,
   features: [\u0275\u0275StandaloneFeature],
-  attrs: _c14,
-  ngContentSelectors: _c24,
+  attrs: _c15,
+  ngContentSelectors: _c25,
   decls: 5,
   vars: 0,
   consts: [[1, "mdc-notched-outline__leading"], [1, "mdc-notched-outline__notch"], ["notch", ""], [1, "mdc-notched-outline__trailing"]],
@@ -52840,7 +54535,7 @@ _MatFormField.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
   },
   viewQuery: function MatFormField_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c34, 5);
+      \u0275\u0275viewQuery(_c35, 5);
       \u0275\u0275viewQuery(_c44, 5);
       \u0275\u0275viewQuery(_c53, 5);
       \u0275\u0275viewQuery(MatFormFieldFloatingLabel, 5);
@@ -53486,8 +55181,8 @@ var UniqueSelectionDispatcher = _UniqueSelectionDispatcher;
 })();
 
 // node_modules/@angular/cdk/fesm2022/scrolling.mjs
-var _c05 = ["contentWrapper"];
-var _c15 = ["*"];
+var _c07 = ["contentWrapper"];
+var _c16 = ["*"];
 var VIRTUAL_SCROLL_STRATEGY = new InjectionToken("VIRTUAL_SCROLL_STRATEGY");
 var FixedSizeVirtualScrollStrategy = class {
   /**
@@ -54464,7 +56159,7 @@ _CdkVirtualScrollViewport.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponen
   selectors: [["cdk-virtual-scroll-viewport"]],
   viewQuery: function CdkVirtualScrollViewport_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c05, 7);
+      \u0275\u0275viewQuery(_c07, 7);
     }
     if (rf & 2) {
       let _t;
@@ -54491,7 +56186,7 @@ _CdkVirtualScrollViewport.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponen
     useFactory: (virtualScrollable, viewport) => virtualScrollable || viewport,
     deps: [[new Optional(), new Inject(VIRTUAL_SCROLLABLE)], _CdkVirtualScrollViewport]
   }]), \u0275\u0275InputTransformsFeature, \u0275\u0275InheritDefinitionFeature, \u0275\u0275StandaloneFeature],
-  ngContentSelectors: _c15,
+  ngContentSelectors: _c16,
   decls: 4,
   vars: 4,
   consts: [[1, "cdk-virtual-scroll-content-wrapper"], ["contentWrapper", ""], [1, "cdk-virtual-scroll-spacer"]],
@@ -58196,8 +59891,8 @@ var FullscreenOverlayContainer = _FullscreenOverlayContainer;
 })();
 
 // node_modules/@angular/material/fesm2022/select.mjs
-var _c06 = ["trigger"];
-var _c16 = ["panel"];
+var _c08 = ["trigger"];
+var _c17 = ["panel"];
 function MatSelect_Conditional_4_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 9);
@@ -58264,8 +59959,8 @@ function MatSelect_ng_template_10_Template(rf, ctx) {
     \u0275\u0275attribute("id", ctx_r4.id + "-panel")("aria-multiselectable", ctx_r4.multiple)("aria-label", ctx_r4.ariaLabel || null)("aria-labelledby", ctx_r4._getPanelAriaLabelledby());
   }
 }
-var _c25 = [[["mat-select-trigger"]], "*"];
-var _c35 = ["mat-select-trigger", "*"];
+var _c26 = [[["mat-select-trigger"]], "*"];
+var _c36 = ["mat-select-trigger", "*"];
 var matSelectAnimations = {
   /**
    * This animation ensures the select's overlay panel animation (transformPanel) is called when
@@ -59083,8 +60778,8 @@ _MatSelect.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
   },
   viewQuery: function MatSelect_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c06, 5);
-      \u0275\u0275viewQuery(_c16, 5);
+      \u0275\u0275viewQuery(_c08, 5);
+      \u0275\u0275viewQuery(_c17, 5);
       \u0275\u0275viewQuery(CdkConnectedOverlay, 5);
     }
     if (rf & 2) {
@@ -59148,13 +60843,13 @@ _MatSelect.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
     provide: MAT_OPTION_PARENT_COMPONENT,
     useExisting: _MatSelect
   }]), \u0275\u0275InputTransformsFeature, \u0275\u0275NgOnChangesFeature, \u0275\u0275StandaloneFeature],
-  ngContentSelectors: _c35,
+  ngContentSelectors: _c36,
   decls: 11,
   vars: 8,
   consts: [["cdk-overlay-origin", "", 1, "mat-mdc-select-trigger", 3, "click"], ["fallbackOverlayOrigin", "cdkOverlayOrigin", "trigger", ""], [1, "mat-mdc-select-value"], ["class", "mat-mdc-select-placeholder mat-mdc-select-min-line"], [1, "mat-mdc-select-arrow-wrapper"], [1, "mat-mdc-select-arrow"], ["viewBox", "0 0 24 24", "width", "24px", "height", "24px", "focusable", "false", "aria-hidden", "true"], ["d", "M7 10l5 5 5-5z"], ["cdk-connected-overlay", "", "cdkConnectedOverlayLockPosition", "", "cdkConnectedOverlayHasBackdrop", "", "cdkConnectedOverlayBackdropClass", "cdk-overlay-transparent-backdrop", 3, "cdkConnectedOverlayPanelClass", "cdkConnectedOverlayScrollStrategy", "cdkConnectedOverlayOrigin", "cdkConnectedOverlayOpen", "cdkConnectedOverlayPositions", "cdkConnectedOverlayWidth", "backdropClick", "attach", "detach"], [1, "mat-mdc-select-placeholder", "mat-mdc-select-min-line"], [1, "mat-mdc-select-value-text"], [1, "mat-mdc-select-min-line"], ["role", "listbox", "tabindex", "-1", 3, "ngClass", "keydown"], ["panel", ""]],
   template: function MatSelect_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275projectionDef(_c25);
+      \u0275\u0275projectionDef(_c26);
       \u0275\u0275elementStart(0, "div", 0, 1);
       \u0275\u0275listener("click", function MatSelect_Template_div_click_0_listener() {
         return ctx.open();
@@ -59546,7 +61241,7 @@ var MatSelectModule = _MatSelectModule;
 })();
 
 // node_modules/@angular/material/fesm2022/autocomplete.mjs
-var _c07 = ["panel"];
+var _c09 = ["panel"];
 function MatAutocomplete_ng_template_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
@@ -59566,7 +61261,7 @@ function MatAutocomplete_ng_template_0_Template(rf, ctx) {
     \u0275\u0275attribute("aria-label", ctx_r0.ariaLabel || null)("aria-labelledby", ctx_r0._getPanelAriaLabelledby(formFieldId_r1));
   }
 }
-var _c17 = ["*"];
+var _c18 = ["*"];
 var panelAnimation = trigger("panelAnimation", [state("void, hidden", style({
   opacity: 0,
   transform: "scaleY(0.8)"
@@ -59760,7 +61455,7 @@ _MatAutocomplete.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
   viewQuery: function MatAutocomplete_Query(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275viewQuery(TemplateRef, 7);
-      \u0275\u0275viewQuery(_c07, 5);
+      \u0275\u0275viewQuery(_c09, 5);
     }
     if (rf & 2) {
       let _t;
@@ -59793,7 +61488,7 @@ _MatAutocomplete.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
     provide: MAT_OPTION_PARENT_COMPONENT,
     useExisting: _MatAutocomplete
   }]), \u0275\u0275InputTransformsFeature, \u0275\u0275StandaloneFeature],
-  ngContentSelectors: _c17,
+  ngContentSelectors: _c18,
   decls: 1,
   vars: 0,
   consts: [["role", "listbox", 1, "mat-mdc-autocomplete-panel", "mdc-menu-surface", "mdc-menu-surface--open", 3, "id", "ngClass"], ["panel", ""]],
@@ -61613,8 +63308,8 @@ var MatInputModule = _MatInputModule;
 })();
 
 // node_modules/ngx-colors/fesm2020/ngx-colors.mjs
-var _c08 = ["hueSlider"];
-var _c18 = ["alphaSlider"];
+var _c010 = ["hueSlider"];
+var _c19 = ["alphaSlider"];
 function ColorPickerComponent_div_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r6 = \u0275\u0275getCurrentView();
@@ -61691,7 +63386,7 @@ function ColorPickerComponent_div_7_Template(rf, ctx) {
     \u0275\u0275styleProp("left", ctx_r4.slider == null ? null : ctx_r4.slider.a, "px");
   }
 }
-var _c26 = ["dialog"];
+var _c27 = ["dialog"];
 function PanelComponent_ng_container_2_ng_container_2_div_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "div", 11);
@@ -61798,7 +63493,7 @@ function PanelComponent_ng_container_3_ng_container_7_div_3_Template(rf, ctx) {
     \u0275\u0275element(0, "div", 11);
   }
 }
-var _c36 = (a0) => ({
+var _c37 = (a0) => ({
   background: a0
 });
 function PanelComponent_ng_container_3_ng_container_7_Template(rf, ctx) {
@@ -61823,7 +63518,7 @@ function PanelComponent_ng_container_3_ng_container_7_Template(rf, ctx) {
     const ctx_r19 = \u0275\u0275nextContext(2);
     \u0275\u0275advance(2);
     \u0275\u0275classProp("colornull", !variant_r20);
-    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(4, _c36, variant_r20));
+    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(4, _c37, variant_r20));
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx_r19.isSelected(variant_r20));
   }
@@ -62572,8 +64267,8 @@ ColorPickerComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
   selectors: [["color-picker"]],
   viewQuery: function ColorPickerComponent_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c08, 5);
-      \u0275\u0275viewQuery(_c18, 5);
+      \u0275\u0275viewQuery(_c010, 5);
+      \u0275\u0275viewQuery(_c19, 5);
     }
     if (rf & 2) {
       let _t;
@@ -62964,7 +64659,7 @@ PanelComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
   selectors: [["ngx-colors-panel"]],
   viewQuery: function PanelComponent_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c26, 5);
+      \u0275\u0275viewQuery(_c27, 5);
     }
     if (rf & 2) {
       let _t;
@@ -63580,7 +65275,7 @@ NgxColorsComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
     if (rf & 2) {
       \u0275\u0275advance(3);
       \u0275\u0275classProp("colornull", !ctx.color);
-      \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(3, _c36, ctx.color));
+      \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(3, _c37, ctx.color));
     }
   },
   dependencies: [NgStyle],
@@ -63629,17 +65324,1611 @@ NgxColorsModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
   }], null, null);
 })();
 
-// src/app/components/tag-card/tag-card.component.ts
-function TagCardComponent_Conditional_0_Conditional_3_Template(rf, ctx) {
+// node_modules/@angular/cdk/fesm2022/dialog.mjs
+function CdkDialogContainer_ng_template_0_Template(rf, ctx) {
+}
+var DialogConfig = class {
+  constructor() {
+    this.role = "dialog";
+    this.panelClass = "";
+    this.hasBackdrop = true;
+    this.backdropClass = "";
+    this.disableClose = false;
+    this.width = "";
+    this.height = "";
+    this.data = null;
+    this.ariaDescribedBy = null;
+    this.ariaLabelledBy = null;
+    this.ariaLabel = null;
+    this.ariaModal = true;
+    this.autoFocus = "first-tabbable";
+    this.restoreFocus = true;
+    this.closeOnNavigation = true;
+    this.closeOnDestroy = true;
+    this.closeOnOverlayDetachments = true;
+  }
+};
+function throwDialogContentAlreadyAttachedError() {
+  throw Error("Attempting to attach dialog content after content is already attached");
+}
+var _CdkDialogContainer = class _CdkDialogContainer extends BasePortalOutlet {
+  constructor(_elementRef, _focusTrapFactory, _document2, _config, _interactivityChecker, _ngZone, _overlayRef, _focusMonitor) {
+    super();
+    this._elementRef = _elementRef;
+    this._focusTrapFactory = _focusTrapFactory;
+    this._config = _config;
+    this._interactivityChecker = _interactivityChecker;
+    this._ngZone = _ngZone;
+    this._overlayRef = _overlayRef;
+    this._focusMonitor = _focusMonitor;
+    this._platform = inject(Platform);
+    this._focusTrap = null;
+    this._elementFocusedBeforeDialogWasOpened = null;
+    this._closeInteractionType = null;
+    this._ariaLabelledByQueue = [];
+    this._changeDetectorRef = inject(ChangeDetectorRef);
+    this.attachDomPortal = (portal) => {
+      if (this._portalOutlet.hasAttached() && (typeof ngDevMode === "undefined" || ngDevMode)) {
+        throwDialogContentAlreadyAttachedError();
+      }
+      const result = this._portalOutlet.attachDomPortal(portal);
+      this._contentAttached();
+      return result;
+    };
+    this._document = _document2;
+    if (this._config.ariaLabelledBy) {
+      this._ariaLabelledByQueue.push(this._config.ariaLabelledBy);
+    }
+  }
+  _addAriaLabelledBy(id) {
+    this._ariaLabelledByQueue.push(id);
+    this._changeDetectorRef.markForCheck();
+  }
+  _removeAriaLabelledBy(id) {
+    const index = this._ariaLabelledByQueue.indexOf(id);
+    if (index > -1) {
+      this._ariaLabelledByQueue.splice(index, 1);
+      this._changeDetectorRef.markForCheck();
+    }
+  }
+  _contentAttached() {
+    this._initializeFocusTrap();
+    this._handleBackdropClicks();
+    this._captureInitialFocus();
+  }
+  /**
+   * Can be used by child classes to customize the initial focus
+   * capturing behavior (e.g. if it's tied to an animation).
+   */
+  _captureInitialFocus() {
+    this._trapFocus();
+  }
+  ngOnDestroy() {
+    this._restoreFocus();
+  }
+  /**
+   * Attach a ComponentPortal as content to this dialog container.
+   * @param portal Portal to be attached as the dialog content.
+   */
+  attachComponentPortal(portal) {
+    if (this._portalOutlet.hasAttached() && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throwDialogContentAlreadyAttachedError();
+    }
+    const result = this._portalOutlet.attachComponentPortal(portal);
+    this._contentAttached();
+    return result;
+  }
+  /**
+   * Attach a TemplatePortal as content to this dialog container.
+   * @param portal Portal to be attached as the dialog content.
+   */
+  attachTemplatePortal(portal) {
+    if (this._portalOutlet.hasAttached() && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throwDialogContentAlreadyAttachedError();
+    }
+    const result = this._portalOutlet.attachTemplatePortal(portal);
+    this._contentAttached();
+    return result;
+  }
+  // TODO(crisbeto): this shouldn't be exposed, but there are internal references to it.
+  /** Captures focus if it isn't already inside the dialog. */
+  _recaptureFocus() {
+    if (!this._containsFocus()) {
+      this._trapFocus();
+    }
+  }
+  /**
+   * Focuses the provided element. If the element is not focusable, it will add a tabIndex
+   * attribute to forcefully focus it. The attribute is removed after focus is moved.
+   * @param element The element to focus.
+   */
+  _forceFocus(element, options) {
+    if (!this._interactivityChecker.isFocusable(element)) {
+      element.tabIndex = -1;
+      this._ngZone.runOutsideAngular(() => {
+        const callback = () => {
+          element.removeEventListener("blur", callback);
+          element.removeEventListener("mousedown", callback);
+          element.removeAttribute("tabindex");
+        };
+        element.addEventListener("blur", callback);
+        element.addEventListener("mousedown", callback);
+      });
+    }
+    element.focus(options);
+  }
+  /**
+   * Focuses the first element that matches the given selector within the focus trap.
+   * @param selector The CSS selector for the element to set focus to.
+   */
+  _focusByCssSelector(selector, options) {
+    let elementToFocus = this._elementRef.nativeElement.querySelector(selector);
+    if (elementToFocus) {
+      this._forceFocus(elementToFocus, options);
+    }
+  }
+  /**
+   * Moves the focus inside the focus trap. When autoFocus is not set to 'dialog', if focus
+   * cannot be moved then focus will go to the dialog container.
+   */
+  _trapFocus() {
+    const element = this._elementRef.nativeElement;
+    switch (this._config.autoFocus) {
+      case false:
+      case "dialog":
+        if (!this._containsFocus()) {
+          element.focus();
+        }
+        break;
+      case true:
+      case "first-tabbable":
+        this._focusTrap?.focusInitialElementWhenReady().then((focusedSuccessfully) => {
+          if (!focusedSuccessfully) {
+            this._focusDialogContainer();
+          }
+        });
+        break;
+      case "first-heading":
+        this._focusByCssSelector('h1, h2, h3, h4, h5, h6, [role="heading"]');
+        break;
+      default:
+        this._focusByCssSelector(this._config.autoFocus);
+        break;
+    }
+  }
+  /** Restores focus to the element that was focused before the dialog opened. */
+  _restoreFocus() {
+    const focusConfig = this._config.restoreFocus;
+    let focusTargetElement = null;
+    if (typeof focusConfig === "string") {
+      focusTargetElement = this._document.querySelector(focusConfig);
+    } else if (typeof focusConfig === "boolean") {
+      focusTargetElement = focusConfig ? this._elementFocusedBeforeDialogWasOpened : null;
+    } else if (focusConfig) {
+      focusTargetElement = focusConfig;
+    }
+    if (this._config.restoreFocus && focusTargetElement && typeof focusTargetElement.focus === "function") {
+      const activeElement = _getFocusedElementPierceShadowDom();
+      const element = this._elementRef.nativeElement;
+      if (!activeElement || activeElement === this._document.body || activeElement === element || element.contains(activeElement)) {
+        if (this._focusMonitor) {
+          this._focusMonitor.focusVia(focusTargetElement, this._closeInteractionType);
+          this._closeInteractionType = null;
+        } else {
+          focusTargetElement.focus();
+        }
+      }
+    }
+    if (this._focusTrap) {
+      this._focusTrap.destroy();
+    }
+  }
+  /** Focuses the dialog container. */
+  _focusDialogContainer() {
+    if (this._elementRef.nativeElement.focus) {
+      this._elementRef.nativeElement.focus();
+    }
+  }
+  /** Returns whether focus is inside the dialog. */
+  _containsFocus() {
+    const element = this._elementRef.nativeElement;
+    const activeElement = _getFocusedElementPierceShadowDom();
+    return element === activeElement || element.contains(activeElement);
+  }
+  /** Sets up the focus trap. */
+  _initializeFocusTrap() {
+    if (this._platform.isBrowser) {
+      this._focusTrap = this._focusTrapFactory.create(this._elementRef.nativeElement);
+      if (this._document) {
+        this._elementFocusedBeforeDialogWasOpened = _getFocusedElementPierceShadowDom();
+      }
+    }
+  }
+  /** Sets up the listener that handles clicks on the dialog backdrop. */
+  _handleBackdropClicks() {
+    this._overlayRef.backdropClick().subscribe(() => {
+      if (this._config.disableClose) {
+        this._recaptureFocus();
+      }
+    });
+  }
+};
+_CdkDialogContainer.\u0275fac = function CdkDialogContainer_Factory(t) {
+  return new (t || _CdkDialogContainer)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(FocusTrapFactory), \u0275\u0275directiveInject(DOCUMENT2, 8), \u0275\u0275directiveInject(DialogConfig), \u0275\u0275directiveInject(InteractivityChecker), \u0275\u0275directiveInject(NgZone), \u0275\u0275directiveInject(OverlayRef), \u0275\u0275directiveInject(FocusMonitor));
+};
+_CdkDialogContainer.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _CdkDialogContainer,
+  selectors: [["cdk-dialog-container"]],
+  viewQuery: function CdkDialogContainer_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuery(CdkPortalOutlet, 7);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._portalOutlet = _t.first);
+    }
+  },
+  hostAttrs: ["tabindex", "-1", 1, "cdk-dialog-container"],
+  hostVars: 6,
+  hostBindings: function CdkDialogContainer_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275attribute("id", ctx._config.id || null)("role", ctx._config.role)("aria-modal", ctx._config.ariaModal)("aria-labelledby", ctx._config.ariaLabel ? null : ctx._ariaLabelledByQueue[0])("aria-label", ctx._config.ariaLabel)("aria-describedby", ctx._config.ariaDescribedBy || null);
+    }
+  },
+  standalone: true,
+  features: [\u0275\u0275InheritDefinitionFeature, \u0275\u0275StandaloneFeature],
+  decls: 1,
+  vars: 0,
+  consts: [["cdkPortalOutlet", ""]],
+  template: function CdkDialogContainer_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, CdkDialogContainer_ng_template_0_Template, 0, 0, "ng-template", 0);
+    }
+  },
+  dependencies: [CdkPortalOutlet],
+  styles: [".cdk-dialog-container{display:block;width:100%;height:100%;min-height:inherit;max-height:inherit}"],
+  encapsulation: 2
+});
+var CdkDialogContainer = _CdkDialogContainer;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CdkDialogContainer, [{
+    type: Component,
+    args: [{
+      selector: "cdk-dialog-container",
+      encapsulation: ViewEncapsulation$1.None,
+      changeDetection: ChangeDetectionStrategy.Default,
+      standalone: true,
+      imports: [CdkPortalOutlet],
+      host: {
+        "class": "cdk-dialog-container",
+        "tabindex": "-1",
+        "[attr.id]": "_config.id || null",
+        "[attr.role]": "_config.role",
+        "[attr.aria-modal]": "_config.ariaModal",
+        "[attr.aria-labelledby]": "_config.ariaLabel ? null : _ariaLabelledByQueue[0]",
+        "[attr.aria-label]": "_config.ariaLabel",
+        "[attr.aria-describedby]": "_config.ariaDescribedBy || null"
+      },
+      template: "<ng-template cdkPortalOutlet />\n",
+      styles: [".cdk-dialog-container{display:block;width:100%;height:100%;min-height:inherit;max-height:inherit}"]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: FocusTrapFactory
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [DOCUMENT2]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DialogConfig]
+    }]
+  }, {
+    type: InteractivityChecker
+  }, {
+    type: NgZone
+  }, {
+    type: OverlayRef
+  }, {
+    type: FocusMonitor
+  }], {
+    _portalOutlet: [{
+      type: ViewChild,
+      args: [CdkPortalOutlet, {
+        static: true
+      }]
+    }]
+  });
+})();
+var DialogRef = class {
+  constructor(overlayRef, config2) {
+    this.overlayRef = overlayRef;
+    this.config = config2;
+    this.closed = new Subject();
+    this.disableClose = config2.disableClose;
+    this.backdropClick = overlayRef.backdropClick();
+    this.keydownEvents = overlayRef.keydownEvents();
+    this.outsidePointerEvents = overlayRef.outsidePointerEvents();
+    this.id = config2.id;
+    this.keydownEvents.subscribe((event) => {
+      if (event.keyCode === ESCAPE && !this.disableClose && !hasModifierKey(event)) {
+        event.preventDefault();
+        this.close(void 0, {
+          focusOrigin: "keyboard"
+        });
+      }
+    });
+    this.backdropClick.subscribe(() => {
+      if (!this.disableClose) {
+        this.close(void 0, {
+          focusOrigin: "mouse"
+        });
+      }
+    });
+    this._detachSubscription = overlayRef.detachments().subscribe(() => {
+      if (config2.closeOnOverlayDetachments !== false) {
+        this.close();
+      }
+    });
+  }
+  /**
+   * Close the dialog.
+   * @param result Optional result to return to the dialog opener.
+   * @param options Additional options to customize the closing behavior.
+   */
+  close(result, options) {
+    if (this.containerInstance) {
+      const closedSubject = this.closed;
+      this.containerInstance._closeInteractionType = options?.focusOrigin || "program";
+      this._detachSubscription.unsubscribe();
+      this.overlayRef.dispose();
+      closedSubject.next(result);
+      closedSubject.complete();
+      this.componentInstance = this.containerInstance = null;
+    }
+  }
+  /** Updates the position of the dialog based on the current position strategy. */
+  updatePosition() {
+    this.overlayRef.updatePosition();
+    return this;
+  }
+  /**
+   * Updates the dialog's width and height.
+   * @param width New width of the dialog.
+   * @param height New height of the dialog.
+   */
+  updateSize(width = "", height = "") {
+    this.overlayRef.updateSize({
+      width,
+      height
+    });
+    return this;
+  }
+  /** Add a CSS class or an array of classes to the overlay pane. */
+  addPanelClass(classes) {
+    this.overlayRef.addPanelClass(classes);
+    return this;
+  }
+  /** Remove a CSS class or an array of classes from the overlay pane. */
+  removePanelClass(classes) {
+    this.overlayRef.removePanelClass(classes);
+    return this;
+  }
+};
+var DIALOG_SCROLL_STRATEGY = new InjectionToken("DialogScrollStrategy", {
+  providedIn: "root",
+  factory: () => {
+    const overlay = inject(Overlay);
+    return () => overlay.scrollStrategies.block();
+  }
+});
+var DIALOG_DATA = new InjectionToken("DialogData");
+var DEFAULT_DIALOG_CONFIG = new InjectionToken("DefaultDialogConfig");
+var uniqueId = 0;
+var _Dialog = class _Dialog {
+  /** Keeps track of the currently-open dialogs. */
+  get openDialogs() {
+    return this._parentDialog ? this._parentDialog.openDialogs : this._openDialogsAtThisLevel;
+  }
+  /** Stream that emits when a dialog has been opened. */
+  get afterOpened() {
+    return this._parentDialog ? this._parentDialog.afterOpened : this._afterOpenedAtThisLevel;
+  }
+  constructor(_overlay, _injector, _defaultOptions, _parentDialog, _overlayContainer, scrollStrategy) {
+    this._overlay = _overlay;
+    this._injector = _injector;
+    this._defaultOptions = _defaultOptions;
+    this._parentDialog = _parentDialog;
+    this._overlayContainer = _overlayContainer;
+    this._openDialogsAtThisLevel = [];
+    this._afterAllClosedAtThisLevel = new Subject();
+    this._afterOpenedAtThisLevel = new Subject();
+    this._ariaHiddenElements = /* @__PURE__ */ new Map();
+    this.afterAllClosed = defer(() => this.openDialogs.length ? this._getAfterAllClosed() : this._getAfterAllClosed().pipe(startWith(void 0)));
+    this._scrollStrategy = scrollStrategy;
+  }
+  open(componentOrTemplateRef, config2) {
+    const defaults2 = this._defaultOptions || new DialogConfig();
+    config2 = __spreadValues(__spreadValues({}, defaults2), config2);
+    config2.id = config2.id || `cdk-dialog-${uniqueId++}`;
+    if (config2.id && this.getDialogById(config2.id) && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error(`Dialog with id "${config2.id}" exists already. The dialog id must be unique.`);
+    }
+    const overlayConfig = this._getOverlayConfig(config2);
+    const overlayRef = this._overlay.create(overlayConfig);
+    const dialogRef = new DialogRef(overlayRef, config2);
+    const dialogContainer = this._attachContainer(overlayRef, dialogRef, config2);
+    dialogRef.containerInstance = dialogContainer;
+    this._attachDialogContent(componentOrTemplateRef, dialogRef, dialogContainer, config2);
+    if (!this.openDialogs.length) {
+      this._hideNonDialogContentFromAssistiveTechnology();
+    }
+    this.openDialogs.push(dialogRef);
+    dialogRef.closed.subscribe(() => this._removeOpenDialog(dialogRef, true));
+    this.afterOpened.next(dialogRef);
+    return dialogRef;
+  }
+  /**
+   * Closes all of the currently-open dialogs.
+   */
+  closeAll() {
+    reverseForEach(this.openDialogs, (dialog) => dialog.close());
+  }
+  /**
+   * Finds an open dialog by its id.
+   * @param id ID to use when looking up the dialog.
+   */
+  getDialogById(id) {
+    return this.openDialogs.find((dialog) => dialog.id === id);
+  }
+  ngOnDestroy() {
+    reverseForEach(this._openDialogsAtThisLevel, (dialog) => {
+      if (dialog.config.closeOnDestroy === false) {
+        this._removeOpenDialog(dialog, false);
+      }
+    });
+    reverseForEach(this._openDialogsAtThisLevel, (dialog) => dialog.close());
+    this._afterAllClosedAtThisLevel.complete();
+    this._afterOpenedAtThisLevel.complete();
+    this._openDialogsAtThisLevel = [];
+  }
+  /**
+   * Creates an overlay config from a dialog config.
+   * @param config The dialog configuration.
+   * @returns The overlay configuration.
+   */
+  _getOverlayConfig(config2) {
+    const state2 = new OverlayConfig({
+      positionStrategy: config2.positionStrategy || this._overlay.position().global().centerHorizontally().centerVertically(),
+      scrollStrategy: config2.scrollStrategy || this._scrollStrategy(),
+      panelClass: config2.panelClass,
+      hasBackdrop: config2.hasBackdrop,
+      direction: config2.direction,
+      minWidth: config2.minWidth,
+      minHeight: config2.minHeight,
+      maxWidth: config2.maxWidth,
+      maxHeight: config2.maxHeight,
+      width: config2.width,
+      height: config2.height,
+      disposeOnNavigation: config2.closeOnNavigation
+    });
+    if (config2.backdropClass) {
+      state2.backdropClass = config2.backdropClass;
+    }
+    return state2;
+  }
+  /**
+   * Attaches a dialog container to a dialog's already-created overlay.
+   * @param overlay Reference to the dialog's underlying overlay.
+   * @param config The dialog configuration.
+   * @returns A promise resolving to a ComponentRef for the attached container.
+   */
+  _attachContainer(overlay, dialogRef, config2) {
+    const userInjector = config2.injector || config2.viewContainerRef?.injector;
+    const providers = [{
+      provide: DialogConfig,
+      useValue: config2
+    }, {
+      provide: DialogRef,
+      useValue: dialogRef
+    }, {
+      provide: OverlayRef,
+      useValue: overlay
+    }];
+    let containerType;
+    if (config2.container) {
+      if (typeof config2.container === "function") {
+        containerType = config2.container;
+      } else {
+        containerType = config2.container.type;
+        providers.push(...config2.container.providers(config2));
+      }
+    } else {
+      containerType = CdkDialogContainer;
+    }
+    const containerPortal = new ComponentPortal(containerType, config2.viewContainerRef, Injector.create({
+      parent: userInjector || this._injector,
+      providers
+    }), config2.componentFactoryResolver);
+    const containerRef = overlay.attach(containerPortal);
+    return containerRef.instance;
+  }
+  /**
+   * Attaches the user-provided component to the already-created dialog container.
+   * @param componentOrTemplateRef The type of component being loaded into the dialog,
+   *     or a TemplateRef to instantiate as the content.
+   * @param dialogRef Reference to the dialog being opened.
+   * @param dialogContainer Component that is going to wrap the dialog content.
+   * @param config Configuration used to open the dialog.
+   */
+  _attachDialogContent(componentOrTemplateRef, dialogRef, dialogContainer, config2) {
+    if (componentOrTemplateRef instanceof TemplateRef) {
+      const injector = this._createInjector(config2, dialogRef, dialogContainer, void 0);
+      let context2 = {
+        $implicit: config2.data,
+        dialogRef
+      };
+      if (config2.templateContext) {
+        context2 = __spreadValues(__spreadValues({}, context2), typeof config2.templateContext === "function" ? config2.templateContext() : config2.templateContext);
+      }
+      dialogContainer.attachTemplatePortal(new TemplatePortal(componentOrTemplateRef, null, context2, injector));
+    } else {
+      const injector = this._createInjector(config2, dialogRef, dialogContainer, this._injector);
+      const contentRef = dialogContainer.attachComponentPortal(new ComponentPortal(componentOrTemplateRef, config2.viewContainerRef, injector, config2.componentFactoryResolver));
+      dialogRef.componentRef = contentRef;
+      dialogRef.componentInstance = contentRef.instance;
+    }
+  }
+  /**
+   * Creates a custom injector to be used inside the dialog. This allows a component loaded inside
+   * of a dialog to close itself and, optionally, to return a value.
+   * @param config Config object that is used to construct the dialog.
+   * @param dialogRef Reference to the dialog being opened.
+   * @param dialogContainer Component that is going to wrap the dialog content.
+   * @param fallbackInjector Injector to use as a fallback when a lookup fails in the custom
+   * dialog injector, if the user didn't provide a custom one.
+   * @returns The custom injector that can be used inside the dialog.
+   */
+  _createInjector(config2, dialogRef, dialogContainer, fallbackInjector) {
+    const userInjector = config2.injector || config2.viewContainerRef?.injector;
+    const providers = [{
+      provide: DIALOG_DATA,
+      useValue: config2.data
+    }, {
+      provide: DialogRef,
+      useValue: dialogRef
+    }];
+    if (config2.providers) {
+      if (typeof config2.providers === "function") {
+        providers.push(...config2.providers(dialogRef, config2, dialogContainer));
+      } else {
+        providers.push(...config2.providers);
+      }
+    }
+    if (config2.direction && (!userInjector || !userInjector.get(Directionality, null, {
+      optional: true
+    }))) {
+      providers.push({
+        provide: Directionality,
+        useValue: {
+          value: config2.direction,
+          change: of()
+        }
+      });
+    }
+    return Injector.create({
+      parent: userInjector || fallbackInjector,
+      providers
+    });
+  }
+  /**
+   * Removes a dialog from the array of open dialogs.
+   * @param dialogRef Dialog to be removed.
+   * @param emitEvent Whether to emit an event if this is the last dialog.
+   */
+  _removeOpenDialog(dialogRef, emitEvent) {
+    const index = this.openDialogs.indexOf(dialogRef);
+    if (index > -1) {
+      this.openDialogs.splice(index, 1);
+      if (!this.openDialogs.length) {
+        this._ariaHiddenElements.forEach((previousValue, element) => {
+          if (previousValue) {
+            element.setAttribute("aria-hidden", previousValue);
+          } else {
+            element.removeAttribute("aria-hidden");
+          }
+        });
+        this._ariaHiddenElements.clear();
+        if (emitEvent) {
+          this._getAfterAllClosed().next();
+        }
+      }
+    }
+  }
+  /** Hides all of the content that isn't an overlay from assistive technology. */
+  _hideNonDialogContentFromAssistiveTechnology() {
+    const overlayContainer = this._overlayContainer.getContainerElement();
+    if (overlayContainer.parentElement) {
+      const siblings = overlayContainer.parentElement.children;
+      for (let i = siblings.length - 1; i > -1; i--) {
+        const sibling = siblings[i];
+        if (sibling !== overlayContainer && sibling.nodeName !== "SCRIPT" && sibling.nodeName !== "STYLE" && !sibling.hasAttribute("aria-live")) {
+          this._ariaHiddenElements.set(sibling, sibling.getAttribute("aria-hidden"));
+          sibling.setAttribute("aria-hidden", "true");
+        }
+      }
+    }
+  }
+  _getAfterAllClosed() {
+    const parent = this._parentDialog;
+    return parent ? parent._getAfterAllClosed() : this._afterAllClosedAtThisLevel;
+  }
+};
+_Dialog.\u0275fac = function Dialog_Factory(t) {
+  return new (t || _Dialog)(\u0275\u0275inject(Overlay), \u0275\u0275inject(Injector), \u0275\u0275inject(DEFAULT_DIALOG_CONFIG, 8), \u0275\u0275inject(_Dialog, 12), \u0275\u0275inject(OverlayContainer), \u0275\u0275inject(DIALOG_SCROLL_STRATEGY));
+};
+_Dialog.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+  token: _Dialog,
+  factory: _Dialog.\u0275fac,
+  providedIn: "root"
+});
+var Dialog = _Dialog;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Dialog, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: Overlay
+  }, {
+    type: Injector
+  }, {
+    type: DialogConfig,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [DEFAULT_DIALOG_CONFIG]
+    }]
+  }, {
+    type: Dialog,
+    decorators: [{
+      type: Optional
+    }, {
+      type: SkipSelf
+    }]
+  }, {
+    type: OverlayContainer
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DIALOG_SCROLL_STRATEGY]
+    }]
+  }], null);
+})();
+function reverseForEach(items, callback) {
+  let i = items.length;
+  while (i--) {
+    callback(items[i]);
+  }
+}
+var _DialogModule = class _DialogModule {
+};
+_DialogModule.\u0275fac = function DialogModule_Factory(t) {
+  return new (t || _DialogModule)();
+};
+_DialogModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _DialogModule
+});
+_DialogModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  providers: [Dialog],
+  imports: [
+    OverlayModule,
+    PortalModule,
+    A11yModule,
+    // Re-export the PortalModule so that people extending the `CdkDialogContainer`
+    // don't have to remember to import it or be faced with an unhelpful error.
+    PortalModule
+  ]
+});
+var DialogModule = _DialogModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DialogModule, [{
+    type: NgModule,
+    args: [{
+      imports: [OverlayModule, PortalModule, A11yModule, CdkDialogContainer],
+      exports: [
+        // Re-export the PortalModule so that people extending the `CdkDialogContainer`
+        // don't have to remember to import it or be faced with an unhelpful error.
+        PortalModule,
+        CdkDialogContainer
+      ],
+      providers: [Dialog]
+    }]
+  }], null, null);
+})();
+
+// node_modules/@angular/material/fesm2022/dialog.mjs
+function MatDialogContainer_ng_template_2_Template(rf, ctx) {
+}
+var MatDialogConfig = class {
+  constructor() {
+    this.role = "dialog";
+    this.panelClass = "";
+    this.hasBackdrop = true;
+    this.backdropClass = "";
+    this.disableClose = false;
+    this.width = "";
+    this.height = "";
+    this.maxWidth = "80vw";
+    this.data = null;
+    this.ariaDescribedBy = null;
+    this.ariaLabelledBy = null;
+    this.ariaLabel = null;
+    this.ariaModal = true;
+    this.autoFocus = "first-tabbable";
+    this.restoreFocus = true;
+    this.delayFocusTrap = true;
+    this.closeOnNavigation = true;
+  }
+};
+var OPEN_CLASS = "mdc-dialog--open";
+var OPENING_CLASS = "mdc-dialog--opening";
+var CLOSING_CLASS = "mdc-dialog--closing";
+var OPEN_ANIMATION_DURATION = 150;
+var CLOSE_ANIMATION_DURATION = 75;
+var _MatDialogContainer = class _MatDialogContainer extends CdkDialogContainer {
+  constructor(elementRef, focusTrapFactory, _document2, dialogConfig, interactivityChecker, ngZone, overlayRef, _animationMode, focusMonitor) {
+    super(elementRef, focusTrapFactory, _document2, dialogConfig, interactivityChecker, ngZone, overlayRef, focusMonitor);
+    this._animationMode = _animationMode;
+    this._animationStateChanged = new EventEmitter();
+    this._animationsEnabled = this._animationMode !== "NoopAnimations";
+    this._hostElement = this._elementRef.nativeElement;
+    this._enterAnimationDuration = this._animationsEnabled ? parseCssTime(this._config.enterAnimationDuration) ?? OPEN_ANIMATION_DURATION : 0;
+    this._exitAnimationDuration = this._animationsEnabled ? parseCssTime(this._config.exitAnimationDuration) ?? CLOSE_ANIMATION_DURATION : 0;
+    this._animationTimer = null;
+    this._finishDialogOpen = () => {
+      this._clearAnimationClasses();
+      this._openAnimationDone(this._enterAnimationDuration);
+    };
+    this._finishDialogClose = () => {
+      this._clearAnimationClasses();
+      this._animationStateChanged.emit({
+        state: "closed",
+        totalTime: this._exitAnimationDuration
+      });
+    };
+  }
+  _contentAttached() {
+    super._contentAttached();
+    this._startOpenAnimation();
+  }
+  /** Starts the dialog open animation if enabled. */
+  _startOpenAnimation() {
+    this._animationStateChanged.emit({
+      state: "opening",
+      totalTime: this._enterAnimationDuration
+    });
+    if (this._animationsEnabled) {
+      this._hostElement.style.setProperty(TRANSITION_DURATION_PROPERTY, `${this._enterAnimationDuration}ms`);
+      this._requestAnimationFrame(() => this._hostElement.classList.add(OPENING_CLASS, OPEN_CLASS));
+      this._waitForAnimationToComplete(this._enterAnimationDuration, this._finishDialogOpen);
+    } else {
+      this._hostElement.classList.add(OPEN_CLASS);
+      Promise.resolve().then(() => this._finishDialogOpen());
+    }
+  }
+  /**
+   * Starts the exit animation of the dialog if enabled. This method is
+   * called by the dialog ref.
+   */
+  _startExitAnimation() {
+    this._animationStateChanged.emit({
+      state: "closing",
+      totalTime: this._exitAnimationDuration
+    });
+    this._hostElement.classList.remove(OPEN_CLASS);
+    if (this._animationsEnabled) {
+      this._hostElement.style.setProperty(TRANSITION_DURATION_PROPERTY, `${this._exitAnimationDuration}ms`);
+      this._requestAnimationFrame(() => this._hostElement.classList.add(CLOSING_CLASS));
+      this._waitForAnimationToComplete(this._exitAnimationDuration, this._finishDialogClose);
+    } else {
+      Promise.resolve().then(() => this._finishDialogClose());
+    }
+  }
+  /** Clears all dialog animation classes. */
+  _clearAnimationClasses() {
+    this._hostElement.classList.remove(OPENING_CLASS, CLOSING_CLASS);
+  }
+  _waitForAnimationToComplete(duration, callback) {
+    if (this._animationTimer !== null) {
+      clearTimeout(this._animationTimer);
+    }
+    this._animationTimer = setTimeout(callback, duration);
+  }
+  /** Runs a callback in `requestAnimationFrame`, if available. */
+  _requestAnimationFrame(callback) {
+    this._ngZone.runOutsideAngular(() => {
+      if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(callback);
+      } else {
+        callback();
+      }
+    });
+  }
+  _captureInitialFocus() {
+    if (!this._config.delayFocusTrap) {
+      this._trapFocus();
+    }
+  }
+  /**
+   * Callback for when the open dialog animation has finished. Intended to
+   * be called by sub-classes that use different animation implementations.
+   */
+  _openAnimationDone(totalTime) {
+    if (this._config.delayFocusTrap) {
+      this._trapFocus();
+    }
+    this._animationStateChanged.next({
+      state: "opened",
+      totalTime
+    });
+  }
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    if (this._animationTimer !== null) {
+      clearTimeout(this._animationTimer);
+    }
+  }
+  attachComponentPortal(portal) {
+    const ref = super.attachComponentPortal(portal);
+    ref.location.nativeElement.classList.add("mat-mdc-dialog-component-host");
+    return ref;
+  }
+};
+_MatDialogContainer.\u0275fac = function MatDialogContainer_Factory(t) {
+  return new (t || _MatDialogContainer)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(FocusTrapFactory), \u0275\u0275directiveInject(DOCUMENT2, 8), \u0275\u0275directiveInject(MatDialogConfig), \u0275\u0275directiveInject(InteractivityChecker), \u0275\u0275directiveInject(NgZone), \u0275\u0275directiveInject(OverlayRef), \u0275\u0275directiveInject(ANIMATION_MODULE_TYPE, 8), \u0275\u0275directiveInject(FocusMonitor));
+};
+_MatDialogContainer.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatDialogContainer,
+  selectors: [["mat-dialog-container"]],
+  hostAttrs: ["tabindex", "-1", 1, "mat-mdc-dialog-container", "mdc-dialog"],
+  hostVars: 8,
+  hostBindings: function MatDialogContainer_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275hostProperty("id", ctx._config.id);
+      \u0275\u0275attribute("aria-modal", ctx._config.ariaModal)("role", ctx._config.role)("aria-labelledby", ctx._config.ariaLabel ? null : ctx._ariaLabelledByQueue[0])("aria-label", ctx._config.ariaLabel)("aria-describedby", ctx._config.ariaDescribedBy || null);
+      \u0275\u0275classProp("_mat-animation-noopable", !ctx._animationsEnabled);
+    }
+  },
+  standalone: true,
+  features: [\u0275\u0275InheritDefinitionFeature, \u0275\u0275StandaloneFeature],
+  decls: 3,
+  vars: 0,
+  consts: [[1, "mdc-dialog__container"], [1, "mat-mdc-dialog-surface", "mdc-dialog__surface"], ["cdkPortalOutlet", ""]],
+  template: function MatDialogContainer_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1);
+      \u0275\u0275template(2, MatDialogContainer_ng_template_2_Template, 0, 0, "ng-template", 2);
+      \u0275\u0275elementEnd()();
+    }
+  },
+  dependencies: [CdkPortalOutlet],
+  styles: ['.mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:var(--mdc-elevation-overlay-opacity, 0);transition:opacity 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-dialog,.mdc-dialog__scrim{position:fixed;top:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:100%}.mdc-dialog{display:none;z-index:var(--mdc-dialog-z-index, 7)}.mdc-dialog .mdc-dialog__content{padding:20px 24px 20px 24px}.mdc-dialog .mdc-dialog__surface{min-width:280px}@media(max-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:calc(100vw - 32px)}}@media(min-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:560px}}.mdc-dialog .mdc-dialog__surface{max-height:calc(100% - 32px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-width:none}@media(max-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px;width:560px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 112px)}}@media(max-width: 720px)and (min-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:560px}}@media(max-width: 720px)and (max-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:calc(100vh - 160px)}}@media(max-width: 720px)and (min-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px}}@media(max-width: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-height: 400px),(max-width: 600px),(min-width: 720px)and (max-height: 400px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{height:100%;max-height:100vh;max-width:100vw;width:100vw;border-radius:0}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{order:-1;left:-12px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__header{padding:0 16px 9px;justify-content:flex-start}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__title{margin-left:calc(16px - 2 * 12px)}}@media(min-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 400px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}.mdc-dialog.mdc-dialog__scrim--hidden .mdc-dialog__scrim{opacity:0}.mdc-dialog__scrim{opacity:0;z-index:-1}.mdc-dialog__container{display:flex;flex-direction:row;align-items:center;justify-content:space-around;box-sizing:border-box;height:100%;opacity:0;pointer-events:none}.mdc-dialog__surface{position:relative;display:flex;flex-direction:column;flex-grow:0;flex-shrink:0;box-sizing:border-box;max-width:100%;max-height:100%;pointer-events:auto;overflow-y:auto;outline:0;transform:scale(0.8)}.mdc-dialog__surface .mdc-elevation-overlay{width:100%;height:100%;top:0;left:0}[dir=rtl] .mdc-dialog__surface,.mdc-dialog__surface[dir=rtl]{text-align:right}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-dialog__surface{outline:2px solid windowText}}.mdc-dialog__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:2px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-dialog__surface::before{border-color:CanvasText}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.mdc-dialog__surface::before{content:none}}.mdc-dialog__title{display:block;margin-top:0;position:relative;flex-shrink:0;box-sizing:border-box;margin:0 0 1px;padding:0 24px 9px}.mdc-dialog__title::before{display:inline-block;width:0;height:40px;content:"";vertical-align:0}[dir=rtl] .mdc-dialog__title,.mdc-dialog__title[dir=rtl]{text-align:right}.mdc-dialog--scrollable .mdc-dialog__title{margin-bottom:1px;padding-bottom:15px}.mdc-dialog--fullscreen .mdc-dialog__header{align-items:baseline;border-bottom:1px solid rgba(0,0,0,0);display:inline-flex;justify-content:space-between;padding:0 24px 9px;z-index:1}@media screen and (forced-colors: active){.mdc-dialog--fullscreen .mdc-dialog__header{border-bottom-color:CanvasText}}.mdc-dialog--fullscreen .mdc-dialog__header .mdc-dialog__close{right:-12px}.mdc-dialog--fullscreen .mdc-dialog__title{margin-bottom:0;padding:0;border-bottom:0}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__title{border-bottom:0;margin-bottom:0}.mdc-dialog--fullscreen .mdc-dialog__close{top:5px}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top:1px solid rgba(0,0,0,0)}@media screen and (forced-colors: active){.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog--fullscreen--titleless .mdc-dialog__close{margin-top:4px}.mdc-dialog--fullscreen--titleless.mdc-dialog--scrollable .mdc-dialog__close{margin-top:0}.mdc-dialog__content{flex-grow:1;box-sizing:border-box;margin:0;overflow:auto}.mdc-dialog__content>:first-child{margin-top:0}.mdc-dialog__content>:last-child{margin-bottom:0}.mdc-dialog__title+.mdc-dialog__content,.mdc-dialog__header+.mdc-dialog__content{padding-top:0}.mdc-dialog--scrollable .mdc-dialog__title+.mdc-dialog__content{padding-top:8px;padding-bottom:8px}.mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:6px 0 0}.mdc-dialog--scrollable .mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:0}.mdc-dialog__actions{display:flex;position:relative;flex-shrink:0;flex-wrap:wrap;align-items:center;justify-content:flex-end;box-sizing:border-box;min-height:52px;margin:0;padding:8px;border-top:1px solid rgba(0,0,0,0)}@media screen and (forced-colors: active){.mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog--stacked .mdc-dialog__actions{flex-direction:column;align-items:flex-end}.mdc-dialog__button{margin-left:8px;margin-right:0;max-width:100%;text-align:right}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{margin-left:0;margin-right:8px}.mdc-dialog__button:first-child{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button:first-child,.mdc-dialog__button:first-child[dir=rtl]{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{text-align:left}.mdc-dialog--stacked .mdc-dialog__button:not(:first-child){margin-top:12px}.mdc-dialog--open,.mdc-dialog--opening,.mdc-dialog--closing{display:flex}.mdc-dialog--opening .mdc-dialog__scrim{transition:opacity 150ms linear}.mdc-dialog--opening .mdc-dialog__container{transition:opacity 75ms linear,transform 150ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-dialog--closing .mdc-dialog__scrim,.mdc-dialog--closing .mdc-dialog__container{transition:opacity 75ms linear}.mdc-dialog--closing .mdc-dialog__container{transform:none}.mdc-dialog--closing .mdc-dialog__surface{transform:none}.mdc-dialog--open .mdc-dialog__scrim{opacity:1}.mdc-dialog--open .mdc-dialog__container{opacity:1}.mdc-dialog--open .mdc-dialog__surface{transform:none}.mdc-dialog--open.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim{opacity:1}.mdc-dialog--open.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{transition:opacity 75ms linear}.mdc-dialog--open.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim{transition:opacity 150ms linear}.mdc-dialog__surface-scrim{display:none;opacity:0;position:absolute;width:100%;height:100%;z-index:1}.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{display:block}.mdc-dialog-scroll-lock{overflow:hidden}.mdc-dialog--no-content-padding .mdc-dialog__content{padding:0}.mdc-dialog--sheet .mdc-dialog__container .mdc-dialog__close{right:12px;top:9px;position:absolute;z-index:1}.mdc-dialog__scrim--removed{pointer-events:none}.mdc-dialog__scrim--removed .mdc-dialog__scrim,.mdc-dialog__scrim--removed .mdc-dialog__surface-scrim{display:none}.mat-mdc-dialog-content{max-height:65vh}.mat-mdc-dialog-container{position:static;display:block}.mat-mdc-dialog-container,.mat-mdc-dialog-container .mdc-dialog__container,.mat-mdc-dialog-container .mdc-dialog__surface{max-height:inherit;min-height:inherit;min-width:inherit;max-width:inherit}.mat-mdc-dialog-container .mdc-dialog__surface{width:100%;height:100%}.mat-mdc-dialog-component-host{display:contents}.mat-mdc-dialog-container{--mdc-dialog-container-elevation: var(--mdc-dialog-container-elevation-shadow);outline:0}.mat-mdc-dialog-container .mdc-dialog__surface{background-color:var(--mdc-dialog-container-color, white)}.mat-mdc-dialog-container .mdc-dialog__surface{box-shadow:var(--mdc-dialog-container-elevation, 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12))}.mat-mdc-dialog-container .mdc-dialog__surface{border-radius:var(--mdc-dialog-container-shape, 4px)}.mat-mdc-dialog-container .mdc-dialog__title{font-family:var(--mdc-dialog-subhead-font, Roboto, sans-serif);line-height:var(--mdc-dialog-subhead-line-height, 1.5rem);font-size:var(--mdc-dialog-subhead-size, 1rem);font-weight:var(--mdc-dialog-subhead-weight, 400);letter-spacing:var(--mdc-dialog-subhead-tracking, 0.03125em)}.mat-mdc-dialog-container .mdc-dialog__title{color:var(--mdc-dialog-subhead-color, rgba(0, 0, 0, 0.87))}.mat-mdc-dialog-container .mdc-dialog__content{font-family:var(--mdc-dialog-supporting-text-font, Roboto, sans-serif);line-height:var(--mdc-dialog-supporting-text-line-height, 1.5rem);font-size:var(--mdc-dialog-supporting-text-size, 1rem);font-weight:var(--mdc-dialog-supporting-text-weight, 400);letter-spacing:var(--mdc-dialog-supporting-text-tracking, 0.03125em)}.mat-mdc-dialog-container .mdc-dialog__content{color:var(--mdc-dialog-supporting-text-color, rgba(0, 0, 0, 0.6))}.mat-mdc-dialog-container .mdc-dialog__container{transition:opacity linear var(--mat-dialog-transition-duration, 0ms)}.mat-mdc-dialog-container .mdc-dialog__surface{transition:transform var(--mat-dialog-transition-duration, 0ms) 0ms cubic-bezier(0, 0, 0.2, 1)}.mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__container,.mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__surface{transition:none}.mat-mdc-dialog-content{display:block}.mat-mdc-dialog-actions{justify-content:start}.mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-center,.mat-mdc-dialog-actions[align=center]{justify-content:center}.mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-end,.mat-mdc-dialog-actions[align=end]{justify-content:flex-end}.mat-mdc-dialog-actions .mat-button-base+.mat-button-base,.mat-mdc-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base{margin-left:8px}[dir=rtl] .mat-mdc-dialog-actions .mat-button-base+.mat-button-base,[dir=rtl] .mat-mdc-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base{margin-left:0;margin-right:8px}'],
+  encapsulation: 2
+});
+var MatDialogContainer = _MatDialogContainer;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialogContainer, [{
+    type: Component,
+    args: [{
+      selector: "mat-dialog-container",
+      encapsulation: ViewEncapsulation$1.None,
+      changeDetection: ChangeDetectionStrategy.Default,
+      standalone: true,
+      imports: [CdkPortalOutlet],
+      host: {
+        "class": "mat-mdc-dialog-container mdc-dialog",
+        "tabindex": "-1",
+        "[attr.aria-modal]": "_config.ariaModal",
+        "[id]": "_config.id",
+        "[attr.role]": "_config.role",
+        "[attr.aria-labelledby]": "_config.ariaLabel ? null : _ariaLabelledByQueue[0]",
+        "[attr.aria-label]": "_config.ariaLabel",
+        "[attr.aria-describedby]": "_config.ariaDescribedBy || null",
+        "[class._mat-animation-noopable]": "!_animationsEnabled"
+      },
+      template: '<div class="mdc-dialog__container">\n  <div class="mat-mdc-dialog-surface mdc-dialog__surface">\n    <ng-template cdkPortalOutlet />\n  </div>\n</div>\n',
+      styles: ['.mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:var(--mdc-elevation-overlay-opacity, 0);transition:opacity 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mdc-dialog,.mdc-dialog__scrim{position:fixed;top:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:100%}.mdc-dialog{display:none;z-index:var(--mdc-dialog-z-index, 7)}.mdc-dialog .mdc-dialog__content{padding:20px 24px 20px 24px}.mdc-dialog .mdc-dialog__surface{min-width:280px}@media(max-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:calc(100vw - 32px)}}@media(min-width: 592px){.mdc-dialog .mdc-dialog__surface{max-width:560px}}.mdc-dialog .mdc-dialog__surface{max-height:calc(100% - 32px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-width:none}@media(max-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px;width:560px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 112px)}}@media(max-width: 720px)and (min-width: 672px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:560px}}@media(max-width: 720px)and (max-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:calc(100vh - 160px)}}@media(max-width: 720px)and (min-height: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{max-height:560px}}@media(max-width: 720px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}@media(max-width: 720px)and (max-height: 400px),(max-width: 600px),(min-width: 720px)and (max-height: 400px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{height:100%;max-height:100vh;max-width:100vw;width:100vw;border-radius:0}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{order:-1;left:-12px}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__header{padding:0 16px 9px;justify-content:flex-start}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__title{margin-left:calc(16px - 2 * 12px)}}@media(min-width: 960px){.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface{width:calc(100vw - 400px)}.mdc-dialog.mdc-dialog--fullscreen .mdc-dialog__surface .mdc-dialog__close{right:-12px}}.mdc-dialog.mdc-dialog__scrim--hidden .mdc-dialog__scrim{opacity:0}.mdc-dialog__scrim{opacity:0;z-index:-1}.mdc-dialog__container{display:flex;flex-direction:row;align-items:center;justify-content:space-around;box-sizing:border-box;height:100%;opacity:0;pointer-events:none}.mdc-dialog__surface{position:relative;display:flex;flex-direction:column;flex-grow:0;flex-shrink:0;box-sizing:border-box;max-width:100%;max-height:100%;pointer-events:auto;overflow-y:auto;outline:0;transform:scale(0.8)}.mdc-dialog__surface .mdc-elevation-overlay{width:100%;height:100%;top:0;left:0}[dir=rtl] .mdc-dialog__surface,.mdc-dialog__surface[dir=rtl]{text-align:right}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mdc-dialog__surface{outline:2px solid windowText}}.mdc-dialog__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:2px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-dialog__surface::before{border-color:CanvasText}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.mdc-dialog__surface::before{content:none}}.mdc-dialog__title{display:block;margin-top:0;position:relative;flex-shrink:0;box-sizing:border-box;margin:0 0 1px;padding:0 24px 9px}.mdc-dialog__title::before{display:inline-block;width:0;height:40px;content:"";vertical-align:0}[dir=rtl] .mdc-dialog__title,.mdc-dialog__title[dir=rtl]{text-align:right}.mdc-dialog--scrollable .mdc-dialog__title{margin-bottom:1px;padding-bottom:15px}.mdc-dialog--fullscreen .mdc-dialog__header{align-items:baseline;border-bottom:1px solid rgba(0,0,0,0);display:inline-flex;justify-content:space-between;padding:0 24px 9px;z-index:1}@media screen and (forced-colors: active){.mdc-dialog--fullscreen .mdc-dialog__header{border-bottom-color:CanvasText}}.mdc-dialog--fullscreen .mdc-dialog__header .mdc-dialog__close{right:-12px}.mdc-dialog--fullscreen .mdc-dialog__title{margin-bottom:0;padding:0;border-bottom:0}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__title{border-bottom:0;margin-bottom:0}.mdc-dialog--fullscreen .mdc-dialog__close{top:5px}.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top:1px solid rgba(0,0,0,0)}@media screen and (forced-colors: active){.mdc-dialog--fullscreen.mdc-dialog--scrollable .mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog--fullscreen--titleless .mdc-dialog__close{margin-top:4px}.mdc-dialog--fullscreen--titleless.mdc-dialog--scrollable .mdc-dialog__close{margin-top:0}.mdc-dialog__content{flex-grow:1;box-sizing:border-box;margin:0;overflow:auto}.mdc-dialog__content>:first-child{margin-top:0}.mdc-dialog__content>:last-child{margin-bottom:0}.mdc-dialog__title+.mdc-dialog__content,.mdc-dialog__header+.mdc-dialog__content{padding-top:0}.mdc-dialog--scrollable .mdc-dialog__title+.mdc-dialog__content{padding-top:8px;padding-bottom:8px}.mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:6px 0 0}.mdc-dialog--scrollable .mdc-dialog__content .mdc-deprecated-list:first-child:last-child{padding:0}.mdc-dialog__actions{display:flex;position:relative;flex-shrink:0;flex-wrap:wrap;align-items:center;justify-content:flex-end;box-sizing:border-box;min-height:52px;margin:0;padding:8px;border-top:1px solid rgba(0,0,0,0)}@media screen and (forced-colors: active){.mdc-dialog__actions{border-top-color:CanvasText}}.mdc-dialog--stacked .mdc-dialog__actions{flex-direction:column;align-items:flex-end}.mdc-dialog__button{margin-left:8px;margin-right:0;max-width:100%;text-align:right}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{margin-left:0;margin-right:8px}.mdc-dialog__button:first-child{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button:first-child,.mdc-dialog__button:first-child[dir=rtl]{margin-left:0;margin-right:0}[dir=rtl] .mdc-dialog__button,.mdc-dialog__button[dir=rtl]{text-align:left}.mdc-dialog--stacked .mdc-dialog__button:not(:first-child){margin-top:12px}.mdc-dialog--open,.mdc-dialog--opening,.mdc-dialog--closing{display:flex}.mdc-dialog--opening .mdc-dialog__scrim{transition:opacity 150ms linear}.mdc-dialog--opening .mdc-dialog__container{transition:opacity 75ms linear,transform 150ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-dialog--closing .mdc-dialog__scrim,.mdc-dialog--closing .mdc-dialog__container{transition:opacity 75ms linear}.mdc-dialog--closing .mdc-dialog__container{transform:none}.mdc-dialog--closing .mdc-dialog__surface{transform:none}.mdc-dialog--open .mdc-dialog__scrim{opacity:1}.mdc-dialog--open .mdc-dialog__container{opacity:1}.mdc-dialog--open .mdc-dialog__surface{transform:none}.mdc-dialog--open.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim{opacity:1}.mdc-dialog--open.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{transition:opacity 75ms linear}.mdc-dialog--open.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim{transition:opacity 150ms linear}.mdc-dialog__surface-scrim{display:none;opacity:0;position:absolute;width:100%;height:100%;z-index:1}.mdc-dialog__surface-scrim--shown .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--showing .mdc-dialog__surface-scrim,.mdc-dialog__surface-scrim--hiding .mdc-dialog__surface-scrim{display:block}.mdc-dialog-scroll-lock{overflow:hidden}.mdc-dialog--no-content-padding .mdc-dialog__content{padding:0}.mdc-dialog--sheet .mdc-dialog__container .mdc-dialog__close{right:12px;top:9px;position:absolute;z-index:1}.mdc-dialog__scrim--removed{pointer-events:none}.mdc-dialog__scrim--removed .mdc-dialog__scrim,.mdc-dialog__scrim--removed .mdc-dialog__surface-scrim{display:none}.mat-mdc-dialog-content{max-height:65vh}.mat-mdc-dialog-container{position:static;display:block}.mat-mdc-dialog-container,.mat-mdc-dialog-container .mdc-dialog__container,.mat-mdc-dialog-container .mdc-dialog__surface{max-height:inherit;min-height:inherit;min-width:inherit;max-width:inherit}.mat-mdc-dialog-container .mdc-dialog__surface{width:100%;height:100%}.mat-mdc-dialog-component-host{display:contents}.mat-mdc-dialog-container{--mdc-dialog-container-elevation: var(--mdc-dialog-container-elevation-shadow);outline:0}.mat-mdc-dialog-container .mdc-dialog__surface{background-color:var(--mdc-dialog-container-color, white)}.mat-mdc-dialog-container .mdc-dialog__surface{box-shadow:var(--mdc-dialog-container-elevation, 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12))}.mat-mdc-dialog-container .mdc-dialog__surface{border-radius:var(--mdc-dialog-container-shape, 4px)}.mat-mdc-dialog-container .mdc-dialog__title{font-family:var(--mdc-dialog-subhead-font, Roboto, sans-serif);line-height:var(--mdc-dialog-subhead-line-height, 1.5rem);font-size:var(--mdc-dialog-subhead-size, 1rem);font-weight:var(--mdc-dialog-subhead-weight, 400);letter-spacing:var(--mdc-dialog-subhead-tracking, 0.03125em)}.mat-mdc-dialog-container .mdc-dialog__title{color:var(--mdc-dialog-subhead-color, rgba(0, 0, 0, 0.87))}.mat-mdc-dialog-container .mdc-dialog__content{font-family:var(--mdc-dialog-supporting-text-font, Roboto, sans-serif);line-height:var(--mdc-dialog-supporting-text-line-height, 1.5rem);font-size:var(--mdc-dialog-supporting-text-size, 1rem);font-weight:var(--mdc-dialog-supporting-text-weight, 400);letter-spacing:var(--mdc-dialog-supporting-text-tracking, 0.03125em)}.mat-mdc-dialog-container .mdc-dialog__content{color:var(--mdc-dialog-supporting-text-color, rgba(0, 0, 0, 0.6))}.mat-mdc-dialog-container .mdc-dialog__container{transition:opacity linear var(--mat-dialog-transition-duration, 0ms)}.mat-mdc-dialog-container .mdc-dialog__surface{transition:transform var(--mat-dialog-transition-duration, 0ms) 0ms cubic-bezier(0, 0, 0.2, 1)}.mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__container,.mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__surface{transition:none}.mat-mdc-dialog-content{display:block}.mat-mdc-dialog-actions{justify-content:start}.mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-center,.mat-mdc-dialog-actions[align=center]{justify-content:center}.mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-end,.mat-mdc-dialog-actions[align=end]{justify-content:flex-end}.mat-mdc-dialog-actions .mat-button-base+.mat-button-base,.mat-mdc-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base{margin-left:8px}[dir=rtl] .mat-mdc-dialog-actions .mat-button-base+.mat-button-base,[dir=rtl] .mat-mdc-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base{margin-left:0;margin-right:8px}']
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: FocusTrapFactory
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [DOCUMENT2]
+    }]
+  }, {
+    type: MatDialogConfig
+  }, {
+    type: InteractivityChecker
+  }, {
+    type: NgZone
+  }, {
+    type: OverlayRef
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [ANIMATION_MODULE_TYPE]
+    }]
+  }, {
+    type: FocusMonitor
+  }], null);
+})();
+var TRANSITION_DURATION_PROPERTY = "--mat-dialog-transition-duration";
+function parseCssTime(time) {
+  if (time == null) {
+    return null;
+  }
+  if (typeof time === "number") {
+    return time;
+  }
+  if (time.endsWith("ms")) {
+    return coerceNumberProperty(time.substring(0, time.length - 2));
+  }
+  if (time.endsWith("s")) {
+    return coerceNumberProperty(time.substring(0, time.length - 1)) * 1e3;
+  }
+  if (time === "0") {
+    return 0;
+  }
+  return null;
+}
+var MatDialogState;
+(function(MatDialogState2) {
+  MatDialogState2[MatDialogState2["OPEN"] = 0] = "OPEN";
+  MatDialogState2[MatDialogState2["CLOSING"] = 1] = "CLOSING";
+  MatDialogState2[MatDialogState2["CLOSED"] = 2] = "CLOSED";
+})(MatDialogState || (MatDialogState = {}));
+var MatDialogRef = class {
+  constructor(_ref, config2, _containerInstance) {
+    this._ref = _ref;
+    this._containerInstance = _containerInstance;
+    this._afterOpened = new Subject();
+    this._beforeClosed = new Subject();
+    this._state = MatDialogState.OPEN;
+    this.disableClose = config2.disableClose;
+    this.id = _ref.id;
+    _containerInstance._animationStateChanged.pipe(filter((event) => event.state === "opened"), take(1)).subscribe(() => {
+      this._afterOpened.next();
+      this._afterOpened.complete();
+    });
+    _containerInstance._animationStateChanged.pipe(filter((event) => event.state === "closed"), take(1)).subscribe(() => {
+      clearTimeout(this._closeFallbackTimeout);
+      this._finishDialogClose();
+    });
+    _ref.overlayRef.detachments().subscribe(() => {
+      this._beforeClosed.next(this._result);
+      this._beforeClosed.complete();
+      this._finishDialogClose();
+    });
+    merge(this.backdropClick(), this.keydownEvents().pipe(filter((event) => event.keyCode === ESCAPE && !this.disableClose && !hasModifierKey(event)))).subscribe((event) => {
+      if (!this.disableClose) {
+        event.preventDefault();
+        _closeDialogVia(this, event.type === "keydown" ? "keyboard" : "mouse");
+      }
+    });
+  }
+  /**
+   * Close the dialog.
+   * @param dialogResult Optional result to return to the dialog opener.
+   */
+  close(dialogResult) {
+    this._result = dialogResult;
+    this._containerInstance._animationStateChanged.pipe(filter((event) => event.state === "closing"), take(1)).subscribe((event) => {
+      this._beforeClosed.next(dialogResult);
+      this._beforeClosed.complete();
+      this._ref.overlayRef.detachBackdrop();
+      this._closeFallbackTimeout = setTimeout(() => this._finishDialogClose(), event.totalTime + 100);
+    });
+    this._state = MatDialogState.CLOSING;
+    this._containerInstance._startExitAnimation();
+  }
+  /**
+   * Gets an observable that is notified when the dialog is finished opening.
+   */
+  afterOpened() {
+    return this._afterOpened;
+  }
+  /**
+   * Gets an observable that is notified when the dialog is finished closing.
+   */
+  afterClosed() {
+    return this._ref.closed;
+  }
+  /**
+   * Gets an observable that is notified when the dialog has started closing.
+   */
+  beforeClosed() {
+    return this._beforeClosed;
+  }
+  /**
+   * Gets an observable that emits when the overlay's backdrop has been clicked.
+   */
+  backdropClick() {
+    return this._ref.backdropClick;
+  }
+  /**
+   * Gets an observable that emits when keydown events are targeted on the overlay.
+   */
+  keydownEvents() {
+    return this._ref.keydownEvents;
+  }
+  /**
+   * Updates the dialog's position.
+   * @param position New dialog position.
+   */
+  updatePosition(position) {
+    let strategy = this._ref.config.positionStrategy;
+    if (position && (position.left || position.right)) {
+      position.left ? strategy.left(position.left) : strategy.right(position.right);
+    } else {
+      strategy.centerHorizontally();
+    }
+    if (position && (position.top || position.bottom)) {
+      position.top ? strategy.top(position.top) : strategy.bottom(position.bottom);
+    } else {
+      strategy.centerVertically();
+    }
+    this._ref.updatePosition();
+    return this;
+  }
+  /**
+   * Updates the dialog's width and height.
+   * @param width New width of the dialog.
+   * @param height New height of the dialog.
+   */
+  updateSize(width = "", height = "") {
+    this._ref.updateSize(width, height);
+    return this;
+  }
+  /** Add a CSS class or an array of classes to the overlay pane. */
+  addPanelClass(classes) {
+    this._ref.addPanelClass(classes);
+    return this;
+  }
+  /** Remove a CSS class or an array of classes from the overlay pane. */
+  removePanelClass(classes) {
+    this._ref.removePanelClass(classes);
+    return this;
+  }
+  /** Gets the current state of the dialog's lifecycle. */
+  getState() {
+    return this._state;
+  }
+  /**
+   * Finishes the dialog close by updating the state of the dialog
+   * and disposing the overlay.
+   */
+  _finishDialogClose() {
+    this._state = MatDialogState.CLOSED;
+    this._ref.close(this._result, {
+      focusOrigin: this._closeInteractionType
+    });
+    this.componentInstance = null;
+  }
+};
+function _closeDialogVia(ref, interactionType, result) {
+  ref._closeInteractionType = interactionType;
+  return ref.close(result);
+}
+var MAT_DIALOG_DATA = new InjectionToken("MatMdcDialogData");
+var MAT_DIALOG_DEFAULT_OPTIONS = new InjectionToken("mat-mdc-dialog-default-options");
+var MAT_DIALOG_SCROLL_STRATEGY = new InjectionToken("mat-mdc-dialog-scroll-strategy", {
+  providedIn: "root",
+  factory: () => {
+    const overlay = inject(Overlay);
+    return () => overlay.scrollStrategies.block();
+  }
+});
+var uniqueId2 = 0;
+var _MatDialog = class _MatDialog {
+  /** Keeps track of the currently-open dialogs. */
+  get openDialogs() {
+    return this._parentDialog ? this._parentDialog.openDialogs : this._openDialogsAtThisLevel;
+  }
+  /** Stream that emits when a dialog has been opened. */
+  get afterOpened() {
+    return this._parentDialog ? this._parentDialog.afterOpened : this._afterOpenedAtThisLevel;
+  }
+  _getAfterAllClosed() {
+    const parent = this._parentDialog;
+    return parent ? parent._getAfterAllClosed() : this._afterAllClosedAtThisLevel;
+  }
+  constructor(_overlay, injector, location2, _defaultOptions, _scrollStrategy, _parentDialog, _overlayContainer, _animationMode) {
+    this._overlay = _overlay;
+    this._defaultOptions = _defaultOptions;
+    this._scrollStrategy = _scrollStrategy;
+    this._parentDialog = _parentDialog;
+    this._openDialogsAtThisLevel = [];
+    this._afterAllClosedAtThisLevel = new Subject();
+    this._afterOpenedAtThisLevel = new Subject();
+    this.dialogConfigClass = MatDialogConfig;
+    this.afterAllClosed = defer(() => this.openDialogs.length ? this._getAfterAllClosed() : this._getAfterAllClosed().pipe(startWith(void 0)));
+    this._dialog = injector.get(Dialog);
+    this._dialogRefConstructor = MatDialogRef;
+    this._dialogContainerType = MatDialogContainer;
+    this._dialogDataToken = MAT_DIALOG_DATA;
+  }
+  open(componentOrTemplateRef, config2) {
+    let dialogRef;
+    config2 = __spreadValues(__spreadValues({}, this._defaultOptions || new MatDialogConfig()), config2);
+    config2.id = config2.id || `mat-mdc-dialog-${uniqueId2++}`;
+    config2.scrollStrategy = config2.scrollStrategy || this._scrollStrategy();
+    const cdkRef = this._dialog.open(componentOrTemplateRef, __spreadProps(__spreadValues({}, config2), {
+      positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
+      // Disable closing since we need to sync it up to the animation ourselves.
+      disableClose: true,
+      // Disable closing on destroy, because this service cleans up its open dialogs as well.
+      // We want to do the cleanup here, rather than the CDK service, because the CDK destroys
+      // the dialogs immediately whereas we want it to wait for the animations to finish.
+      closeOnDestroy: false,
+      // Disable closing on detachments so that we can sync up the animation.
+      // The Material dialog ref handles this manually.
+      closeOnOverlayDetachments: false,
+      container: {
+        type: this._dialogContainerType,
+        providers: () => [
+          // Provide our config as the CDK config as well since it has the same interface as the
+          // CDK one, but it contains the actual values passed in by the user for things like
+          // `disableClose` which we disable for the CDK dialog since we handle it ourselves.
+          {
+            provide: this.dialogConfigClass,
+            useValue: config2
+          },
+          {
+            provide: DialogConfig,
+            useValue: config2
+          }
+        ]
+      },
+      templateContext: () => ({
+        dialogRef
+      }),
+      providers: (ref, cdkConfig, dialogContainer) => {
+        dialogRef = new this._dialogRefConstructor(ref, config2, dialogContainer);
+        dialogRef.updatePosition(config2?.position);
+        return [{
+          provide: this._dialogContainerType,
+          useValue: dialogContainer
+        }, {
+          provide: this._dialogDataToken,
+          useValue: cdkConfig.data
+        }, {
+          provide: this._dialogRefConstructor,
+          useValue: dialogRef
+        }];
+      }
+    }));
+    dialogRef.componentRef = cdkRef.componentRef;
+    dialogRef.componentInstance = cdkRef.componentInstance;
+    this.openDialogs.push(dialogRef);
+    this.afterOpened.next(dialogRef);
+    dialogRef.afterClosed().subscribe(() => {
+      const index = this.openDialogs.indexOf(dialogRef);
+      if (index > -1) {
+        this.openDialogs.splice(index, 1);
+        if (!this.openDialogs.length) {
+          this._getAfterAllClosed().next();
+        }
+      }
+    });
+    return dialogRef;
+  }
+  /**
+   * Closes all of the currently-open dialogs.
+   */
+  closeAll() {
+    this._closeDialogs(this.openDialogs);
+  }
+  /**
+   * Finds an open dialog by its id.
+   * @param id ID to use when looking up the dialog.
+   */
+  getDialogById(id) {
+    return this.openDialogs.find((dialog) => dialog.id === id);
+  }
+  ngOnDestroy() {
+    this._closeDialogs(this._openDialogsAtThisLevel);
+    this._afterAllClosedAtThisLevel.complete();
+    this._afterOpenedAtThisLevel.complete();
+  }
+  _closeDialogs(dialogs) {
+    let i = dialogs.length;
+    while (i--) {
+      dialogs[i].close();
+    }
+  }
+};
+_MatDialog.\u0275fac = function MatDialog_Factory(t) {
+  return new (t || _MatDialog)(\u0275\u0275inject(Overlay), \u0275\u0275inject(Injector), \u0275\u0275inject(Location, 8), \u0275\u0275inject(MAT_DIALOG_DEFAULT_OPTIONS, 8), \u0275\u0275inject(MAT_DIALOG_SCROLL_STRATEGY), \u0275\u0275inject(_MatDialog, 12), \u0275\u0275inject(OverlayContainer), \u0275\u0275inject(ANIMATION_MODULE_TYPE, 8));
+};
+_MatDialog.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+  token: _MatDialog,
+  factory: _MatDialog.\u0275fac,
+  providedIn: "root"
+});
+var MatDialog = _MatDialog;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialog, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: Overlay
+  }, {
+    type: Injector
+  }, {
+    type: Location,
+    decorators: [{
+      type: Optional
+    }]
+  }, {
+    type: MatDialogConfig,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [MAT_DIALOG_DEFAULT_OPTIONS]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [MAT_DIALOG_SCROLL_STRATEGY]
+    }]
+  }, {
+    type: MatDialog,
+    decorators: [{
+      type: Optional
+    }, {
+      type: SkipSelf
+    }]
+  }, {
+    type: OverlayContainer
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [ANIMATION_MODULE_TYPE]
+    }]
+  }], null);
+})();
+var dialogElementUid = 0;
+var _MatDialogClose = class _MatDialogClose {
+  constructor(dialogRef, _elementRef, _dialog) {
+    this.dialogRef = dialogRef;
+    this._elementRef = _elementRef;
+    this._dialog = _dialog;
+    this.type = "button";
+  }
+  ngOnInit() {
+    if (!this.dialogRef) {
+      this.dialogRef = getClosestDialog(this._elementRef, this._dialog.openDialogs);
+    }
+  }
+  ngOnChanges(changes) {
+    const proxiedChange = changes["_matDialogClose"] || changes["_matDialogCloseResult"];
+    if (proxiedChange) {
+      this.dialogResult = proxiedChange.currentValue;
+    }
+  }
+  _onButtonClick(event) {
+    _closeDialogVia(this.dialogRef, event.screenX === 0 && event.screenY === 0 ? "keyboard" : "mouse", this.dialogResult);
+  }
+};
+_MatDialogClose.\u0275fac = function MatDialogClose_Factory(t) {
+  return new (t || _MatDialogClose)(\u0275\u0275directiveInject(MatDialogRef, 8), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(MatDialog));
+};
+_MatDialogClose.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatDialogClose,
+  selectors: [["", "mat-dialog-close", ""], ["", "matDialogClose", ""]],
+  hostVars: 2,
+  hostBindings: function MatDialogClose_HostBindings(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275listener("click", function MatDialogClose_click_HostBindingHandler($event) {
+        return ctx._onButtonClick($event);
+      });
+    }
+    if (rf & 2) {
+      \u0275\u0275attribute("aria-label", ctx.ariaLabel || null)("type", ctx.type);
+    }
+  },
+  inputs: {
+    ariaLabel: [InputFlags.None, "aria-label", "ariaLabel"],
+    type: "type",
+    dialogResult: [InputFlags.None, "mat-dialog-close", "dialogResult"],
+    _matDialogClose: [InputFlags.None, "matDialogClose", "_matDialogClose"]
+  },
+  exportAs: ["matDialogClose"],
+  standalone: true,
+  features: [\u0275\u0275NgOnChangesFeature]
+});
+var MatDialogClose = _MatDialogClose;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialogClose, [{
+    type: Directive,
+    args: [{
+      selector: "[mat-dialog-close], [matDialogClose]",
+      exportAs: "matDialogClose",
+      standalone: true,
+      host: {
+        "(click)": "_onButtonClick($event)",
+        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.type]": "type"
+      }
+    }]
+  }], () => [{
+    type: MatDialogRef,
+    decorators: [{
+      type: Optional
+    }]
+  }, {
+    type: ElementRef
+  }, {
+    type: MatDialog
+  }], {
+    ariaLabel: [{
+      type: Input,
+      args: ["aria-label"]
+    }],
+    type: [{
+      type: Input
+    }],
+    dialogResult: [{
+      type: Input,
+      args: ["mat-dialog-close"]
+    }],
+    _matDialogClose: [{
+      type: Input,
+      args: ["matDialogClose"]
+    }]
+  });
+})();
+var _MatDialogTitle = class _MatDialogTitle {
+  constructor(_dialogRef, _elementRef, _dialog) {
+    this._dialogRef = _dialogRef;
+    this._elementRef = _elementRef;
+    this._dialog = _dialog;
+    this.id = `mat-mdc-dialog-title-${dialogElementUid++}`;
+  }
+  ngOnInit() {
+    if (!this._dialogRef) {
+      this._dialogRef = getClosestDialog(this._elementRef, this._dialog.openDialogs);
+    }
+    if (this._dialogRef) {
+      Promise.resolve().then(() => {
+        this._dialogRef._containerInstance?._addAriaLabelledBy?.(this.id);
+      });
+    }
+  }
+  ngOnDestroy() {
+    const instance = this._dialogRef?._containerInstance;
+    if (instance) {
+      Promise.resolve().then(() => {
+        instance._removeAriaLabelledBy?.(this.id);
+      });
+    }
+  }
+};
+_MatDialogTitle.\u0275fac = function MatDialogTitle_Factory(t) {
+  return new (t || _MatDialogTitle)(\u0275\u0275directiveInject(MatDialogRef, 8), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(MatDialog));
+};
+_MatDialogTitle.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatDialogTitle,
+  selectors: [["", "mat-dialog-title", ""], ["", "matDialogTitle", ""]],
+  hostAttrs: [1, "mat-mdc-dialog-title", "mdc-dialog__title"],
+  hostVars: 1,
+  hostBindings: function MatDialogTitle_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275hostProperty("id", ctx.id);
+    }
+  },
+  inputs: {
+    id: "id"
+  },
+  exportAs: ["matDialogTitle"],
+  standalone: true
+});
+var MatDialogTitle = _MatDialogTitle;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialogTitle, [{
+    type: Directive,
+    args: [{
+      selector: "[mat-dialog-title], [matDialogTitle]",
+      exportAs: "matDialogTitle",
+      standalone: true,
+      host: {
+        "class": "mat-mdc-dialog-title mdc-dialog__title",
+        "[id]": "id"
+      }
+    }]
+  }], () => [{
+    type: MatDialogRef,
+    decorators: [{
+      type: Optional
+    }]
+  }, {
+    type: ElementRef
+  }, {
+    type: MatDialog
+  }], {
+    id: [{
+      type: Input
+    }]
+  });
+})();
+var _MatDialogContent = class _MatDialogContent {
+};
+_MatDialogContent.\u0275fac = function MatDialogContent_Factory(t) {
+  return new (t || _MatDialogContent)();
+};
+_MatDialogContent.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatDialogContent,
+  selectors: [["", "mat-dialog-content", ""], ["mat-dialog-content"], ["", "matDialogContent", ""]],
+  hostAttrs: [1, "mat-mdc-dialog-content", "mdc-dialog__content"],
+  standalone: true
+});
+var MatDialogContent = _MatDialogContent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialogContent, [{
+    type: Directive,
+    args: [{
+      selector: `[mat-dialog-content], mat-dialog-content, [matDialogContent]`,
+      host: {
+        "class": "mat-mdc-dialog-content mdc-dialog__content"
+      },
+      standalone: true
+    }]
+  }], null, null);
+})();
+var _MatDialogActions = class _MatDialogActions {
+  constructor() {
+    this.align = "start";
+  }
+};
+_MatDialogActions.\u0275fac = function MatDialogActions_Factory(t) {
+  return new (t || _MatDialogActions)();
+};
+_MatDialogActions.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatDialogActions,
+  selectors: [["", "mat-dialog-actions", ""], ["mat-dialog-actions"], ["", "matDialogActions", ""]],
+  hostAttrs: [1, "mat-mdc-dialog-actions", "mdc-dialog__actions"],
+  hostVars: 4,
+  hostBindings: function MatDialogActions_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275classProp("mat-mdc-dialog-actions-align-center", ctx.align === "center")("mat-mdc-dialog-actions-align-end", ctx.align === "end");
+    }
+  },
+  inputs: {
+    align: "align"
+  },
+  standalone: true
+});
+var MatDialogActions = _MatDialogActions;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialogActions, [{
+    type: Directive,
+    args: [{
+      selector: `[mat-dialog-actions], mat-dialog-actions, [matDialogActions]`,
+      standalone: true,
+      host: {
+        "class": "mat-mdc-dialog-actions mdc-dialog__actions",
+        "[class.mat-mdc-dialog-actions-align-center]": 'align === "center"',
+        "[class.mat-mdc-dialog-actions-align-end]": 'align === "end"'
+      }
+    }]
+  }], null, {
+    align: [{
+      type: Input
+    }]
+  });
+})();
+function getClosestDialog(element, openDialogs) {
+  let parent = element.nativeElement.parentElement;
+  while (parent && !parent.classList.contains("mat-mdc-dialog-container")) {
+    parent = parent.parentElement;
+  }
+  return parent ? openDialogs.find((dialog) => dialog.id === parent.id) : null;
+}
+var DIRECTIVES = [MatDialogContainer, MatDialogClose, MatDialogTitle, MatDialogActions, MatDialogContent];
+var _MatDialogModule = class _MatDialogModule {
+};
+_MatDialogModule.\u0275fac = function MatDialogModule_Factory(t) {
+  return new (t || _MatDialogModule)();
+};
+_MatDialogModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatDialogModule
+});
+_MatDialogModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  providers: [MatDialog],
+  imports: [DialogModule, OverlayModule, PortalModule, MatCommonModule, MatCommonModule]
+});
+var MatDialogModule = _MatDialogModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatDialogModule, [{
+    type: NgModule,
+    args: [{
+      imports: [DialogModule, OverlayModule, PortalModule, MatCommonModule, ...DIRECTIVES],
+      exports: [MatCommonModule, ...DIRECTIVES],
+      providers: [MatDialog]
+    }]
+  }], null, null);
+})();
+var _defaultParams = {
+  params: {
+    enterAnimationDuration: "150ms",
+    exitAnimationDuration: "75ms"
+  }
+};
+var matDialogAnimations = {
+  /** Animation that is applied on the dialog container by default. */
+  dialogContainer: trigger("dialogContainer", [
+    // Note: The `enter` animation transitions to `transform: none`, because for some reason
+    // specifying the transform explicitly, causes IE both to blur the dialog content and
+    // decimate the animation performance. Leaving it as `none` solves both issues.
+    state("void, exit", style({
+      opacity: 0,
+      transform: "scale(0.7)"
+    })),
+    state("enter", style({
+      transform: "none"
+    })),
+    transition("* => enter", group([animate("{{enterAnimationDuration}} cubic-bezier(0, 0, 0.2, 1)", style({
+      transform: "none",
+      opacity: 1
+    })), query("@*", animateChild(), {
+      optional: true
+    })]), _defaultParams),
+    transition("* => void, * => exit", group([animate("{{exitAnimationDuration}} cubic-bezier(0.4, 0.0, 0.2, 1)", style({
+      opacity: 0
+    })), query("@*", animateChild(), {
+      optional: true
+    })]), _defaultParams)
+  ])
+};
+
+// src/app/components/tag-card/spool-modal.ts
+function SpoolModal_Conditional_0_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate2(" ", ctx_r2.spool.name, " - (", ctx_r2.spool.id, " ");
+    \u0275\u0275textInterpolate2(" ", ctx_r2.spool.name, " - (", ctx_r2.spool.id, ") ");
   }
 }
-function TagCardComponent_Conditional_0_Conditional_4_Template(rf, ctx) {
+function SpoolModal_Conditional_0_Conditional_4_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
@@ -63648,9 +66937,9 @@ function TagCardComponent_Conditional_0_Conditional_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", ctx_r3.spool.id, " ");
   }
 }
-function TagCardComponent_Conditional_0_For_16_Template(rf, ctx) {
+function SpoolModal_Conditional_0_For_16_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 10);
+    \u0275\u0275elementStart(0, "mat-option", 11);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -63661,9 +66950,9 @@ function TagCardComponent_Conditional_0_For_16_Template(rf, ctx) {
     \u0275\u0275textInterpolate(brand_r8);
   }
 }
-function TagCardComponent_Conditional_0_For_24_Template(rf, ctx) {
+function SpoolModal_Conditional_0_For_24_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 10);
+    \u0275\u0275elementStart(0, "mat-option", 11);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -63674,17 +66963,17 @@ function TagCardComponent_Conditional_0_For_24_Template(rf, ctx) {
     \u0275\u0275textInterpolate(material_r13);
   }
 }
-function TagCardComponent_Conditional_0_Template(rf, ctx) {
+function SpoolModal_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r19 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
-    \u0275\u0275template(3, TagCardComponent_Conditional_0_Conditional_3_Template, 1, 2)(4, TagCardComponent_Conditional_0_Conditional_4_Template, 1, 1);
+    \u0275\u0275template(3, SpoolModal_Conditional_0_Conditional_3_Template, 1, 2)(4, SpoolModal_Conditional_0_Conditional_4_Template, 1, 1);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(5, "mat-card-content")(6, "mat-form-field")(7, "mat-label");
     \u0275\u0275text(8, "Name");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(9, "input", 0);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_9_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_9_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r18 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r18.spool.name = $event);
@@ -63694,10 +66983,10 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(12, "Brand");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(13, "mat-autocomplete", null, 1);
-    \u0275\u0275repeaterCreate(15, TagCardComponent_Conditional_0_For_16_Template, 2, 2, "mat-option", 10, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275repeaterCreate(15, SpoolModal_Conditional_0_For_16_Template, 2, 2, "mat-option", 11, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(17, "input", 2);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_17_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_17_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r20 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r20.spool.brand = $event);
@@ -63707,17 +66996,17 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(20, "Material");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(21, "mat-autocomplete", null, 3);
-    \u0275\u0275repeaterCreate(23, TagCardComponent_Conditional_0_For_24_Template, 2, 2, "mat-option", 10, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275repeaterCreate(23, SpoolModal_Conditional_0_For_24_Template, 2, 2, "mat-option", 11, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(25, "input", 4);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_25_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_25_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r21 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r21.spool.material = $event);
     });
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(26, "mat-form-field")(27, "ngx-colors", 5);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_ngx_colors_ngModelChange_27_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_ngx_colors_ngModelChange_27_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r22 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r22.spool.color = $event);
@@ -63727,7 +67016,7 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(29, "Color");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(30, "input", 6);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_30_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_30_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r23 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r23.spool.color = $event);
@@ -63737,7 +67026,7 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(33, "Spool weight");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(34, "input", 7);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_34_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_34_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r24 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r24.spool.spoolWeight = $event);
@@ -63747,7 +67036,7 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(37, "Filament weight (initial)");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(38, "input", 7);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_38_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_38_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r25 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r25.spool.initialFilamentWeight = $event);
@@ -63757,7 +67046,7 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(41, "Filament weight (remaining)");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(42, "input", 7);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_42_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_42_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r26 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r26.spool.remainingFilamentWeight = $event);
@@ -63767,7 +67056,7 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(45, "Flow calibration factor (K)");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(46, "input", 8);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_46_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_46_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r27 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r27.spool.flowFactor = $event);
@@ -63777,27 +67066,17 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275text(49, "Temperature (\xBAC)");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(50, "input", 7);
-    \u0275\u0275listener("ngModelChange", function TagCardComponent_Conditional_0_Template_input_ngModelChange_50_listener($event) {
+    \u0275\u0275listener("ngModelChange", function SpoolModal_Conditional_0_Template_input_ngModelChange_50_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r28 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r28.spool.temperature = $event);
     });
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(51, "mat-card-actions")(52, "button", 9);
-    \u0275\u0275listener("click", function TagCardComponent_Conditional_0_Template_button_click_52_listener() {
-      \u0275\u0275restoreView(_r19);
-      const ctx_r29 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r29.update());
-    });
-    \u0275\u0275text(53, "Update");
+    \u0275\u0275text(53, "Cancel");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(54, "button", 9);
-    \u0275\u0275listener("click", function TagCardComponent_Conditional_0_Template_button_click_54_listener() {
-      \u0275\u0275restoreView(_r19);
-      const ctx_r30 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r30.remove());
-    });
-    \u0275\u0275text(55, "Remove");
+    \u0275\u0275elementStart(54, "button", 10);
+    \u0275\u0275text(55, "Update");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
@@ -63832,17 +67111,16 @@ function TagCardComponent_Conditional_0_Template(rf, ctx) {
     \u0275\u0275property("ngModel", ctx_r0.spool.temperature);
   }
 }
-function TagCardComponent_Conditional_1_Template(rf, ctx) {
+function SpoolModal_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-card");
     \u0275\u0275text(1, " No card ");
     \u0275\u0275elementEnd();
   }
 }
-var _TagCardComponent = class _TagCardComponent {
-  constructor() {
-    this.cardRemoved = new EventEmitter();
-    this.saveTag = new EventEmitter();
+var _SpoolModal = class _SpoolModal {
+  constructor(data) {
+    this.data = data;
     this.brands = [
       "JAYO",
       "eSUN",
@@ -63853,20 +67131,18 @@ var _TagCardComponent = class _TagCardComponent {
       "PLA+",
       "HS-PLA"
     ];
-  }
-  remove() {
-    this.cardRemoved.next();
+    this.spool = data.spool;
   }
   update() {
-    this.saveTag.next();
+    console.log(this.spool);
   }
 };
-_TagCardComponent.\u0275fac = function TagCardComponent_Factory(t) {
-  return new (t || _TagCardComponent)();
+_SpoolModal.\u0275fac = function SpoolModal_Factory(t) {
+  return new (t || _SpoolModal)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
 };
-_TagCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TagCardComponent, selectors: [["app-tag-card"]], inputs: { spool: "spool" }, outputs: { cardRemoved: "cardRemoved", saveTag: "saveTag" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", 3, "click"], [3, "value"]], template: function TagCardComponent_Template(rf, ctx) {
+_SpoolModal.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolModal, selectors: [["app-spool-modal"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", "", "mat-dialog-close", "update"], [3, "value"]], template: function SpoolModal_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, TagCardComponent_Conditional_0_Template, 56, 14, "mat-card")(1, TagCardComponent_Conditional_1_Template, 2, 0);
+    \u0275\u0275template(0, SpoolModal_Conditional_0_Template, 56, 14, "mat-card")(1, SpoolModal_Conditional_1_Template, 2, 0);
   }
   if (rf & 2) {
     \u0275\u0275conditional(0, ctx.spool ? 0 : 1);
@@ -63895,11 +67171,643 @@ _TagCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type
   ReactiveFormsModule,
   NgxColorsModule,
   NgxColorsComponent,
-  NgxColorsTriggerDirective
-], styles: ["\n\n/*# sourceMappingURL=tag-card.component.css.map */"] });
-var TagCardComponent = _TagCardComponent;
+  NgxColorsTriggerDirective,
+  MatDialogClose
+], styles: ["\n\n/*# sourceMappingURL=spool-modal.css.map */"] });
+var SpoolModal = _SpoolModal;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TagCardComponent, { className: "TagCardComponent", filePath: "src/app/components/tag-card/tag-card.component.ts", lineNumber: 40 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolModal, { className: "SpoolModal", filePath: "src/app/components/tag-card/spool-modal.ts", lineNumber: 42 });
+})();
+
+// node_modules/@angular/material/fesm2022/toolbar.mjs
+var _c011 = ["*", [["mat-toolbar-row"]]];
+var _c110 = ["*", "mat-toolbar-row"];
+var _MatToolbarRow = class _MatToolbarRow {
+};
+_MatToolbarRow.\u0275fac = function MatToolbarRow_Factory(t) {
+  return new (t || _MatToolbarRow)();
+};
+_MatToolbarRow.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatToolbarRow,
+  selectors: [["mat-toolbar-row"]],
+  hostAttrs: [1, "mat-toolbar-row"],
+  exportAs: ["matToolbarRow"],
+  standalone: true
+});
+var MatToolbarRow = _MatToolbarRow;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatToolbarRow, [{
+    type: Directive,
+    args: [{
+      selector: "mat-toolbar-row",
+      exportAs: "matToolbarRow",
+      host: {
+        "class": "mat-toolbar-row"
+      },
+      standalone: true
+    }]
+  }], null, null);
+})();
+var _MatToolbar = class _MatToolbar {
+  constructor(_elementRef, _platform, document2) {
+    this._elementRef = _elementRef;
+    this._platform = _platform;
+    this._document = document2;
+  }
+  ngAfterViewInit() {
+    if (this._platform.isBrowser) {
+      this._checkToolbarMixedModes();
+      this._toolbarRows.changes.subscribe(() => this._checkToolbarMixedModes());
+    }
+  }
+  /**
+   * Throws an exception when developers are attempting to combine the different toolbar row modes.
+   */
+  _checkToolbarMixedModes() {
+    if (this._toolbarRows.length && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      const isCombinedUsage = Array.from(this._elementRef.nativeElement.childNodes).filter((node) => !(node.classList && node.classList.contains("mat-toolbar-row"))).filter((node) => node.nodeType !== (this._document ? this._document.COMMENT_NODE : 8)).some((node) => !!(node.textContent && node.textContent.trim()));
+      if (isCombinedUsage) {
+        throwToolbarMixedModesError();
+      }
+    }
+  }
+};
+_MatToolbar.\u0275fac = function MatToolbar_Factory(t) {
+  return new (t || _MatToolbar)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(Platform), \u0275\u0275directiveInject(DOCUMENT2));
+};
+_MatToolbar.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatToolbar,
+  selectors: [["mat-toolbar"]],
+  contentQueries: function MatToolbar_ContentQueries(rf, ctx, dirIndex) {
+    if (rf & 1) {
+      \u0275\u0275contentQuery(dirIndex, MatToolbarRow, 5);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._toolbarRows = _t);
+    }
+  },
+  hostAttrs: [1, "mat-toolbar"],
+  hostVars: 6,
+  hostBindings: function MatToolbar_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275classMap(ctx.color ? "mat-" + ctx.color : "");
+      \u0275\u0275classProp("mat-toolbar-multiple-rows", ctx._toolbarRows.length > 0)("mat-toolbar-single-row", ctx._toolbarRows.length === 0);
+    }
+  },
+  inputs: {
+    color: "color"
+  },
+  exportAs: ["matToolbar"],
+  standalone: true,
+  features: [\u0275\u0275StandaloneFeature],
+  ngContentSelectors: _c110,
+  decls: 2,
+  vars: 0,
+  template: function MatToolbar_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef(_c011);
+      \u0275\u0275projection(0);
+      \u0275\u0275projection(1, 1);
+    }
+  },
+  styles: [".mat-toolbar{background:var(--mat-toolbar-container-background-color);color:var(--mat-toolbar-container-text-color)}.mat-toolbar,.mat-toolbar h1,.mat-toolbar h2,.mat-toolbar h3,.mat-toolbar h4,.mat-toolbar h5,.mat-toolbar h6{font-family:var(--mat-toolbar-title-text-font);font-size:var(--mat-toolbar-title-text-size);line-height:var(--mat-toolbar-title-text-line-height);font-weight:var(--mat-toolbar-title-text-weight);letter-spacing:var(--mat-toolbar-title-text-tracking);margin:0}.cdk-high-contrast-active .mat-toolbar{outline:solid 1px}.mat-toolbar .mat-form-field-underline,.mat-toolbar .mat-form-field-ripple,.mat-toolbar .mat-focused .mat-form-field-ripple{background-color:currentColor}.mat-toolbar .mat-form-field-label,.mat-toolbar .mat-focused .mat-form-field-label,.mat-toolbar .mat-select-value,.mat-toolbar .mat-select-arrow,.mat-toolbar .mat-form-field.mat-focused .mat-select-arrow{color:inherit}.mat-toolbar .mat-input-element{caret-color:currentColor}.mat-toolbar .mat-mdc-button-base.mat-mdc-button-base.mat-unthemed{--mdc-text-button-label-text-color:var(--mat-toolbar-container-text-color);--mdc-outlined-button-label-text-color:var(--mat-toolbar-container-text-color)}.mat-toolbar-row,.mat-toolbar-single-row{display:flex;box-sizing:border-box;padding:0 16px;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:var(--mat-toolbar-standard-height)}@media(max-width: 599px){.mat-toolbar-row,.mat-toolbar-single-row{height:var(--mat-toolbar-mobile-height)}}.mat-toolbar-multiple-rows{display:flex;box-sizing:border-box;flex-direction:column;width:100%;min-height:var(--mat-toolbar-standard-height)}@media(max-width: 599px){.mat-toolbar-multiple-rows{min-height:var(--mat-toolbar-mobile-height)}}"],
+  encapsulation: 2,
+  changeDetection: 0
+});
+var MatToolbar = _MatToolbar;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatToolbar, [{
+    type: Component,
+    args: [{
+      selector: "mat-toolbar",
+      exportAs: "matToolbar",
+      host: {
+        "class": "mat-toolbar",
+        "[class]": 'color ? "mat-" + color : ""',
+        "[class.mat-toolbar-multiple-rows]": "_toolbarRows.length > 0",
+        "[class.mat-toolbar-single-row]": "_toolbarRows.length === 0"
+      },
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation$1.None,
+      standalone: true,
+      template: '<ng-content></ng-content>\n<ng-content select="mat-toolbar-row"></ng-content>\n',
+      styles: [".mat-toolbar{background:var(--mat-toolbar-container-background-color);color:var(--mat-toolbar-container-text-color)}.mat-toolbar,.mat-toolbar h1,.mat-toolbar h2,.mat-toolbar h3,.mat-toolbar h4,.mat-toolbar h5,.mat-toolbar h6{font-family:var(--mat-toolbar-title-text-font);font-size:var(--mat-toolbar-title-text-size);line-height:var(--mat-toolbar-title-text-line-height);font-weight:var(--mat-toolbar-title-text-weight);letter-spacing:var(--mat-toolbar-title-text-tracking);margin:0}.cdk-high-contrast-active .mat-toolbar{outline:solid 1px}.mat-toolbar .mat-form-field-underline,.mat-toolbar .mat-form-field-ripple,.mat-toolbar .mat-focused .mat-form-field-ripple{background-color:currentColor}.mat-toolbar .mat-form-field-label,.mat-toolbar .mat-focused .mat-form-field-label,.mat-toolbar .mat-select-value,.mat-toolbar .mat-select-arrow,.mat-toolbar .mat-form-field.mat-focused .mat-select-arrow{color:inherit}.mat-toolbar .mat-input-element{caret-color:currentColor}.mat-toolbar .mat-mdc-button-base.mat-mdc-button-base.mat-unthemed{--mdc-text-button-label-text-color:var(--mat-toolbar-container-text-color);--mdc-outlined-button-label-text-color:var(--mat-toolbar-container-text-color)}.mat-toolbar-row,.mat-toolbar-single-row{display:flex;box-sizing:border-box;padding:0 16px;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:var(--mat-toolbar-standard-height)}@media(max-width: 599px){.mat-toolbar-row,.mat-toolbar-single-row{height:var(--mat-toolbar-mobile-height)}}.mat-toolbar-multiple-rows{display:flex;box-sizing:border-box;flex-direction:column;width:100%;min-height:var(--mat-toolbar-standard-height)}@media(max-width: 599px){.mat-toolbar-multiple-rows{min-height:var(--mat-toolbar-mobile-height)}}"]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: Platform
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT2]
+    }]
+  }], {
+    color: [{
+      type: Input
+    }],
+    _toolbarRows: [{
+      type: ContentChildren,
+      args: [MatToolbarRow, {
+        descendants: true
+      }]
+    }]
+  });
+})();
+function throwToolbarMixedModesError() {
+  throw Error("MatToolbar: Attempting to combine different toolbar modes. Either specify multiple `<mat-toolbar-row>` elements explicitly or just place content inside of a `<mat-toolbar>` for a single row.");
+}
+var _MatToolbarModule = class _MatToolbarModule {
+};
+_MatToolbarModule.\u0275fac = function MatToolbarModule_Factory(t) {
+  return new (t || _MatToolbarModule)();
+};
+_MatToolbarModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatToolbarModule
+});
+_MatToolbarModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  imports: [MatCommonModule, MatCommonModule]
+});
+var MatToolbarModule = _MatToolbarModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatToolbarModule, [{
+    type: NgModule,
+    args: [{
+      imports: [MatCommonModule, MatToolbar, MatToolbarRow],
+      exports: [MatToolbar, MatToolbarRow, MatCommonModule]
+    }]
+  }], null, null);
+})();
+
+// node_modules/@angular/material/fesm2022/progress-spinner.mjs
+var _c012 = ["determinateSpinner"];
+function MatProgressSpinner_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(0, "svg", 11);
+    \u0275\u0275element(1, "circle", 12);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275attribute("viewBox", ctx_r0._viewBox());
+    \u0275\u0275advance();
+    \u0275\u0275styleProp("stroke-dasharray", ctx_r0._strokeCircumference(), "px")("stroke-dashoffset", ctx_r0._strokeCircumference() / 2, "px")("stroke-width", ctx_r0._circleStrokeWidth(), "%");
+    \u0275\u0275attribute("r", ctx_r0._circleRadius());
+  }
+}
+var MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS = new InjectionToken("mat-progress-spinner-default-options", {
+  providedIn: "root",
+  factory: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY
+});
+function MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY() {
+  return {
+    diameter: BASE_SIZE
+  };
+}
+var BASE_SIZE = 100;
+var BASE_STROKE_WIDTH = 10;
+var _MatProgressSpinner = class _MatProgressSpinner {
+  // TODO: should be typed as `ThemePalette` but internal apps pass in arbitrary strings.
+  /** Theme palette color of the progress spinner. */
+  get color() {
+    return this._color || this._defaultColor;
+  }
+  set color(value) {
+    this._color = value;
+  }
+  constructor(_elementRef, animationMode, defaults2) {
+    this._elementRef = _elementRef;
+    this._defaultColor = "primary";
+    this._value = 0;
+    this._diameter = BASE_SIZE;
+    this._noopAnimations = animationMode === "NoopAnimations" && !!defaults2 && !defaults2._forceAnimations;
+    this.mode = _elementRef.nativeElement.nodeName.toLowerCase() === "mat-spinner" ? "indeterminate" : "determinate";
+    if (defaults2) {
+      if (defaults2.color) {
+        this.color = this._defaultColor = defaults2.color;
+      }
+      if (defaults2.diameter) {
+        this.diameter = defaults2.diameter;
+      }
+      if (defaults2.strokeWidth) {
+        this.strokeWidth = defaults2.strokeWidth;
+      }
+    }
+  }
+  /** Value of the progress bar. Defaults to zero. Mirrored to aria-valuenow. */
+  get value() {
+    return this.mode === "determinate" ? this._value : 0;
+  }
+  set value(v) {
+    this._value = Math.max(0, Math.min(100, v || 0));
+  }
+  /** The diameter of the progress spinner (will set width and height of svg). */
+  get diameter() {
+    return this._diameter;
+  }
+  set diameter(size) {
+    this._diameter = size || 0;
+  }
+  /** Stroke width of the progress spinner. */
+  get strokeWidth() {
+    return this._strokeWidth ?? this.diameter / 10;
+  }
+  set strokeWidth(value) {
+    this._strokeWidth = value || 0;
+  }
+  /** The radius of the spinner, adjusted for stroke width. */
+  _circleRadius() {
+    return (this.diameter - BASE_STROKE_WIDTH) / 2;
+  }
+  /** The view box of the spinner's svg element. */
+  _viewBox() {
+    const viewBox = this._circleRadius() * 2 + this.strokeWidth;
+    return `0 0 ${viewBox} ${viewBox}`;
+  }
+  /** The stroke circumference of the svg circle. */
+  _strokeCircumference() {
+    return 2 * Math.PI * this._circleRadius();
+  }
+  /** The dash offset of the svg circle. */
+  _strokeDashOffset() {
+    if (this.mode === "determinate") {
+      return this._strokeCircumference() * (100 - this._value) / 100;
+    }
+    return null;
+  }
+  /** Stroke width of the circle in percent. */
+  _circleStrokeWidth() {
+    return this.strokeWidth / this.diameter * 100;
+  }
+};
+_MatProgressSpinner.\u0275fac = function MatProgressSpinner_Factory(t) {
+  return new (t || _MatProgressSpinner)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ANIMATION_MODULE_TYPE, 8), \u0275\u0275directiveInject(MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS));
+};
+_MatProgressSpinner.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatProgressSpinner,
+  selectors: [["mat-progress-spinner"], ["mat-spinner"]],
+  viewQuery: function MatProgressSpinner_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuery(_c012, 5);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._determinateCircle = _t.first);
+    }
+  },
+  hostAttrs: ["role", "progressbar", "tabindex", "-1", 1, "mat-mdc-progress-spinner", "mdc-circular-progress"],
+  hostVars: 18,
+  hostBindings: function MatProgressSpinner_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275attribute("aria-valuemin", 0)("aria-valuemax", 100)("aria-valuenow", ctx.mode === "determinate" ? ctx.value : null)("mode", ctx.mode);
+      \u0275\u0275classMap("mat-" + ctx.color);
+      \u0275\u0275styleProp("width", ctx.diameter, "px")("height", ctx.diameter, "px")("--mdc-circular-progress-size", ctx.diameter + "px")("--mdc-circular-progress-active-indicator-width", ctx.diameter + "px");
+      \u0275\u0275classProp("_mat-animation-noopable", ctx._noopAnimations)("mdc-circular-progress--indeterminate", ctx.mode === "indeterminate");
+    }
+  },
+  inputs: {
+    color: "color",
+    mode: "mode",
+    value: [InputFlags.HasDecoratorInputTransform, "value", "value", numberAttribute],
+    diameter: [InputFlags.HasDecoratorInputTransform, "diameter", "diameter", numberAttribute],
+    strokeWidth: [InputFlags.HasDecoratorInputTransform, "strokeWidth", "strokeWidth", numberAttribute]
+  },
+  exportAs: ["matProgressSpinner"],
+  standalone: true,
+  features: [\u0275\u0275InputTransformsFeature, \u0275\u0275StandaloneFeature],
+  decls: 14,
+  vars: 11,
+  consts: [["circle", ""], ["aria-hidden", "true", 1, "mdc-circular-progress__determinate-container"], ["determinateSpinner", ""], ["xmlns", "http://www.w3.org/2000/svg", "focusable", "false", 1, "mdc-circular-progress__determinate-circle-graphic"], ["cx", "50%", "cy", "50%", 1, "mdc-circular-progress__determinate-circle"], ["aria-hidden", "true", 1, "mdc-circular-progress__indeterminate-container"], [1, "mdc-circular-progress__spinner-layer"], [1, "mdc-circular-progress__circle-clipper", "mdc-circular-progress__circle-left"], [3, "ngTemplateOutlet"], [1, "mdc-circular-progress__gap-patch"], [1, "mdc-circular-progress__circle-clipper", "mdc-circular-progress__circle-right"], ["xmlns", "http://www.w3.org/2000/svg", "focusable", "false", 1, "mdc-circular-progress__indeterminate-circle-graphic"], ["cx", "50%", "cy", "50%"]],
+  template: function MatProgressSpinner_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, MatProgressSpinner_ng_template_0_Template, 2, 8, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementStart(2, "div", 1, 2);
+      \u0275\u0275namespaceSVG();
+      \u0275\u0275elementStart(4, "svg", 3);
+      \u0275\u0275element(5, "circle", 4);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275namespaceHTML();
+      \u0275\u0275elementStart(6, "div", 5)(7, "div", 6)(8, "div", 7);
+      \u0275\u0275elementContainer(9, 8);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(10, "div", 9);
+      \u0275\u0275elementContainer(11, 8);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(12, "div", 10);
+      \u0275\u0275elementContainer(13, 8);
+      \u0275\u0275elementEnd()()();
+    }
+    if (rf & 2) {
+      const _r1 = \u0275\u0275reference(1);
+      \u0275\u0275advance(4);
+      \u0275\u0275attribute("viewBox", ctx._viewBox());
+      \u0275\u0275advance();
+      \u0275\u0275styleProp("stroke-dasharray", ctx._strokeCircumference(), "px")("stroke-dashoffset", ctx._strokeDashOffset(), "px")("stroke-width", ctx._circleStrokeWidth(), "%");
+      \u0275\u0275attribute("r", ctx._circleRadius());
+      \u0275\u0275advance(4);
+      \u0275\u0275property("ngTemplateOutlet", _r1);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngTemplateOutlet", _r1);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngTemplateOutlet", _r1);
+    }
+  },
+  dependencies: [NgTemplateOutlet],
+  styles: ["@keyframes mdc-circular-progress-container-rotate{to{transform:rotate(360deg)}}@keyframes mdc-circular-progress-spinner-layer-rotate{12.5%{transform:rotate(135deg)}25%{transform:rotate(270deg)}37.5%{transform:rotate(405deg)}50%{transform:rotate(540deg)}62.5%{transform:rotate(675deg)}75%{transform:rotate(810deg)}87.5%{transform:rotate(945deg)}100%{transform:rotate(1080deg)}}@keyframes mdc-circular-progress-color-1-fade-in-out{from{opacity:.99}25%{opacity:.99}26%{opacity:0}89%{opacity:0}90%{opacity:.99}to{opacity:.99}}@keyframes mdc-circular-progress-color-2-fade-in-out{from{opacity:0}15%{opacity:0}25%{opacity:.99}50%{opacity:.99}51%{opacity:0}to{opacity:0}}@keyframes mdc-circular-progress-color-3-fade-in-out{from{opacity:0}40%{opacity:0}50%{opacity:.99}75%{opacity:.99}76%{opacity:0}to{opacity:0}}@keyframes mdc-circular-progress-color-4-fade-in-out{from{opacity:0}65%{opacity:0}75%{opacity:.99}90%{opacity:.99}to{opacity:0}}@keyframes mdc-circular-progress-left-spin{from{transform:rotate(265deg)}50%{transform:rotate(130deg)}to{transform:rotate(265deg)}}@keyframes mdc-circular-progress-right-spin{from{transform:rotate(-265deg)}50%{transform:rotate(-130deg)}to{transform:rotate(-265deg)}}.mdc-circular-progress{display:inline-flex;position:relative;direction:ltr;line-height:0;transition:opacity 250ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-circular-progress__determinate-container,.mdc-circular-progress__indeterminate-circle-graphic,.mdc-circular-progress__indeterminate-container,.mdc-circular-progress__spinner-layer{position:absolute;width:100%;height:100%}.mdc-circular-progress__determinate-container{transform:rotate(-90deg)}.mdc-circular-progress__indeterminate-container{font-size:0;letter-spacing:0;white-space:nowrap;opacity:0}.mdc-circular-progress__determinate-circle-graphic,.mdc-circular-progress__indeterminate-circle-graphic{fill:rgba(0,0,0,0)}.mdc-circular-progress__determinate-circle{transition:stroke-dashoffset 500ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-circular-progress__gap-patch{position:absolute;top:0;left:47.5%;box-sizing:border-box;width:5%;height:100%;overflow:hidden}.mdc-circular-progress__gap-patch .mdc-circular-progress__indeterminate-circle-graphic{left:-900%;width:2000%;transform:rotate(180deg)}.mdc-circular-progress__circle-clipper{display:inline-flex;position:relative;width:50%;height:100%;overflow:hidden}.mdc-circular-progress__circle-clipper .mdc-circular-progress__indeterminate-circle-graphic{width:200%}.mdc-circular-progress__circle-right .mdc-circular-progress__indeterminate-circle-graphic{left:-100%}.mdc-circular-progress--indeterminate .mdc-circular-progress__determinate-container{opacity:0}.mdc-circular-progress--indeterminate .mdc-circular-progress__indeterminate-container{opacity:1}.mdc-circular-progress--indeterminate .mdc-circular-progress__indeterminate-container{animation:mdc-circular-progress-container-rotate 1568.2352941176ms linear infinite}.mdc-circular-progress--indeterminate .mdc-circular-progress__spinner-layer{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-1{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-1-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-2{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-2-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-3{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-3-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-4{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-4-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__circle-left .mdc-circular-progress__indeterminate-circle-graphic{animation:mdc-circular-progress-left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__circle-right .mdc-circular-progress__indeterminate-circle-graphic{animation:mdc-circular-progress-right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--closed{opacity:0}.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{stroke:var(--mdc-circular-progress-active-indicator-color)}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}.mat-mdc-progress-spinner circle{stroke-width:var(--mdc-circular-progress-active-indicator-width)}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-1 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-2 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-3 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-4 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}.mat-mdc-progress-spinner .mdc-circular-progress{width:var(--mdc-circular-progress-size) !important;height:var(--mdc-circular-progress-size) !important}.mat-mdc-progress-spinner{display:block;overflow:hidden;line-height:0}.mat-mdc-progress-spinner._mat-animation-noopable,.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__determinate-circle{transition:none}.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__indeterminate-circle-graphic,.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__spinner-layer,.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__indeterminate-container{animation:none}.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__indeterminate-container circle{stroke-dasharray:0 !important}.cdk-high-contrast-active .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,.cdk-high-contrast-active .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle{stroke:currentColor;stroke:CanvasText}"],
+  encapsulation: 2,
+  changeDetection: 0
+});
+var MatProgressSpinner = _MatProgressSpinner;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatProgressSpinner, [{
+    type: Component,
+    args: [{
+      selector: "mat-progress-spinner, mat-spinner",
+      exportAs: "matProgressSpinner",
+      host: {
+        "role": "progressbar",
+        "class": "mat-mdc-progress-spinner mdc-circular-progress",
+        // set tab index to -1 so screen readers will read the aria-label
+        // Note: there is a known issue with JAWS that does not read progressbar aria labels on FireFox
+        "tabindex": "-1",
+        "[class]": '"mat-" + color',
+        "[class._mat-animation-noopable]": `_noopAnimations`,
+        "[class.mdc-circular-progress--indeterminate]": 'mode === "indeterminate"',
+        "[style.width.px]": "diameter",
+        "[style.height.px]": "diameter",
+        "[style.--mdc-circular-progress-size]": 'diameter + "px"',
+        "[style.--mdc-circular-progress-active-indicator-width]": 'diameter + "px"',
+        "[attr.aria-valuemin]": "0",
+        "[attr.aria-valuemax]": "100",
+        "[attr.aria-valuenow]": 'mode === "determinate" ? value : null',
+        "[attr.mode]": "mode"
+      },
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation$1.None,
+      standalone: true,
+      imports: [NgTemplateOutlet],
+      template: '<ng-template #circle>\n  <svg [attr.viewBox]="_viewBox()" class="mdc-circular-progress__indeterminate-circle-graphic"\n       xmlns="http://www.w3.org/2000/svg" focusable="false">\n    <circle [attr.r]="_circleRadius()"\n            [style.stroke-dasharray.px]="_strokeCircumference()"\n            [style.stroke-dashoffset.px]="_strokeCircumference() / 2"\n            [style.stroke-width.%]="_circleStrokeWidth()"\n            cx="50%" cy="50%"/>\n  </svg>\n</ng-template>\n\n<!--\n  All children need to be hidden for screen readers in order to support ChromeVox.\n  More context in the issue: https://github.com/angular/components/issues/22165.\n-->\n<div class="mdc-circular-progress__determinate-container" aria-hidden="true" #determinateSpinner>\n  <svg [attr.viewBox]="_viewBox()" class="mdc-circular-progress__determinate-circle-graphic"\n       xmlns="http://www.w3.org/2000/svg" focusable="false">\n    <circle [attr.r]="_circleRadius()"\n            [style.stroke-dasharray.px]="_strokeCircumference()"\n            [style.stroke-dashoffset.px]="_strokeDashOffset()"\n            [style.stroke-width.%]="_circleStrokeWidth()"\n            class="mdc-circular-progress__determinate-circle"\n            cx="50%" cy="50%"/>\n  </svg>\n</div>\n<!--TODO: figure out why there are 3 separate svgs-->\n<div class="mdc-circular-progress__indeterminate-container" aria-hidden="true">\n  <div class="mdc-circular-progress__spinner-layer">\n    <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-left">\n      <ng-container [ngTemplateOutlet]="circle"></ng-container>\n    </div>\n    <div class="mdc-circular-progress__gap-patch">\n      <ng-container [ngTemplateOutlet]="circle"></ng-container>\n    </div>\n    <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right">\n      <ng-container [ngTemplateOutlet]="circle"></ng-container>\n    </div>\n  </div>\n</div>\n',
+      styles: ["@keyframes mdc-circular-progress-container-rotate{to{transform:rotate(360deg)}}@keyframes mdc-circular-progress-spinner-layer-rotate{12.5%{transform:rotate(135deg)}25%{transform:rotate(270deg)}37.5%{transform:rotate(405deg)}50%{transform:rotate(540deg)}62.5%{transform:rotate(675deg)}75%{transform:rotate(810deg)}87.5%{transform:rotate(945deg)}100%{transform:rotate(1080deg)}}@keyframes mdc-circular-progress-color-1-fade-in-out{from{opacity:.99}25%{opacity:.99}26%{opacity:0}89%{opacity:0}90%{opacity:.99}to{opacity:.99}}@keyframes mdc-circular-progress-color-2-fade-in-out{from{opacity:0}15%{opacity:0}25%{opacity:.99}50%{opacity:.99}51%{opacity:0}to{opacity:0}}@keyframes mdc-circular-progress-color-3-fade-in-out{from{opacity:0}40%{opacity:0}50%{opacity:.99}75%{opacity:.99}76%{opacity:0}to{opacity:0}}@keyframes mdc-circular-progress-color-4-fade-in-out{from{opacity:0}65%{opacity:0}75%{opacity:.99}90%{opacity:.99}to{opacity:0}}@keyframes mdc-circular-progress-left-spin{from{transform:rotate(265deg)}50%{transform:rotate(130deg)}to{transform:rotate(265deg)}}@keyframes mdc-circular-progress-right-spin{from{transform:rotate(-265deg)}50%{transform:rotate(-130deg)}to{transform:rotate(-265deg)}}.mdc-circular-progress{display:inline-flex;position:relative;direction:ltr;line-height:0;transition:opacity 250ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-circular-progress__determinate-container,.mdc-circular-progress__indeterminate-circle-graphic,.mdc-circular-progress__indeterminate-container,.mdc-circular-progress__spinner-layer{position:absolute;width:100%;height:100%}.mdc-circular-progress__determinate-container{transform:rotate(-90deg)}.mdc-circular-progress__indeterminate-container{font-size:0;letter-spacing:0;white-space:nowrap;opacity:0}.mdc-circular-progress__determinate-circle-graphic,.mdc-circular-progress__indeterminate-circle-graphic{fill:rgba(0,0,0,0)}.mdc-circular-progress__determinate-circle{transition:stroke-dashoffset 500ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-circular-progress__gap-patch{position:absolute;top:0;left:47.5%;box-sizing:border-box;width:5%;height:100%;overflow:hidden}.mdc-circular-progress__gap-patch .mdc-circular-progress__indeterminate-circle-graphic{left:-900%;width:2000%;transform:rotate(180deg)}.mdc-circular-progress__circle-clipper{display:inline-flex;position:relative;width:50%;height:100%;overflow:hidden}.mdc-circular-progress__circle-clipper .mdc-circular-progress__indeterminate-circle-graphic{width:200%}.mdc-circular-progress__circle-right .mdc-circular-progress__indeterminate-circle-graphic{left:-100%}.mdc-circular-progress--indeterminate .mdc-circular-progress__determinate-container{opacity:0}.mdc-circular-progress--indeterminate .mdc-circular-progress__indeterminate-container{opacity:1}.mdc-circular-progress--indeterminate .mdc-circular-progress__indeterminate-container{animation:mdc-circular-progress-container-rotate 1568.2352941176ms linear infinite}.mdc-circular-progress--indeterminate .mdc-circular-progress__spinner-layer{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-1{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-1-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-2{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-2-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-3{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-3-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__color-4{animation:mdc-circular-progress-spinner-layer-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both,mdc-circular-progress-color-4-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__circle-left .mdc-circular-progress__indeterminate-circle-graphic{animation:mdc-circular-progress-left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--indeterminate .mdc-circular-progress__circle-right .mdc-circular-progress__indeterminate-circle-graphic{animation:mdc-circular-progress-right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both}.mdc-circular-progress--closed{opacity:0}.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{stroke:var(--mdc-circular-progress-active-indicator-color)}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}.mat-mdc-progress-spinner circle{stroke-width:var(--mdc-circular-progress-active-indicator-width)}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-1 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-2 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-3 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}@media screen and (forced-colors: active),(-ms-high-contrast: active){.mat-mdc-progress-spinner .mdc-circular-progress--four-color .mdc-circular-progress__color-4 .mdc-circular-progress__indeterminate-circle-graphic{stroke:CanvasText}}.mat-mdc-progress-spinner .mdc-circular-progress{width:var(--mdc-circular-progress-size) !important;height:var(--mdc-circular-progress-size) !important}.mat-mdc-progress-spinner{display:block;overflow:hidden;line-height:0}.mat-mdc-progress-spinner._mat-animation-noopable,.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__determinate-circle{transition:none}.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__indeterminate-circle-graphic,.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__spinner-layer,.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__indeterminate-container{animation:none}.mat-mdc-progress-spinner._mat-animation-noopable .mdc-circular-progress__indeterminate-container circle{stroke-dasharray:0 !important}.cdk-high-contrast-active .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,.cdk-high-contrast-active .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle{stroke:currentColor;stroke:CanvasText}"]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [ANIMATION_MODULE_TYPE]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS]
+    }]
+  }], {
+    color: [{
+      type: Input
+    }],
+    _determinateCircle: [{
+      type: ViewChild,
+      args: ["determinateSpinner"]
+    }],
+    mode: [{
+      type: Input
+    }],
+    value: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    diameter: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    strokeWidth: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }]
+  });
+})();
+var MatSpinner = MatProgressSpinner;
+var _MatProgressSpinnerModule = class _MatProgressSpinnerModule {
+};
+_MatProgressSpinnerModule.\u0275fac = function MatProgressSpinnerModule_Factory(t) {
+  return new (t || _MatProgressSpinnerModule)();
+};
+_MatProgressSpinnerModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatProgressSpinnerModule
+});
+_MatProgressSpinnerModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  imports: [CommonModule, MatCommonModule]
+});
+var MatProgressSpinnerModule = _MatProgressSpinnerModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatProgressSpinnerModule, [{
+    type: NgModule,
+    args: [{
+      imports: [CommonModule, MatProgressSpinner, MatSpinner],
+      exports: [MatProgressSpinner, MatSpinner, MatCommonModule]
+    }]
+  }], null, null);
+})();
+
+// src/app/components/help-dialog/help-dialog.component.ts
+var _HelpDialogComponent = class _HelpDialogComponent {
+};
+_HelpDialogComponent.\u0275fac = function HelpDialogComponent_Factory(t) {
+  return new (t || _HelpDialogComponent)();
+};
+_HelpDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HelpDialogComponent, selectors: [["app-help-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 0, consts: [["mat-dialog-title", ""], ["mat-button", "", "mat-dialog-close", ""]], template: function HelpDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275text(1, "Help");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content");
+    \u0275\u0275text(3, " content here\n");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "mat-dialog-actions")(5, "button", 1);
+    \u0275\u0275text(6, "Close");
+    \u0275\u0275elementEnd()();
+  }
+}, dependencies: [
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatButton,
+  MatDialogClose
+], styles: ["\n\n/*# sourceMappingURL=help-dialog.component.css.map */"] });
+var HelpDialogComponent = _HelpDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HelpDialogComponent, { className: "HelpDialogComponent", filePath: "src/app/components/help-dialog/help-dialog.component.ts", lineNumber: 18 });
+})();
+
+// src/app/components/spool-card/spool-card.component.ts
+function SpoolCardComponent_Conditional_0_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275textInterpolate1(" Mat: ", ctx_r1.spool.material, " ");
+  }
+}
+function SpoolCardComponent_Conditional_0_Conditional_10_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "mat-card-actions")(1, "button", 0);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r3 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r3.edit());
+    });
+    \u0275\u0275text(2, "Edit");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "button", 0);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r5 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r5.remove());
+    });
+    \u0275\u0275text(4, "Remove");
+    \u0275\u0275elementEnd()();
+  }
+}
+function SpoolCardComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
+    \u0275\u0275text(3);
+    \u0275\u0275elementStart(4, "mat-icon");
+    \u0275\u0275text(5, "gesture");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "mat-card-subtitle");
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "mat-card-content");
+    \u0275\u0275template(9, SpoolCardComponent_Conditional_0_Conditional_9_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(10, SpoolCardComponent_Conditional_0_Conditional_10_Template, 5, 0, "mat-card-actions");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", ctx_r0.spool.name, " ");
+    \u0275\u0275advance();
+    \u0275\u0275styleMapInterpolate1("color: ", ctx_r0.spool.color, ";");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r0.spool.id);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(9, ctx_r0.spool.material ? 9 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(10, !ctx_r0.readOnly ? 10 : -1);
+  }
+}
+var _SpoolCardComponent = class _SpoolCardComponent {
+  constructor(dialog) {
+    this.dialog = dialog;
+    this.readOnly = false;
+    this.cardRemoved = new EventEmitter();
+    this.cardUpdated = new EventEmitter();
+  }
+  edit() {
+    const spool = __spreadValues({}, this.spool);
+    const dialog = this.dialog.open(SpoolModal, { data: { spool }, disableClose: true });
+    dialog.afterClosed().subscribe({
+      next: (r) => {
+        if (r === "update") {
+          this.update(spool);
+        }
+      }
+    });
+  }
+  remove() {
+    this.cardRemoved.next();
+  }
+  update(spool) {
+    this.cardUpdated.next(spool);
+  }
+};
+_SpoolCardComponent.\u0275fac = function SpoolCardComponent_Factory(t) {
+  return new (t || _SpoolCardComponent)(\u0275\u0275directiveInject(MatDialog));
+};
+_SpoolCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolCardComponent, selectors: [["app-spool-card"]], inputs: { spool: "spool", readOnly: "readOnly" }, outputs: { cardRemoved: "cardRemoved", cardUpdated: "cardUpdated" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [["mat-button", "", 3, "click"]], template: function SpoolCardComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, SpoolCardComponent_Conditional_0_Template, 11, 7, "mat-card");
+  }
+  if (rf & 2) {
+    \u0275\u0275conditional(0, ctx.spool ? 0 : -1);
+  }
+}, dependencies: [
+  MatCardTitle,
+  MatCard,
+  NgxColorsModule,
+  FormsModule,
+  MatIcon,
+  MatCardHeader,
+  MatCardContent,
+  MatCardActions,
+  MatCardSubtitle,
+  MatButton
+], styles: ["\n\n/*# sourceMappingURL=spool-card.component.css.map */"] });
+var SpoolCardComponent = _SpoolCardComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolCardComponent, { className: "SpoolCardComponent", filePath: "src/app/components/spool-card/spool-card.component.ts", lineNumber: 38 });
+})();
+
+// src/app/components/write-dialog/write-dialog.component.ts
+function WriteDialogComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "app-debug-nfc");
+  }
+}
+var _WriteDialogComponent = class _WriteDialogComponent {
+  constructor(data) {
+    this.data = data;
+    this.environment = environment;
+    this.spool = data.spool;
+  }
+};
+_WriteDialogComponent.\u0275fac = function WriteDialogComponent_Factory(t) {
+  return new (t || _WriteDialogComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
+};
+_WriteDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _WriteDialogComponent, selectors: [["app-write-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 3, consts: [["mat-dialog-title", ""], [3, "readOnly", "spool"]], template: function WriteDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275text(1, "Writing...");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content");
+    \u0275\u0275text(3, " Please tap this spool's tag with your phone: ");
+    \u0275\u0275element(4, "app-spool-card", 1)(5, "mat-spinner");
+    \u0275\u0275template(6, WriteDialogComponent_Conditional_6_Template, 1, 0, "app-debug-nfc");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(4);
+    \u0275\u0275property("readOnly", true)("spool", ctx.spool);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(6, ctx.environment.isDev ? 6 : -1);
+  }
+}, dependencies: [
+  MatProgressSpinner,
+  DebugNfcComponent,
+  MatDialogContent,
+  MatDialogTitle,
+  SpoolCardComponent
+], styles: ["\n\n/*# sourceMappingURL=write-dialog.component.css.map */"] });
+var WriteDialogComponent = _WriteDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(WriteDialogComponent, { className: "WriteDialogComponent", filePath: "src/app/components/write-dialog/write-dialog.component.ts", lineNumber: 36 });
 })();
 
 // src/app/classes/emulated-ndef-reader.ts
@@ -63922,11 +67830,11 @@ var EmulatedNdefReader = class {
     throw new Error("Method not implemented.");
   }
   scan() {
-    if (this.state !== "idle") {
-      return Promise.reject("Already scanning!");
-    } else {
+    if (this.state === "idle") {
       this.state = "scanning";
       return Promise.resolve();
+    } else {
+      return Promise.reject(new Error("Already scanning!"));
     }
   }
   write(message, options) {
@@ -63947,136 +67855,952 @@ var EmulatedNdefReader = class {
   }
 };
 
+// node_modules/@angular/material/fesm2022/snack-bar.mjs
+function SimpleSnackBar_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 1)(1, "button", 2);
+    \u0275\u0275listener("click", function SimpleSnackBar_Conditional_2_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.action());
+    });
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r0.data.action, " ");
+  }
+}
+var _c013 = ["label"];
+function MatSnackBarContainer_ng_template_4_Template(rf, ctx) {
+}
+var MAX_TIMEOUT = Math.pow(2, 31) - 1;
+var MatSnackBarRef = class {
+  constructor(containerInstance, _overlayRef) {
+    this._overlayRef = _overlayRef;
+    this._afterDismissed = new Subject();
+    this._afterOpened = new Subject();
+    this._onAction = new Subject();
+    this._dismissedByAction = false;
+    this.containerInstance = containerInstance;
+    containerInstance._onExit.subscribe(() => this._finishDismiss());
+  }
+  /** Dismisses the snack bar. */
+  dismiss() {
+    if (!this._afterDismissed.closed) {
+      this.containerInstance.exit();
+    }
+    clearTimeout(this._durationTimeoutId);
+  }
+  /** Marks the snackbar action clicked. */
+  dismissWithAction() {
+    if (!this._onAction.closed) {
+      this._dismissedByAction = true;
+      this._onAction.next();
+      this._onAction.complete();
+      this.dismiss();
+    }
+    clearTimeout(this._durationTimeoutId);
+  }
+  /**
+   * Marks the snackbar action clicked.
+   * @deprecated Use `dismissWithAction` instead.
+   * @breaking-change 8.0.0
+   */
+  closeWithAction() {
+    this.dismissWithAction();
+  }
+  /** Dismisses the snack bar after some duration */
+  _dismissAfter(duration) {
+    this._durationTimeoutId = setTimeout(() => this.dismiss(), Math.min(duration, MAX_TIMEOUT));
+  }
+  /** Marks the snackbar as opened */
+  _open() {
+    if (!this._afterOpened.closed) {
+      this._afterOpened.next();
+      this._afterOpened.complete();
+    }
+  }
+  /** Cleans up the DOM after closing. */
+  _finishDismiss() {
+    this._overlayRef.dispose();
+    if (!this._onAction.closed) {
+      this._onAction.complete();
+    }
+    this._afterDismissed.next({
+      dismissedByAction: this._dismissedByAction
+    });
+    this._afterDismissed.complete();
+    this._dismissedByAction = false;
+  }
+  /** Gets an observable that is notified when the snack bar is finished closing. */
+  afterDismissed() {
+    return this._afterDismissed;
+  }
+  /** Gets an observable that is notified when the snack bar has opened and appeared. */
+  afterOpened() {
+    return this.containerInstance._onEnter;
+  }
+  /** Gets an observable that is notified when the snack bar action is called. */
+  onAction() {
+    return this._onAction;
+  }
+};
+var MAT_SNACK_BAR_DATA = new InjectionToken("MatSnackBarData");
+var MatSnackBarConfig = class {
+  constructor() {
+    this.politeness = "assertive";
+    this.announcementMessage = "";
+    this.duration = 0;
+    this.data = null;
+    this.horizontalPosition = "center";
+    this.verticalPosition = "bottom";
+  }
+};
+var _MatSnackBarLabel = class _MatSnackBarLabel {
+};
+_MatSnackBarLabel.\u0275fac = function MatSnackBarLabel_Factory(t) {
+  return new (t || _MatSnackBarLabel)();
+};
+_MatSnackBarLabel.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatSnackBarLabel,
+  selectors: [["", "matSnackBarLabel", ""]],
+  hostAttrs: [1, "mat-mdc-snack-bar-label", "mdc-snackbar__label"],
+  standalone: true
+});
+var MatSnackBarLabel = _MatSnackBarLabel;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarLabel, [{
+    type: Directive,
+    args: [{
+      selector: `[matSnackBarLabel]`,
+      standalone: true,
+      host: {
+        "class": "mat-mdc-snack-bar-label mdc-snackbar__label"
+      }
+    }]
+  }], null, null);
+})();
+var _MatSnackBarActions = class _MatSnackBarActions {
+};
+_MatSnackBarActions.\u0275fac = function MatSnackBarActions_Factory(t) {
+  return new (t || _MatSnackBarActions)();
+};
+_MatSnackBarActions.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatSnackBarActions,
+  selectors: [["", "matSnackBarActions", ""]],
+  hostAttrs: [1, "mat-mdc-snack-bar-actions", "mdc-snackbar__actions"],
+  standalone: true
+});
+var MatSnackBarActions = _MatSnackBarActions;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarActions, [{
+    type: Directive,
+    args: [{
+      selector: `[matSnackBarActions]`,
+      standalone: true,
+      host: {
+        "class": "mat-mdc-snack-bar-actions mdc-snackbar__actions"
+      }
+    }]
+  }], null, null);
+})();
+var _MatSnackBarAction = class _MatSnackBarAction {
+};
+_MatSnackBarAction.\u0275fac = function MatSnackBarAction_Factory(t) {
+  return new (t || _MatSnackBarAction)();
+};
+_MatSnackBarAction.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatSnackBarAction,
+  selectors: [["", "matSnackBarAction", ""]],
+  hostAttrs: [1, "mat-mdc-snack-bar-action", "mdc-snackbar__action"],
+  standalone: true
+});
+var MatSnackBarAction = _MatSnackBarAction;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarAction, [{
+    type: Directive,
+    args: [{
+      selector: `[matSnackBarAction]`,
+      standalone: true,
+      host: {
+        "class": "mat-mdc-snack-bar-action mdc-snackbar__action"
+      }
+    }]
+  }], null, null);
+})();
+var _SimpleSnackBar = class _SimpleSnackBar {
+  constructor(snackBarRef, data) {
+    this.snackBarRef = snackBarRef;
+    this.data = data;
+  }
+  /** Performs the action on the snack bar. */
+  action() {
+    this.snackBarRef.dismissWithAction();
+  }
+  /** If the action button should be shown. */
+  get hasAction() {
+    return !!this.data.action;
+  }
+};
+_SimpleSnackBar.\u0275fac = function SimpleSnackBar_Factory(t) {
+  return new (t || _SimpleSnackBar)(\u0275\u0275directiveInject(MatSnackBarRef), \u0275\u0275directiveInject(MAT_SNACK_BAR_DATA));
+};
+_SimpleSnackBar.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _SimpleSnackBar,
+  selectors: [["simple-snack-bar"]],
+  hostAttrs: [1, "mat-mdc-simple-snack-bar"],
+  exportAs: ["matSnackBar"],
+  standalone: true,
+  features: [\u0275\u0275StandaloneFeature],
+  decls: 3,
+  vars: 2,
+  consts: [["matSnackBarLabel", ""], ["matSnackBarActions", ""], ["mat-button", "", "matSnackBarAction", "", 3, "click"]],
+  template: function SimpleSnackBar_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275text(1);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(2, SimpleSnackBar_Conditional_2_Template, 3, 1, "div", 1);
+    }
+    if (rf & 2) {
+      \u0275\u0275advance();
+      \u0275\u0275textInterpolate1(" ", ctx.data.message, "\n");
+      \u0275\u0275advance();
+      \u0275\u0275conditional(2, ctx.hasAction ? 2 : -1);
+    }
+  },
+  dependencies: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+  styles: [".mat-mdc-simple-snack-bar{display:flex}"],
+  encapsulation: 2,
+  changeDetection: 0
+});
+var SimpleSnackBar = _SimpleSnackBar;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SimpleSnackBar, [{
+    type: Component,
+    args: [{
+      selector: "simple-snack-bar",
+      exportAs: "matSnackBar",
+      encapsulation: ViewEncapsulation$1.None,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+      standalone: true,
+      host: {
+        "class": "mat-mdc-simple-snack-bar"
+      },
+      template: '<div matSnackBarLabel>\n  {{data.message}}\n</div>\n\n@if (hasAction) {\n  <div matSnackBarActions>\n    <button mat-button matSnackBarAction (click)="action()">\n      {{data.action}}\n    </button>\n  </div>\n}\n',
+      styles: [".mat-mdc-simple-snack-bar{display:flex}"]
+    }]
+  }], () => [{
+    type: MatSnackBarRef
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [MAT_SNACK_BAR_DATA]
+    }]
+  }], null);
+})();
+var matSnackBarAnimations = {
+  /** Animation that shows and hides a snack bar. */
+  snackBarState: trigger("state", [state("void, hidden", style({
+    transform: "scale(0.8)",
+    opacity: 0
+  })), state("visible", style({
+    transform: "scale(1)",
+    opacity: 1
+  })), transition("* => visible", animate("150ms cubic-bezier(0, 0, 0.2, 1)")), transition("* => void, * => hidden", animate("75ms cubic-bezier(0.4, 0.0, 1, 1)", style({
+    opacity: 0
+  })))])
+};
+var uniqueId3 = 0;
+var _MatSnackBarContainer = class _MatSnackBarContainer extends BasePortalOutlet {
+  constructor(_ngZone, _elementRef, _changeDetectorRef, _platform, snackBarConfig) {
+    super();
+    this._ngZone = _ngZone;
+    this._elementRef = _elementRef;
+    this._changeDetectorRef = _changeDetectorRef;
+    this._platform = _platform;
+    this.snackBarConfig = snackBarConfig;
+    this._document = inject(DOCUMENT2);
+    this._trackedModals = /* @__PURE__ */ new Set();
+    this._announceDelay = 150;
+    this._destroyed = false;
+    this._onAnnounce = new Subject();
+    this._onExit = new Subject();
+    this._onEnter = new Subject();
+    this._animationState = "void";
+    this._liveElementId = `mat-snack-bar-container-live-${uniqueId3++}`;
+    this.attachDomPortal = (portal) => {
+      this._assertNotAttached();
+      const result = this._portalOutlet.attachDomPortal(portal);
+      this._afterPortalAttached();
+      return result;
+    };
+    if (snackBarConfig.politeness === "assertive" && !snackBarConfig.announcementMessage) {
+      this._live = "assertive";
+    } else if (snackBarConfig.politeness === "off") {
+      this._live = "off";
+    } else {
+      this._live = "polite";
+    }
+    if (this._platform.FIREFOX) {
+      if (this._live === "polite") {
+        this._role = "status";
+      }
+      if (this._live === "assertive") {
+        this._role = "alert";
+      }
+    }
+  }
+  /** Attach a component portal as content to this snack bar container. */
+  attachComponentPortal(portal) {
+    this._assertNotAttached();
+    const result = this._portalOutlet.attachComponentPortal(portal);
+    this._afterPortalAttached();
+    return result;
+  }
+  /** Attach a template portal as content to this snack bar container. */
+  attachTemplatePortal(portal) {
+    this._assertNotAttached();
+    const result = this._portalOutlet.attachTemplatePortal(portal);
+    this._afterPortalAttached();
+    return result;
+  }
+  /** Handle end of animations, updating the state of the snackbar. */
+  onAnimationEnd(event) {
+    const {
+      fromState,
+      toState
+    } = event;
+    if (toState === "void" && fromState !== "void" || toState === "hidden") {
+      this._completeExit();
+    }
+    if (toState === "visible") {
+      const onEnter2 = this._onEnter;
+      this._ngZone.run(() => {
+        onEnter2.next();
+        onEnter2.complete();
+      });
+    }
+  }
+  /** Begin animation of snack bar entrance into view. */
+  enter() {
+    if (!this._destroyed) {
+      this._animationState = "visible";
+      this._changeDetectorRef.markForCheck();
+      this._changeDetectorRef.detectChanges();
+      this._screenReaderAnnounce();
+    }
+  }
+  /** Begin animation of the snack bar exiting from view. */
+  exit() {
+    this._ngZone.run(() => {
+      this._animationState = "hidden";
+      this._changeDetectorRef.markForCheck();
+      this._elementRef.nativeElement.setAttribute("mat-exit", "");
+      clearTimeout(this._announceTimeoutId);
+    });
+    return this._onExit;
+  }
+  /** Makes sure the exit callbacks have been invoked when the element is destroyed. */
+  ngOnDestroy() {
+    this._destroyed = true;
+    this._clearFromModals();
+    this._completeExit();
+  }
+  /**
+   * Removes the element in a microtask. Helps prevent errors where we end up
+   * removing an element which is in the middle of an animation.
+   */
+  _completeExit() {
+    queueMicrotask(() => {
+      this._onExit.next();
+      this._onExit.complete();
+    });
+  }
+  /**
+   * Called after the portal contents have been attached. Can be
+   * used to modify the DOM once it's guaranteed to be in place.
+   */
+  _afterPortalAttached() {
+    const element = this._elementRef.nativeElement;
+    const panelClasses = this.snackBarConfig.panelClass;
+    if (panelClasses) {
+      if (Array.isArray(panelClasses)) {
+        panelClasses.forEach((cssClass) => element.classList.add(cssClass));
+      } else {
+        element.classList.add(panelClasses);
+      }
+    }
+    this._exposeToModals();
+    const label = this._label.nativeElement;
+    const labelClass = "mdc-snackbar__label";
+    label.classList.toggle(labelClass, !label.querySelector(`.${labelClass}`));
+  }
+  /**
+   * Some browsers won't expose the accessibility node of the live element if there is an
+   * `aria-modal` and the live element is outside of it. This method works around the issue by
+   * pointing the `aria-owns` of all modals to the live element.
+   */
+  _exposeToModals() {
+    const id = this._liveElementId;
+    const modals = this._document.querySelectorAll('body > .cdk-overlay-container [aria-modal="true"]');
+    for (let i = 0; i < modals.length; i++) {
+      const modal = modals[i];
+      const ariaOwns = modal.getAttribute("aria-owns");
+      this._trackedModals.add(modal);
+      if (!ariaOwns) {
+        modal.setAttribute("aria-owns", id);
+      } else if (ariaOwns.indexOf(id) === -1) {
+        modal.setAttribute("aria-owns", ariaOwns + " " + id);
+      }
+    }
+  }
+  /** Clears the references to the live element from any modals it was added to. */
+  _clearFromModals() {
+    this._trackedModals.forEach((modal) => {
+      const ariaOwns = modal.getAttribute("aria-owns");
+      if (ariaOwns) {
+        const newValue = ariaOwns.replace(this._liveElementId, "").trim();
+        if (newValue.length > 0) {
+          modal.setAttribute("aria-owns", newValue);
+        } else {
+          modal.removeAttribute("aria-owns");
+        }
+      }
+    });
+    this._trackedModals.clear();
+  }
+  /** Asserts that no content is already attached to the container. */
+  _assertNotAttached() {
+    if (this._portalOutlet.hasAttached() && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error("Attempting to attach snack bar content after content is already attached");
+    }
+  }
+  /**
+   * Starts a timeout to move the snack bar content to the live region so screen readers will
+   * announce it.
+   */
+  _screenReaderAnnounce() {
+    if (!this._announceTimeoutId) {
+      this._ngZone.runOutsideAngular(() => {
+        this._announceTimeoutId = setTimeout(() => {
+          const inertElement = this._elementRef.nativeElement.querySelector("[aria-hidden]");
+          const liveElement = this._elementRef.nativeElement.querySelector("[aria-live]");
+          if (inertElement && liveElement) {
+            let focusedElement = null;
+            if (this._platform.isBrowser && document.activeElement instanceof HTMLElement && inertElement.contains(document.activeElement)) {
+              focusedElement = document.activeElement;
+            }
+            inertElement.removeAttribute("aria-hidden");
+            liveElement.appendChild(inertElement);
+            focusedElement?.focus();
+            this._onAnnounce.next();
+            this._onAnnounce.complete();
+          }
+        }, this._announceDelay);
+      });
+    }
+  }
+};
+_MatSnackBarContainer.\u0275fac = function MatSnackBarContainer_Factory(t) {
+  return new (t || _MatSnackBarContainer)(\u0275\u0275directiveInject(NgZone), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(Platform), \u0275\u0275directiveInject(MatSnackBarConfig));
+};
+_MatSnackBarContainer.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatSnackBarContainer,
+  selectors: [["mat-snack-bar-container"]],
+  viewQuery: function MatSnackBarContainer_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuery(CdkPortalOutlet, 7);
+      \u0275\u0275viewQuery(_c013, 7);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._portalOutlet = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._label = _t.first);
+    }
+  },
+  hostAttrs: [1, "mdc-snackbar", "mat-mdc-snack-bar-container", "mdc-snackbar--open"],
+  hostVars: 1,
+  hostBindings: function MatSnackBarContainer_HostBindings(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275syntheticHostListener("@state.done", function MatSnackBarContainer_animation_state_done_HostBindingHandler($event) {
+        return ctx.onAnimationEnd($event);
+      });
+    }
+    if (rf & 2) {
+      \u0275\u0275syntheticHostProperty("@state", ctx._animationState);
+    }
+  },
+  standalone: true,
+  features: [\u0275\u0275InheritDefinitionFeature, \u0275\u0275StandaloneFeature],
+  decls: 6,
+  vars: 3,
+  consts: [[1, "mdc-snackbar__surface"], [1, "mat-mdc-snack-bar-label"], ["label", ""], ["aria-hidden", "true"], ["cdkPortalOutlet", ""]],
+  template: function MatSnackBarContainer_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1, 2)(3, "div", 3);
+      \u0275\u0275template(4, MatSnackBarContainer_ng_template_4_Template, 0, 0, "ng-template", 4);
+      \u0275\u0275elementEnd();
+      \u0275\u0275element(5, "div");
+      \u0275\u0275elementEnd()();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(5);
+      \u0275\u0275attribute("aria-live", ctx._live)("role", ctx._role)("id", ctx._liveElementId);
+    }
+  },
+  dependencies: [CdkPortalOutlet],
+  styles: ['.mdc-snackbar{display:none;position:fixed;right:0;bottom:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;pointer-events:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-snackbar--opening,.mdc-snackbar--open,.mdc-snackbar--closing{display:flex}.mdc-snackbar--open .mdc-snackbar__label,.mdc-snackbar--open .mdc-snackbar__actions{visibility:visible}.mdc-snackbar__surface{padding-left:0;padding-right:8px;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;transform:scale(0.8);opacity:0}.mdc-snackbar__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-snackbar__surface::before{border-color:CanvasText}}[dir=rtl] .mdc-snackbar__surface,.mdc-snackbar__surface[dir=rtl]{padding-left:8px;padding-right:0}.mdc-snackbar--open .mdc-snackbar__surface{transform:scale(1);opacity:1;pointer-events:auto}.mdc-snackbar--closing .mdc-snackbar__surface{transform:scale(1)}.mdc-snackbar__label{padding-left:16px;padding-right:8px;width:100%;flex-grow:1;box-sizing:border-box;margin:0;visibility:hidden;padding-top:14px;padding-bottom:14px}[dir=rtl] .mdc-snackbar__label,.mdc-snackbar__label[dir=rtl]{padding-left:8px;padding-right:16px}.mdc-snackbar__label::before{display:inline;content:attr(data-mdc-snackbar-label-text)}.mdc-snackbar__actions{display:flex;flex-shrink:0;align-items:center;box-sizing:border-box;visibility:hidden}.mdc-snackbar__action+.mdc-snackbar__dismiss{margin-left:8px;margin-right:0}[dir=rtl] .mdc-snackbar__action+.mdc-snackbar__dismiss,.mdc-snackbar__action+.mdc-snackbar__dismiss[dir=rtl]{margin-left:0;margin-right:8px}.mat-mdc-snack-bar-container{margin:8px;position:static}.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:344px}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:100%}}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container{width:100vw}}.mat-mdc-snack-bar-container .mdc-snackbar__surface{max-width:672px}.mat-mdc-snack-bar-container .mdc-snackbar__surface{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{background-color:var(--mdc-snackbar-container-color)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{border-radius:var(--mdc-snackbar-container-shape)}.mat-mdc-snack-bar-container .mdc-snackbar__label{color:var(--mdc-snackbar-supporting-text-color)}.mat-mdc-snack-bar-container .mdc-snackbar__label{font-size:var(--mdc-snackbar-supporting-text-size);font-family:var(--mdc-snackbar-supporting-text-font);font-weight:var(--mdc-snackbar-supporting-text-weight);line-height:var(--mdc-snackbar-supporting-text-line-height)}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled){color:var(--mat-snack-bar-button-color);--mat-text-button-state-layer-color:currentColor;--mat-text-button-ripple-color:currentColor}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) .mat-ripple-element{opacity:.1}.mat-mdc-snack-bar-container .mdc-snackbar__label::before{display:none}.mat-mdc-snack-bar-handset,.mat-mdc-snack-bar-container,.mat-mdc-snack-bar-label{flex:1 1 auto}.mat-mdc-snack-bar-handset .mdc-snackbar__surface{width:100%}'],
+  encapsulation: 2,
+  data: {
+    animation: [matSnackBarAnimations.snackBarState]
+  }
+});
+var MatSnackBarContainer = _MatSnackBarContainer;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarContainer, [{
+    type: Component,
+    args: [{
+      selector: "mat-snack-bar-container",
+      changeDetection: ChangeDetectionStrategy.Default,
+      encapsulation: ViewEncapsulation$1.None,
+      animations: [matSnackBarAnimations.snackBarState],
+      standalone: true,
+      imports: [CdkPortalOutlet],
+      host: {
+        "class": "mdc-snackbar mat-mdc-snack-bar-container mdc-snackbar--open",
+        "[@state]": "_animationState",
+        "(@state.done)": "onAnimationEnd($event)"
+      },
+      template: '<div class="mdc-snackbar__surface">\n  <!--\n    This outer label wrapper will have the class `mdc-snackbar__label` applied if\n    the attached template/component does not contain it.\n  -->\n  <div class="mat-mdc-snack-bar-label" #label>\n    <!-- Initialy holds the snack bar content, will be empty after announcing to screen readers. -->\n    <div aria-hidden="true">\n      <ng-template cdkPortalOutlet />\n    </div>\n\n    <!-- Will receive the snack bar content from the non-live div, move will happen a short delay after opening -->\n    <div [attr.aria-live]="_live" [attr.role]="_role" [attr.id]="_liveElementId"></div>\n  </div>\n</div>\n',
+      styles: ['.mdc-snackbar{display:none;position:fixed;right:0;bottom:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;pointer-events:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-snackbar--opening,.mdc-snackbar--open,.mdc-snackbar--closing{display:flex}.mdc-snackbar--open .mdc-snackbar__label,.mdc-snackbar--open .mdc-snackbar__actions{visibility:visible}.mdc-snackbar__surface{padding-left:0;padding-right:8px;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;transform:scale(0.8);opacity:0}.mdc-snackbar__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-snackbar__surface::before{border-color:CanvasText}}[dir=rtl] .mdc-snackbar__surface,.mdc-snackbar__surface[dir=rtl]{padding-left:8px;padding-right:0}.mdc-snackbar--open .mdc-snackbar__surface{transform:scale(1);opacity:1;pointer-events:auto}.mdc-snackbar--closing .mdc-snackbar__surface{transform:scale(1)}.mdc-snackbar__label{padding-left:16px;padding-right:8px;width:100%;flex-grow:1;box-sizing:border-box;margin:0;visibility:hidden;padding-top:14px;padding-bottom:14px}[dir=rtl] .mdc-snackbar__label,.mdc-snackbar__label[dir=rtl]{padding-left:8px;padding-right:16px}.mdc-snackbar__label::before{display:inline;content:attr(data-mdc-snackbar-label-text)}.mdc-snackbar__actions{display:flex;flex-shrink:0;align-items:center;box-sizing:border-box;visibility:hidden}.mdc-snackbar__action+.mdc-snackbar__dismiss{margin-left:8px;margin-right:0}[dir=rtl] .mdc-snackbar__action+.mdc-snackbar__dismiss,.mdc-snackbar__action+.mdc-snackbar__dismiss[dir=rtl]{margin-left:0;margin-right:8px}.mat-mdc-snack-bar-container{margin:8px;position:static}.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:344px}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:100%}}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container{width:100vw}}.mat-mdc-snack-bar-container .mdc-snackbar__surface{max-width:672px}.mat-mdc-snack-bar-container .mdc-snackbar__surface{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{background-color:var(--mdc-snackbar-container-color)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{border-radius:var(--mdc-snackbar-container-shape)}.mat-mdc-snack-bar-container .mdc-snackbar__label{color:var(--mdc-snackbar-supporting-text-color)}.mat-mdc-snack-bar-container .mdc-snackbar__label{font-size:var(--mdc-snackbar-supporting-text-size);font-family:var(--mdc-snackbar-supporting-text-font);font-weight:var(--mdc-snackbar-supporting-text-weight);line-height:var(--mdc-snackbar-supporting-text-line-height)}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled){color:var(--mat-snack-bar-button-color);--mat-text-button-state-layer-color:currentColor;--mat-text-button-ripple-color:currentColor}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) .mat-ripple-element{opacity:.1}.mat-mdc-snack-bar-container .mdc-snackbar__label::before{display:none}.mat-mdc-snack-bar-handset,.mat-mdc-snack-bar-container,.mat-mdc-snack-bar-label{flex:1 1 auto}.mat-mdc-snack-bar-handset .mdc-snackbar__surface{width:100%}']
+    }]
+  }], () => [{
+    type: NgZone
+  }, {
+    type: ElementRef
+  }, {
+    type: ChangeDetectorRef
+  }, {
+    type: Platform
+  }, {
+    type: MatSnackBarConfig
+  }], {
+    _portalOutlet: [{
+      type: ViewChild,
+      args: [CdkPortalOutlet, {
+        static: true
+      }]
+    }],
+    _label: [{
+      type: ViewChild,
+      args: ["label", {
+        static: true
+      }]
+    }]
+  });
+})();
+function MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY() {
+  return new MatSnackBarConfig();
+}
+var MAT_SNACK_BAR_DEFAULT_OPTIONS = new InjectionToken("mat-snack-bar-default-options", {
+  providedIn: "root",
+  factory: MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY
+});
+var _MatSnackBar = class _MatSnackBar {
+  /** Reference to the currently opened snackbar at *any* level. */
+  get _openedSnackBarRef() {
+    const parent = this._parentSnackBar;
+    return parent ? parent._openedSnackBarRef : this._snackBarRefAtThisLevel;
+  }
+  set _openedSnackBarRef(value) {
+    if (this._parentSnackBar) {
+      this._parentSnackBar._openedSnackBarRef = value;
+    } else {
+      this._snackBarRefAtThisLevel = value;
+    }
+  }
+  constructor(_overlay, _live, _injector, _breakpointObserver, _parentSnackBar, _defaultConfig) {
+    this._overlay = _overlay;
+    this._live = _live;
+    this._injector = _injector;
+    this._breakpointObserver = _breakpointObserver;
+    this._parentSnackBar = _parentSnackBar;
+    this._defaultConfig = _defaultConfig;
+    this._snackBarRefAtThisLevel = null;
+    this.simpleSnackBarComponent = SimpleSnackBar;
+    this.snackBarContainerComponent = MatSnackBarContainer;
+    this.handsetCssClass = "mat-mdc-snack-bar-handset";
+  }
+  /**
+   * Creates and dispatches a snack bar with a custom component for the content, removing any
+   * currently opened snack bars.
+   *
+   * @param component Component to be instantiated.
+   * @param config Extra configuration for the snack bar.
+   */
+  openFromComponent(component, config2) {
+    return this._attach(component, config2);
+  }
+  /**
+   * Creates and dispatches a snack bar with a custom template for the content, removing any
+   * currently opened snack bars.
+   *
+   * @param template Template to be instantiated.
+   * @param config Extra configuration for the snack bar.
+   */
+  openFromTemplate(template, config2) {
+    return this._attach(template, config2);
+  }
+  /**
+   * Opens a snackbar with a message and an optional action.
+   * @param message The message to show in the snackbar.
+   * @param action The label for the snackbar action.
+   * @param config Additional configuration options for the snackbar.
+   */
+  open(message, action = "", config2) {
+    const _config = __spreadValues(__spreadValues({}, this._defaultConfig), config2);
+    _config.data = {
+      message,
+      action
+    };
+    if (_config.announcementMessage === message) {
+      _config.announcementMessage = void 0;
+    }
+    return this.openFromComponent(this.simpleSnackBarComponent, _config);
+  }
+  /**
+   * Dismisses the currently-visible snack bar.
+   */
+  dismiss() {
+    if (this._openedSnackBarRef) {
+      this._openedSnackBarRef.dismiss();
+    }
+  }
+  ngOnDestroy() {
+    if (this._snackBarRefAtThisLevel) {
+      this._snackBarRefAtThisLevel.dismiss();
+    }
+  }
+  /**
+   * Attaches the snack bar container component to the overlay.
+   */
+  _attachSnackBarContainer(overlayRef, config2) {
+    const userInjector = config2 && config2.viewContainerRef && config2.viewContainerRef.injector;
+    const injector = Injector.create({
+      parent: userInjector || this._injector,
+      providers: [{
+        provide: MatSnackBarConfig,
+        useValue: config2
+      }]
+    });
+    const containerPortal = new ComponentPortal(this.snackBarContainerComponent, config2.viewContainerRef, injector);
+    const containerRef = overlayRef.attach(containerPortal);
+    containerRef.instance.snackBarConfig = config2;
+    return containerRef.instance;
+  }
+  /**
+   * Places a new component or a template as the content of the snack bar container.
+   */
+  _attach(content, userConfig) {
+    const config2 = __spreadValues(__spreadValues(__spreadValues({}, new MatSnackBarConfig()), this._defaultConfig), userConfig);
+    const overlayRef = this._createOverlay(config2);
+    const container = this._attachSnackBarContainer(overlayRef, config2);
+    const snackBarRef = new MatSnackBarRef(container, overlayRef);
+    if (content instanceof TemplateRef) {
+      const portal = new TemplatePortal(content, null, {
+        $implicit: config2.data,
+        snackBarRef
+      });
+      snackBarRef.instance = container.attachTemplatePortal(portal);
+    } else {
+      const injector = this._createInjector(config2, snackBarRef);
+      const portal = new ComponentPortal(content, void 0, injector);
+      const contentRef = container.attachComponentPortal(portal);
+      snackBarRef.instance = contentRef.instance;
+    }
+    this._breakpointObserver.observe(Breakpoints.HandsetPortrait).pipe(takeUntil(overlayRef.detachments())).subscribe((state2) => {
+      overlayRef.overlayElement.classList.toggle(this.handsetCssClass, state2.matches);
+    });
+    if (config2.announcementMessage) {
+      container._onAnnounce.subscribe(() => {
+        this._live.announce(config2.announcementMessage, config2.politeness);
+      });
+    }
+    this._animateSnackBar(snackBarRef, config2);
+    this._openedSnackBarRef = snackBarRef;
+    return this._openedSnackBarRef;
+  }
+  /** Animates the old snack bar out and the new one in. */
+  _animateSnackBar(snackBarRef, config2) {
+    snackBarRef.afterDismissed().subscribe(() => {
+      if (this._openedSnackBarRef == snackBarRef) {
+        this._openedSnackBarRef = null;
+      }
+      if (config2.announcementMessage) {
+        this._live.clear();
+      }
+    });
+    if (this._openedSnackBarRef) {
+      this._openedSnackBarRef.afterDismissed().subscribe(() => {
+        snackBarRef.containerInstance.enter();
+      });
+      this._openedSnackBarRef.dismiss();
+    } else {
+      snackBarRef.containerInstance.enter();
+    }
+    if (config2.duration && config2.duration > 0) {
+      snackBarRef.afterOpened().subscribe(() => snackBarRef._dismissAfter(config2.duration));
+    }
+  }
+  /**
+   * Creates a new overlay and places it in the correct location.
+   * @param config The user-specified snack bar config.
+   */
+  _createOverlay(config2) {
+    const overlayConfig = new OverlayConfig();
+    overlayConfig.direction = config2.direction;
+    let positionStrategy = this._overlay.position().global();
+    const isRtl = config2.direction === "rtl";
+    const isLeft = config2.horizontalPosition === "left" || config2.horizontalPosition === "start" && !isRtl || config2.horizontalPosition === "end" && isRtl;
+    const isRight = !isLeft && config2.horizontalPosition !== "center";
+    if (isLeft) {
+      positionStrategy.left("0");
+    } else if (isRight) {
+      positionStrategy.right("0");
+    } else {
+      positionStrategy.centerHorizontally();
+    }
+    if (config2.verticalPosition === "top") {
+      positionStrategy.top("0");
+    } else {
+      positionStrategy.bottom("0");
+    }
+    overlayConfig.positionStrategy = positionStrategy;
+    return this._overlay.create(overlayConfig);
+  }
+  /**
+   * Creates an injector to be used inside of a snack bar component.
+   * @param config Config that was used to create the snack bar.
+   * @param snackBarRef Reference to the snack bar.
+   */
+  _createInjector(config2, snackBarRef) {
+    const userInjector = config2 && config2.viewContainerRef && config2.viewContainerRef.injector;
+    return Injector.create({
+      parent: userInjector || this._injector,
+      providers: [{
+        provide: MatSnackBarRef,
+        useValue: snackBarRef
+      }, {
+        provide: MAT_SNACK_BAR_DATA,
+        useValue: config2.data
+      }]
+    });
+  }
+};
+_MatSnackBar.\u0275fac = function MatSnackBar_Factory(t) {
+  return new (t || _MatSnackBar)(\u0275\u0275inject(Overlay), \u0275\u0275inject(LiveAnnouncer), \u0275\u0275inject(Injector), \u0275\u0275inject(BreakpointObserver), \u0275\u0275inject(_MatSnackBar, 12), \u0275\u0275inject(MAT_SNACK_BAR_DEFAULT_OPTIONS));
+};
+_MatSnackBar.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+  token: _MatSnackBar,
+  factory: _MatSnackBar.\u0275fac,
+  providedIn: "root"
+});
+var MatSnackBar = _MatSnackBar;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBar, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: Overlay
+  }, {
+    type: LiveAnnouncer
+  }, {
+    type: Injector
+  }, {
+    type: BreakpointObserver
+  }, {
+    type: MatSnackBar,
+    decorators: [{
+      type: Optional
+    }, {
+      type: SkipSelf
+    }]
+  }, {
+    type: MatSnackBarConfig,
+    decorators: [{
+      type: Inject,
+      args: [MAT_SNACK_BAR_DEFAULT_OPTIONS]
+    }]
+  }], null);
+})();
+var DIRECTIVES2 = [MatSnackBarContainer, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction];
+var _MatSnackBarModule = class _MatSnackBarModule {
+};
+_MatSnackBarModule.\u0275fac = function MatSnackBarModule_Factory(t) {
+  return new (t || _MatSnackBarModule)();
+};
+_MatSnackBarModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatSnackBarModule
+});
+_MatSnackBarModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  providers: [MatSnackBar],
+  imports: [OverlayModule, PortalModule, MatButtonModule, MatCommonModule, SimpleSnackBar, MatCommonModule]
+});
+var MatSnackBarModule = _MatSnackBarModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarModule, [{
+    type: NgModule,
+    args: [{
+      imports: [OverlayModule, PortalModule, MatButtonModule, MatCommonModule, SimpleSnackBar, ...DIRECTIVES2],
+      exports: [MatCommonModule, ...DIRECTIVES2],
+      providers: [MatSnackBar]
+    }]
+  }], null, null);
+})();
+
 // src/app/services/nfc.service.ts
 var _NfcService = class _NfcService {
-  constructor(nfcEmulator) {
+  constructor(nfcEmulator, snackBar) {
     this.nfcEmulator = nfcEmulator;
-    this.reading = false;
-    this.read = false;
-    this.writing = false;
-    this.written = false;
+    this.snackBar = snackBar;
     this.converter = new MessageConverter();
+    this.statusSubject = new BehaviorSubject("Idle");
+    this.readSubject = new Subject();
     this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
     this.ndef.onreading = (tag) => this.handleReadWrite(tag);
     this.ndef.onreadingerror = (err) => this.handleError(err);
     this.ndef.scan().then(() => {
-      console.log("Starting scan...");
+      this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
+      this.statusSubject.next("Scanning");
     }).catch((e) => {
+      this.snackBar.open("Scan could not be started: " + e.type, "Dismiss", { duration: 1e3 });
       console.log("Scan could not be started: " + e.type);
+      this.statusSubject.next("Error");
     });
   }
-  readSpool(timeout) {
-    this.readSubject = new AsyncSubject();
-    if (!this.reading) {
-      this.reading = true;
-      this.read = false;
-      setTimeout(() => {
-        if (!this.read) {
-          console.warn("Timeout!");
-          this.readSubject?.error("Read timed out");
-        }
-        this.reading = false;
-        this.read = false;
-      }, timeout);
-    } else {
-      console.warn("Read in progress!");
-      this.readSubject.error("Already reading");
-    }
+  spool$() {
     return this.readSubject;
   }
+  status$() {
+    return this.statusSubject;
+  }
   updateSpool(spool) {
-    this.writeSubject = new AsyncSubject();
-    let message = this.converter.spoolToMessage(spool);
-    const source = {
-      records: message.records.map((r) => {
-        return r;
-      })
-    };
-    this.writing = true;
-    this.writingTo = spool.id;
-    this.writingBody = source;
-    return this.writeSubject;
+    if (!this.writing) {
+      this.statusSubject.next("Writing");
+      this.writing = {
+        id: spool.id,
+        message: { records: this.converter.spoolToMessage(spool).records.map((r) => r) },
+        subject: new AsyncSubject()
+      };
+      return this.writing.subject;
+    } else {
+      return throwError(new Error("Already writing"));
+    }
   }
   handleReadWrite(tag) {
-    if (this.reading && !this.read) {
-      this.read = true;
-      this.readSubject?.next(this.converter.messageToSpool(tag.serialNumber, tag.message));
-      this.readSubject?.complete();
+    if (!this.writing) {
+      this.readSubject.next(this.converter.messageToSpool(tag.serialNumber, tag.message));
     }
-    if (this.writing && !this.written && this.writingTo && this.writingBody) {
-      if (tag.serialNumber === this.writingTo) {
-        this.ndef.write(this.writingBody, { overwrite: true }).then(() => {
-          this.written = true;
-          this.writeSubject?.next();
-          this.writeSubject?.complete();
+    if (this.writing) {
+      if (tag.serialNumber === this.writing.id) {
+        this.ndef.write(this.writing.message, { overwrite: true }).then(() => {
+          this.statusSubject.next("Reading");
+          this.writing?.subject.complete();
+          this.writing = void 0;
         }).catch((e) => {
           console.log(e);
+          this.writing?.subject.error(new Error("Could not write tag, try again?"));
         }).finally();
       } else {
-        console.log("This is not the tag we are waiting for");
+        this.snackBar.open("Not the correct tag, try again", "Dismiss", { duration: 1e3 });
       }
     }
   }
   handleError(error) {
-    console.error("Could not read tag: " + error.type);
+    console.log(error);
+    this.snackBar.open("Error reading tag, try again?", "Dismiss", { duration: 1e3 });
   }
 };
 _NfcService.\u0275fac = function NfcService_Factory(t) {
-  return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService));
+  return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService), \u0275\u0275inject(MatSnackBar));
 };
 _NfcService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _NfcService, factory: _NfcService.\u0275fac, providedIn: "root" });
 var NfcService = _NfcService;
 
 // src/app/app.component.ts
 var _forTrack02 = ($index, $item) => $item.id;
-function AppComponent_For_6_Template(rf, ctx) {
+function AppComponent_Conditional_16_For_2_Template(rf, ctx) {
   if (rf & 1) {
-    const _r8 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "app-tag-card", 2);
-    \u0275\u0275listener("cardRemoved", function AppComponent_For_6_Template_app_tag_card_cardRemoved_0_listener() {
-      const restoredCtx = \u0275\u0275restoreView(_r8);
-      const spool_r2 = restoredCtx.$implicit;
-      const ctx_r7 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r7.removeSpool(spool_r2.id));
-    })("saveTag", function AppComponent_For_6_Template_app_tag_card_saveTag_0_listener() {
-      const restoredCtx = \u0275\u0275restoreView(_r8);
-      const spool_r2 = restoredCtx.$implicit;
-      const ctx_r9 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r9.updateSpool(spool_r2));
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "mat-grid-tile")(1, "app-spool-card", 6);
+    \u0275\u0275listener("cardRemoved", function AppComponent_Conditional_16_For_2_Template_app_spool_card_cardRemoved_1_listener() {
+      const restoredCtx = \u0275\u0275restoreView(_r10);
+      const spool_r4 = restoredCtx.$implicit;
+      const ctx_r9 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r9.removeSpool(spool_r4.id));
+    })("cardUpdated", function AppComponent_Conditional_16_For_2_Template_app_spool_card_cardUpdated_1_listener($event) {
+      \u0275\u0275restoreView(_r10);
+      const ctx_r11 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r11.updateSpool($event));
     });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const spool_r4 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("spool", spool_r4);
+  }
+}
+function AppComponent_Conditional_16_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-grid-list", 4);
+    \u0275\u0275repeaterCreate(1, AppComponent_Conditional_16_For_2_Template, 2, 1, "mat-grid-tile", null, _forTrack02);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const spool_r2 = ctx.$implicit;
-    \u0275\u0275property("spool", spool_r2);
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275repeater(ctx_r0.spools);
   }
 }
-function AppComponent_app_debug_nfc_7_Template(rf, ctx) {
+function AppComponent_Conditional_17_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2");
+    \u0275\u0275text(1, "There are no scanned spools yet, tap a spool tag to populate this list");
+    \u0275\u0275elementEnd();
+  }
+}
+function AppComponent_app_debug_nfc_18_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "app-debug-nfc");
   }
 }
 var _AppComponent = class _AppComponent {
-  constructor(nfcService) {
+  constructor(nfcService, dialog, snackBar) {
     this.nfcService = nfcService;
-    this.title = "spoolmeter";
-    this.status = "idle";
+    this.dialog = dialog;
+    this.snackBar = snackBar;
     this.spools = [];
     this.environment = environment;
-  }
-  scan() {
-    this.status = "scanning";
-    this.nfcService.readSpool(5e3).subscribe({
+    this.nfcService.spool$().subscribe({
       next: (spool) => {
-        this.status = "Read spool: " + spool.id;
-        console.log(this.status);
+        this.snackBar.open("Scanned spool tag " + spool.id, "Dismiss", { duration: 1e3 });
         if (!this.spoolScanned(spool)) {
           this.spools.push(spool);
         }
       },
       error: (err) => {
-        this.status = "Could not read spool: " + err;
-        console.log(this.status);
+        this.snackBar.open("Error scanning tag, try again?", "Dismiss", { duration: 1e3 });
+        console.log(err);
       }
     });
   }
@@ -64087,39 +68811,72 @@ var _AppComponent = class _AppComponent {
     this.spools = this.spools.filter((s) => s.id != id);
   }
   updateSpool(spool) {
-    this.nfcService.updateSpool(spool);
+    const dialog = this.dialog.open(WriteDialogComponent, {
+      data: { spool },
+      disableClose: true,
+      width: this.environment.isDev ? "600px" : void 0,
+      height: this.environment.isDev ? "500px" : void 0
+    });
+    this.nfcService.updateSpool(spool).subscribe({
+      error: (e) => {
+        console.log(e);
+        dialog.close();
+        this.snackBar.open("Could not write tag", "Dismiss", { duration: 2e3 });
+      },
+      complete: () => {
+        dialog.close();
+        const index = this.spools.findIndex((s) => s.id === spool.id);
+        this.spools[index] = spool;
+        this.snackBar.open("Spool updated", "Dismiss", { duration: 1e3 });
+      }
+    });
+  }
+  showHelp() {
+    this.dialog.open(HelpDialogComponent);
   }
 };
 _AppComponent.\u0275fac = function AppComponent_Factory(t) {
-  return new (t || _AppComponent)(\u0275\u0275directiveInject(NfcService));
+  return new (t || _AppComponent)(\u0275\u0275directiveInject(NfcService), \u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(MatSnackBar));
 };
-_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 8, vars: 2, consts: [[3, "click"], [4, "ngIf"], [3, "spool", "cardRemoved", "saveTag"], [3, "spool"]], template: function AppComponent_Template(rf, ctx) {
+_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 19, vars: 5, consts: [["color", "primary"], [1, "spacer"], [2, "font-size", "small"], ["mat-button", "", 3, "click"], ["cols", "2"], [4, "ngIf"], [3, "spool", "cardRemoved", "cardUpdated"]], template: function AppComponent_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "router-outlet");
-    \u0275\u0275elementStart(1, "button", 0);
-    \u0275\u0275listener("click", function AppComponent_Template_button_click_1_listener() {
-      return ctx.scan();
+    \u0275\u0275elementStart(0, "mat-toolbar", 0)(1, "span");
+    \u0275\u0275text(2, "Spool-meter");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(3, "span", 1);
+    \u0275\u0275elementStart(4, "span", 2);
+    \u0275\u0275text(5);
+    \u0275\u0275pipe(6, "async");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "button", 3);
+    \u0275\u0275listener("click", function AppComponent_Template_button_click_7_listener() {
+      return ctx.showHelp();
     });
-    \u0275\u0275text(2, "Scan");
+    \u0275\u0275elementStart(8, "mat-icon");
+    \u0275\u0275text(9, "help");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(10, "mat-card")(11, "mat-card-title")(12, "mat-icon");
+    \u0275\u0275text(13, "radar");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "label");
-    \u0275\u0275text(4);
+    \u0275\u0275elementStart(14, "span");
+    \u0275\u0275text(15, "Scanned spools:");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(16, AppComponent_Conditional_16_Template, 3, 0, "mat-grid-list", 4)(17, AppComponent_Conditional_17_Template, 2, 0);
     \u0275\u0275elementEnd();
-    \u0275\u0275repeaterCreate(5, AppComponent_For_6_Template, 1, 1, "app-tag-card", 3, _forTrack02);
-    \u0275\u0275template(7, AppComponent_app_debug_nfc_7_Template, 1, 0, "app-debug-nfc", 1);
+    \u0275\u0275template(18, AppComponent_app_debug_nfc_18_Template, 1, 0, "app-debug-nfc", 5);
   }
   if (rf & 2) {
-    \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(ctx.status);
-    \u0275\u0275advance();
-    \u0275\u0275repeater(ctx.spools);
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 3, ctx.nfcService.status$()));
+    \u0275\u0275advance(11);
+    \u0275\u0275conditional(16, ctx.spools.length ? 16 : 17);
     \u0275\u0275advance(2);
     \u0275\u0275property("ngIf", ctx.environment.isDev);
   }
-}, dependencies: [RouterOutlet, FormsModule, DebugNfcComponent, NgIf, TagCardComponent, MatInputModule, MatFormFieldModule], styles: ["\n\n/*# sourceMappingURL=app.component.css.map */"] });
+}, dependencies: [FormsModule, DebugNfcComponent, NgIf, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent], styles: ["\n\n.spacer[_ngcontent-%COMP%] {\n  flex: 1 1 auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 var AppComponent = _AppComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 20 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 31 });
 })();
 
 // src/main.ts
