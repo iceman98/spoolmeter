@@ -67862,15 +67862,6 @@ var EmulatedNdefReader = class {
   }
 };
 
-// src/app/classes/utils.ts
-var Utils = class {
-  static showToast(snackbar, message, action, timeout) {
-    setTimeout(() => {
-      snackbar.open(message, action, timeout ? { duration: timeout } : void 0);
-    }, 10);
-  }
-};
-
 // node_modules/@angular/material/fesm2022/snack-bar.mjs
 function SimpleSnackBar_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
@@ -68683,11 +68674,29 @@ var MatSnackBarModule = _MatSnackBarModule;
   }], null, null);
 })();
 
+// src/app/services/toast.service.ts
+var _ToastService = class _ToastService {
+  constructor(zone, snackbar) {
+    this.zone = zone;
+    this.snackbar = snackbar;
+  }
+  showToast(message, timeout) {
+    this.zone.run(() => {
+      this.snackbar.open(message, "Dismiss", timeout ? { duration: timeout } : void 0);
+    });
+  }
+};
+_ToastService.\u0275fac = function ToastService_Factory(t) {
+  return new (t || _ToastService)(\u0275\u0275inject(NgZone), \u0275\u0275inject(MatSnackBar));
+};
+_ToastService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ToastService, factory: _ToastService.\u0275fac, providedIn: "root" });
+var ToastService = _ToastService;
+
 // src/app/services/nfc.service.ts
 var _NfcService = class _NfcService {
-  constructor(nfcEmulator, snackBar) {
+  constructor(nfcEmulator, toastService) {
     this.nfcEmulator = nfcEmulator;
-    this.snackBar = snackBar;
+    this.toastService = toastService;
     this.converter = new MessageConverter();
     this.statusSubject = new BehaviorSubject("idle");
     this.readSubject = new Subject();
@@ -68730,27 +68739,27 @@ var _NfcService = class _NfcService {
           this.writing?.subject.error(new Error("Could not write tag, try again?"));
         }).finally();
       } else {
-        Utils.showToast(this.snackBar, "Not the correct tag, try again", "Dismiss", 1e3);
+        this.toastService.showToast("Not the correct tag, try again", 1e3);
       }
     }
   }
   handleError(error) {
     console.log(error);
-    Utils.showToast(this.snackBar, "Error reading tag, try again?", "Dismiss", 1e3);
+    this.toastService.showToast("Error reading tag, try again?", 1e3);
   }
   startScan() {
     this.ndef.scan().then(() => {
-      Utils.showToast(this.snackBar, "Starting scan...", "Dismiss", 1e3);
+      this.toastService.showToast("Starting scan...", 1e3);
       this.statusSubject.next("reading");
     }).catch((e) => {
-      Utils.showToast(this.snackBar, "Scan could not be started: " + e, "Dismiss", 1e3);
+      this.toastService.showToast("Scan could not be started: " + e, 1e3);
       console.log("Scan could not be started", e);
       this.statusSubject.next("error");
     });
   }
 };
 _NfcService.\u0275fac = function NfcService_Factory(t) {
-  return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService), \u0275\u0275inject(MatSnackBar));
+  return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService), \u0275\u0275inject(ToastService));
 };
 _NfcService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _NfcService, factory: _NfcService.\u0275fac, providedIn: "root" });
 var NfcService = _NfcService;
@@ -68849,21 +68858,21 @@ function AppComponent_app_debug_nfc_18_Template(rf, ctx) {
   }
 }
 var _AppComponent = class _AppComponent {
-  constructor(nfcService, dialog, snackBar) {
+  constructor(nfcService, dialog, toastService) {
     this.nfcService = nfcService;
     this.dialog = dialog;
-    this.snackBar = snackBar;
+    this.toastService = toastService;
     this.spools = [];
     this.environment = environment;
     this.nfcService.spool$().subscribe({
       next: (spool) => {
-        Utils.showToast(this.snackBar, "Scanned spool tag " + spool.id, "Dismiss", 1e3);
+        this.toastService.showToast("Scanned spool tag " + spool.id, 1e3);
         if (!this.spoolScanned(spool)) {
           this.spools.push(spool);
         }
       },
       error: (err) => {
-        Utils.showToast(this.snackBar, "Error scanning tag, try again?", "Dismiss", 1e3);
+        this.toastService.showToast("Error scanning tag, try again?", 1e3);
         console.log(err);
       }
     });
@@ -68892,13 +68901,13 @@ var _AppComponent = class _AppComponent {
       error: (e) => {
         console.log(e);
         dialog.close();
-        Utils.showToast(this.snackBar, "Could not write tag", "Dismiss", 2e3);
+        this.toastService.showToast("Could not write tag", 2e3);
       },
       complete: () => {
         dialog.close();
         const index = this.spools.findIndex((s) => s.id === spool.id);
         this.spools[index] = spool;
-        Utils.showToast(this.snackBar, "Spool updated", "Dismiss", 1e3);
+        this.toastService.showToast("Spool updated", 1e3);
       }
     });
   }
@@ -68910,7 +68919,7 @@ var _AppComponent = class _AppComponent {
   }
 };
 _AppComponent.\u0275fac = function AppComponent_Factory(t) {
-  return new (t || _AppComponent)(\u0275\u0275directiveInject(NfcService), \u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(MatSnackBar));
+  return new (t || _AppComponent)(\u0275\u0275directiveInject(NfcService), \u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(ToastService));
 };
 _AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 19, vars: 5, consts: [["color", "primary"], [1, "spacer"], [2, "font-size", "small"], ["mat-button", "", 3, "click"], ["cols", "2"], [4, "ngIf"], [3, "spool", "cardRemoved", "cardUpdated"]], template: function AppComponent_Template(rf, ctx) {
   if (rf & 1) {
@@ -68950,7 +68959,7 @@ _AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _A
 }, dependencies: [FormsModule, DebugNfcComponent, NgIf, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent], styles: ["\n\n.spacer[_ngcontent-%COMP%] {\n  flex: 1 1 auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 var AppComponent = _AppComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 33 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 32 });
 })();
 
 // src/main.ts
