@@ -14,8 +14,10 @@ export class MessageConverter {
   private readonly REMAINING_FILAMENT_ID = "rf";
   private readonly FLOW_FACTOR_ID = "ff";
   private readonly TEMPERATURE_ID = "te";
+  private readonly SIGNATURE_ID = "sg";
 
   public messageToSpool(id: string, message: NDEFMessage): Spool {
+    const signature = this.getAsString(message, this.SIGNATURE_ID);
     const name = this.getAsString(message, this.NAME_ID);
     const brand = this.getAsString(message, this.BRAND_ID);
     const material = this.getAsString(message, this.MATERIAL_ID);
@@ -28,6 +30,7 @@ export class MessageConverter {
 
     return {
       id,
+      signature,
       name,
       brand,
       material,
@@ -42,6 +45,10 @@ export class MessageConverter {
 
   public spoolToMessage(spool: Spool): NDEFMessage {
     const records: NDEFRecord[] = [];
+
+    if (spool.signature) {
+      records.push(this.getRecord(this.SIGNATURE_ID, spool.signature));
+    }
     if (spool.name) {
       records.push(this.getRecord(this.NAME_ID, spool.name));
     }
@@ -92,7 +99,7 @@ export class MessageConverter {
   }
 
   private getRecord(key: string, value: string): NDEFRecord {
-    return {recordType: "text", id: key, data: new DataView(this.encoder.encode(value).buffer)};
+    return {recordType: "text", id: key, lang: undefined, data: new DataView(this.encoder.encode(value).buffer)};
   }
 
   private getMessage(records: NDEFRecord[]): NDEFMessage {
