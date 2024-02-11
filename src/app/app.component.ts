@@ -20,6 +20,7 @@ import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SpoolCardComponent} from "./components/spool-card/spool-card.component";
 import {WriteDialogComponent} from "./components/write-dialog/write-dialog.component";
+import {PermissionDialogComponent} from "./components/permission-dialog/permission-dialog.component";
 
 @Component({
   selector: 'app-root',
@@ -45,6 +46,14 @@ export class AppComponent {
       error: err => {
         this.snackBar.open("Error scanning tag, try again?", "Dismiss", {duration: 1000});
         console.log(err);
+      }
+    });
+
+    this.nfcService.status$().subscribe({
+      next: s => {
+        if (s === "error") {
+          this.showPermissionDialog();
+        }
       }
     });
   }
@@ -82,6 +91,10 @@ export class AppComponent {
 
   protected showHelp(): void {
     this.dialog.open(HelpDialogComponent);
+  }
+
+  protected showPermissionDialog(): void {
+    this.dialog.open(PermissionDialogComponent, {disableClose: true});
   }
 
 }
