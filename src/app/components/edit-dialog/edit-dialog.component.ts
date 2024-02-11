@@ -9,10 +9,16 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput, MatInputModule} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
-import {MAT_DIALOG_DATA, MatDialogClose} from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle
+} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-spool-modal',
+  selector: 'app-edit-dialog',
   standalone: true,
   imports: [
     MatCard,
@@ -34,12 +40,15 @@ import {MAT_DIALOG_DATA, MatDialogClose} from "@angular/material/dialog";
     MatInputModule,
     ReactiveFormsModule,
     NgxColorsModule,
-    MatDialogClose
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions
   ],
-  templateUrl: './spool-modal.html',
-  styleUrl: './spool-modal.sass'
+  templateUrl: './edit-dialog.component.html',
+  styleUrl: './edit-dialog.sass'
 })
-export class SpoolModal {
+export class EditDialog {
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: { spool: Spool }) {
     this.spool = data.spool;

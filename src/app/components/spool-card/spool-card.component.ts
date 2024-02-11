@@ -14,7 +14,7 @@ import {FormsModule} from "@angular/forms";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
-import {SpoolModal} from "../tag-card/spool-modal";
+import {EditDialog} from "../edit-dialog/edit-dialog.component";
 
 @Component({
   selector: 'app-spool-card',
@@ -54,7 +54,7 @@ export class SpoolCardComponent {
 
   protected edit() {
     const spool = {...this.spool} as Spool;
-    const dialog = this.dialog.open(SpoolModal, {data: {spool}, disableClose: true});
+    const dialog = this.dialog.open(EditDialog, {data: {spool}, disableClose: true});
     dialog.afterClosed().subscribe({
       next: r => {
         if (r === "update") {

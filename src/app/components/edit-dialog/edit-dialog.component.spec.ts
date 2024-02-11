@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpoolModal } from './spool-modal';
+import { EditDialog } from './edit-dialog.component';
 
 describe('TagCardComponent', () => {
-  let component: SpoolModal;
-  let fixture: ComponentFixture<SpoolModal>;
+  let component: EditDialog;
+  let fixture: ComponentFixture<EditDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpoolModal]
+      imports: [EditDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SpoolModal);
+    fixture = TestBed.createComponent(EditDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

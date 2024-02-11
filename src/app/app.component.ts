@@ -5,7 +5,7 @@ import {NfcService} from "./services/nfc.service";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {DebugNfcComponent} from "./components/debug-nfc/debug-nfc.component";
 import {environment} from '../environments/environment';
-import {SpoolModal} from "./components/tag-card/spool-modal";
+import {EditDialog} from "./components/edit-dialog/edit-dialog.component";
 import {Spool} from "./model/spool";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -24,7 +24,7 @@ import {WriteDialogComponent} from "./components/write-dialog/write-dialog.compo
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, DebugNfcComponent, NgIf, SpoolModal, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatProgressSpinner, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent],
+  imports: [RouterOutlet, FormsModule, DebugNfcComponent, NgIf, EditDialog, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatProgressSpinner, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
