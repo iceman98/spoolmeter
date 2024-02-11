@@ -10,3 +10,7 @@ export const BRANDS = [
   "Amazon Basics",
   "eSUN"
 ];
+
+export const WEIGHTS = {
+  "JAYO,PLA+": 120
+}

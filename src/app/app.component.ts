@@ -21,6 +21,7 @@ import {SpoolCardComponent} from "./components/spool-card/spool-card.component";
 import {WriteDialogComponent} from "./components/write-dialog/write-dialog.component";
 import {PermissionDialogComponent} from "./components/permission-dialog/permission-dialog.component";
 import {ToastService} from "./services/toast.service";
+import {SpoolWizardComponent} from "./components/spool-wizard/spool-wizard.component";
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,9 @@ export class AppComponent {
         this.toastService.showToast("Scanned spool tag " + spool.id, 1000);
         if (!this.spoolScanned(spool)) {
           this.spools.push(spool);
+          if (!spool.signature || !spool.signature.startsWith("ic_v")) {
+            this.showWizard(spool);
+          }
         }
       },
       error: err => {
@@ -95,6 +99,15 @@ export class AppComponent {
 
   protected showPermissionDialog(): void {
     this.dialog.open(PermissionDialogComponent, {disableClose: true});
+  }
+
+  protected showWizard(spool: Spool): void {
+    const dialog = this.dialog.open(SpoolWizardComponent, {disableClose: true, data: {spool}});
+    dialog.afterClosed().subscribe(r => {
+      if (r === "confirm") {
+        this.updateSpool(spool);
+      }
+    });
   }
 
 }

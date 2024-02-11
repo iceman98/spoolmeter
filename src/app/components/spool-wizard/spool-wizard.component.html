@@ -1,0 +1,143 @@
+<h1 mat-dialog-title>New Spool Wizard</h1>
+<mat-dialog-content>
+  <mat-vertical-stepper [linear]="true" #stepper (selectionChange)="change($event)">
+    <mat-step label="Wizard type" #step0>
+      <!-- Step 0 -->
+      <div class="column">
+        <label>It looks like this tag is empty or is not recognized by Spool-Meter. What do you want to do?</label>
+        <br>
+        <mat-radio-group [(ngModel)]="option" class="column">
+          <mat-radio-button value="new" class="padded">I want to enter the total weight and the initial filament weight
+            (new spools)
+          </mat-radio-button>
+          <mat-radio-button value="used" class="padded">I want to enter the total weight and the spool weight (used
+            spools)
+          </mat-radio-button>
+          <mat-radio-button value="manual" class="padded">I want to manually enter some weights</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-step>
+
+    <mat-step label="Material" #step1>
+      <!-- Step 1 -->
+      <div class="column">
+        <label>Brand and material is optional, but if it's a known combination we can suggest a spool weight.</label>
+        <br>
+        <mat-form-field>
+          <mat-label>Brand</mat-label>
+          <mat-autocomplete #brandAuto>
+            @for (brand of brands; track brand) {
+              <mat-option [value]="brand">{{ brand }}</mat-option>
+            }
+          </mat-autocomplete>
+          <input matInput type="text" placeholder="No brand" [matAutocomplete]="brandAuto" [(ngModel)]="brand">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Material</mat-label>
+          <mat-autocomplete #materialAuto>
+            @for (material of materials; track material) {
+              <mat-option [value]="material">{{ material }}</mat-option>
+            }
+          </mat-autocomplete>
+          <input matInput type="text" placeholder="No material" [matAutocomplete]="materialAuto"
+                 [(ngModel)]="material">
+        </mat-form-field>
+      </div>
+    </mat-step>
+
+    <mat-step label="Weights" #step2>
+      <!-- Step 2 -->
+      <div class="column">
+        <label>You can edit the fields with the open lock, the fields with the closed lock will be calculated. You can
+          also lock/unlock fields clicking on the lock.</label>
+        <br>
+
+        <mat-form-field>
+          <mat-label>Total weight</mat-label>
+          <input type="number" matInput [(ngModel)]="totalWeight" [disabled]="!totalWeightEnabled">
+          @if (totalWeightEnabled) {
+            <mat-icon matSuffix class="unlocked" (click)="totalWeightEnabled=false">lock_open</mat-icon>
+          } @else {
+            <mat-icon matSuffix class="locked" (click)="totalWeightEnabled=true">lock</mat-icon>
+          }
+        </mat-form-field>
+
+        <div class="symbol">=</div>
+
+        <mat-form-field>
+          <mat-label>Spool weight</mat-label>
+          <input type="number" matInput [(ngModel)]="spoolWeight" [disabled]="!spoolWeightEnabled">
+          @if (spoolWeightEnabled) {
+            <mat-icon matSuffix class="unlocked" (click)="spoolWeightEnabled=false">lock_open</mat-icon>
+          } @else {
+            <mat-icon matSuffix class="locked" (click)="spoolWeightEnabled=true">lock</mat-icon>
+          }
+        </mat-form-field>
+
+        <div class="symbol">+</div>
+
+        <mat-form-field>
+          <mat-label>Spent filament weight</mat-label>
+          <input type="number" matInput [(ngModel)]="spentFilamentWeight" [disabled]="!spentFilamentWeightEnabled">
+          @if (spentFilamentWeightEnabled) {
+            <mat-icon matSuffix class="unlocked" (click)="spentFilamentWeightEnabled=false">lock_open</mat-icon>
+          } @else {
+            <mat-icon matSuffix class="locked" (click)="spentFilamentWeightEnabled=true">lock</mat-icon>
+          }
+        </mat-form-field>
+
+        <div class="symbol">+</div>
+
+        <mat-form-field>
+          <mat-label>Remaining filament weight</mat-label>
+          <input type="number" matInput [(ngModel)]="remainingFilamentWeight"
+                 [disabled]="!remainingFilamentWeightEnabled">
+          @if (remainingFilamentWeightEnabled) {
+            <mat-icon matSuffix class="unlocked" (click)="remainingFilamentWeightEnabled=false">lock_open</mat-icon>
+          } @else {
+            <mat-icon matSuffix class="locked" (click)="remainingFilamentWeightEnabled=true">lock</mat-icon>
+          }
+        </mat-form-field>
+
+      </div>
+    </mat-step>
+
+    <mat-step label="Optional" #step3>
+      <!-- Step 3 -->
+      <div class="column">
+        <label>These fields are optional for you to identify the spool or configure it in the printer. Color can be a #hex string or a custom name.</label>
+        <br>
+
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input type="text" matInput [(ngModel)]="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <ngx-colors matSuffix ngx-colors-trigger [(ngModel)]="color" format="hex" colorPickerControls="no-alpha"
+                      [hideTextInput]="true"></ngx-colors>
+          <mat-label>Color</mat-label>
+          <input matInput type="text" [(ngModel)]="color">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Flow calibration factor (K)</mat-label>
+          <input type="number" matInput step="0.01" [(ngModel)]="flowFactor">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Temperature (ºC)</mat-label>
+          <input type="number" matInput [(ngModel)]="temperature">
+        </mat-form-field>
+      </div>
+    </mat-step>
+
+  </mat-vertical-stepper>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close="cancel">Cancel</button>
+  @if (stepper.selectedIndex === 3) {
+    <button mat-button (click)="confirm()">Confirm and Write</button>
+  }
+</mat-dialog-actions>
