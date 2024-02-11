@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagCardComponent } from './tag-card.component';
+import { SpoolModal } from './spool-modal';
 
 describe('TagCardComponent', () => {
-  let component: TagCardComponent;
-  let fixture: ComponentFixture<TagCardComponent>;
+  let component: SpoolModal;
+  let fixture: ComponentFixture<SpoolModal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TagCardComponent]
+      imports: [SpoolModal]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(TagCardComponent);
+
+    fixture = TestBed.createComponent(SpoolModal);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

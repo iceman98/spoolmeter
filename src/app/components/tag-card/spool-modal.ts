@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {Spool} from "../../model/spool";
@@ -9,9 +9,10 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput, MatInputModule} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
+import {MAT_DIALOG_DATA, MatDialogClose} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-tag-card',
+  selector: 'app-spool-modal',
   standalone: true,
   imports: [
     MatCard,
@@ -32,21 +33,19 @@ import {NgxColorsModule} from "ngx-colors";
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    NgxColorsModule
+    NgxColorsModule,
+    MatDialogClose
   ],
-  templateUrl: './tag-card.component.html',
-  styleUrl: './tag-card.component.sass'
+  templateUrl: './spool-modal.html',
+  styleUrl: './spool-modal.sass'
 })
-export class TagCardComponent {
+export class SpoolModal {
 
-  @Input()
-  spool: Spool | undefined;
+  constructor(@Inject(MAT_DIALOG_DATA) private data: { spool: Spool }) {
+    this.spool = data.spool;
+  }
 
-  @Output()
-  cardRemoved = new EventEmitter<void>();
-
-  @Output()
-  saveTag = new EventEmitter<void>();
+  protected spool: Spool;
 
   brands = [
     "JAYO",
@@ -60,12 +59,8 @@ export class TagCardComponent {
     "HS-PLA"
   ];
 
-  protected remove() {
-    this.cardRemoved.next();
-  }
-
   protected update() {
-    this.saveTag.next()
+    console.log(this.spool);
   }
 
 }
