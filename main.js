@@ -67622,194 +67622,6 @@ var MatProgressSpinnerModule = _MatProgressSpinnerModule;
   }], null, null);
 })();
 
-// src/app/components/help-dialog/help-dialog.component.ts
-var _HelpDialogComponent = class _HelpDialogComponent {
-};
-_HelpDialogComponent.\u0275fac = function HelpDialogComponent_Factory(t) {
-  return new (t || _HelpDialogComponent)();
-};
-_HelpDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HelpDialogComponent, selectors: [["app-help-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 0, consts: [["mat-dialog-title", ""], ["mat-button", "", "mat-dialog-close", ""]], template: function HelpDialogComponent_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "h2", 0);
-    \u0275\u0275text(1, "Help");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "mat-dialog-content");
-    \u0275\u0275text(3, " content here\n");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "mat-dialog-actions")(5, "button", 1);
-    \u0275\u0275text(6, "Close");
-    \u0275\u0275elementEnd()();
-  }
-}, dependencies: [
-  MatDialogTitle,
-  MatDialogContent,
-  MatDialogActions,
-  MatButton,
-  MatDialogClose
-], styles: ["\n\n/*# sourceMappingURL=help-dialog.component.css.map */"] });
-var HelpDialogComponent = _HelpDialogComponent;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HelpDialogComponent, { className: "HelpDialogComponent", filePath: "src/app/components/help-dialog/help-dialog.component.ts", lineNumber: 18 });
-})();
-
-// src/app/components/spool-card/spool-card.component.ts
-function SpoolCardComponent_Conditional_0_Conditional_9_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0);
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1(" Mat: ", ctx_r1.spool.material, " ");
-  }
-}
-function SpoolCardComponent_Conditional_0_Conditional_10_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "mat-card-actions")(1, "button", 0);
-    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_1_listener() {
-      \u0275\u0275restoreView(_r4);
-      const ctx_r3 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r3.edit());
-    });
-    \u0275\u0275text(2, "Edit");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 0);
-    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_3_listener() {
-      \u0275\u0275restoreView(_r4);
-      const ctx_r5 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r5.remove());
-    });
-    \u0275\u0275text(4, "Remove");
-    \u0275\u0275elementEnd()();
-  }
-}
-function SpoolCardComponent_Conditional_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
-    \u0275\u0275text(3);
-    \u0275\u0275elementStart(4, "mat-icon");
-    \u0275\u0275text(5, "gesture");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "mat-card-subtitle");
-    \u0275\u0275text(7);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "mat-card-content");
-    \u0275\u0275template(9, SpoolCardComponent_Conditional_0_Conditional_9_Template, 1, 1);
-    \u0275\u0275elementEnd();
-    \u0275\u0275template(10, SpoolCardComponent_Conditional_0_Conditional_10_Template, 5, 0, "mat-card-actions");
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", ctx_r0.spool.name, " ");
-    \u0275\u0275advance();
-    \u0275\u0275styleMapInterpolate1("color: ", ctx_r0.spool.color, ";");
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(ctx_r0.spool.id);
-    \u0275\u0275advance(2);
-    \u0275\u0275conditional(9, ctx_r0.spool.material ? 9 : -1);
-    \u0275\u0275advance();
-    \u0275\u0275conditional(10, !ctx_r0.readOnly ? 10 : -1);
-  }
-}
-var _SpoolCardComponent = class _SpoolCardComponent {
-  constructor(dialog) {
-    this.dialog = dialog;
-    this.readOnly = false;
-    this.cardRemoved = new EventEmitter();
-    this.cardUpdated = new EventEmitter();
-  }
-  edit() {
-    const spool = __spreadValues({}, this.spool);
-    const dialog = this.dialog.open(SpoolModal, { data: { spool }, disableClose: true });
-    dialog.afterClosed().subscribe({
-      next: (r) => {
-        if (r === "update") {
-          this.update(spool);
-        }
-      }
-    });
-  }
-  remove() {
-    this.cardRemoved.next();
-  }
-  update(spool) {
-    this.cardUpdated.next(spool);
-  }
-};
-_SpoolCardComponent.\u0275fac = function SpoolCardComponent_Factory(t) {
-  return new (t || _SpoolCardComponent)(\u0275\u0275directiveInject(MatDialog));
-};
-_SpoolCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolCardComponent, selectors: [["app-spool-card"]], inputs: { spool: "spool", readOnly: "readOnly" }, outputs: { cardRemoved: "cardRemoved", cardUpdated: "cardUpdated" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [["mat-button", "", 3, "click"]], template: function SpoolCardComponent_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, SpoolCardComponent_Conditional_0_Template, 11, 7, "mat-card");
-  }
-  if (rf & 2) {
-    \u0275\u0275conditional(0, ctx.spool ? 0 : -1);
-  }
-}, dependencies: [
-  MatCardTitle,
-  MatCard,
-  NgxColorsModule,
-  FormsModule,
-  MatIcon,
-  MatCardHeader,
-  MatCardContent,
-  MatCardActions,
-  MatCardSubtitle,
-  MatButton
-], styles: ["\n\n/*# sourceMappingURL=spool-card.component.css.map */"] });
-var SpoolCardComponent = _SpoolCardComponent;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolCardComponent, { className: "SpoolCardComponent", filePath: "src/app/components/spool-card/spool-card.component.ts", lineNumber: 38 });
-})();
-
-// src/app/components/write-dialog/write-dialog.component.ts
-function WriteDialogComponent_Conditional_6_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "app-debug-nfc");
-  }
-}
-var _WriteDialogComponent = class _WriteDialogComponent {
-  constructor(data) {
-    this.data = data;
-    this.environment = environment;
-    this.spool = data.spool;
-  }
-};
-_WriteDialogComponent.\u0275fac = function WriteDialogComponent_Factory(t) {
-  return new (t || _WriteDialogComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
-};
-_WriteDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _WriteDialogComponent, selectors: [["app-write-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 3, consts: [["mat-dialog-title", ""], [3, "readOnly", "spool"]], template: function WriteDialogComponent_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "h2", 0);
-    \u0275\u0275text(1, "Writing...");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "mat-dialog-content");
-    \u0275\u0275text(3, " Please tap this spool's tag with your phone: ");
-    \u0275\u0275element(4, "app-spool-card", 1)(5, "mat-spinner");
-    \u0275\u0275template(6, WriteDialogComponent_Conditional_6_Template, 1, 0, "app-debug-nfc");
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    \u0275\u0275advance(4);
-    \u0275\u0275property("readOnly", true)("spool", ctx.spool);
-    \u0275\u0275advance(2);
-    \u0275\u0275conditional(6, ctx.environment.isDev ? 6 : -1);
-  }
-}, dependencies: [
-  MatProgressSpinner,
-  DebugNfcComponent,
-  MatDialogContent,
-  MatDialogTitle,
-  SpoolCardComponent
-], styles: ["\n\n/*# sourceMappingURL=write-dialog.component.css.map */"] });
-var WriteDialogComponent = _WriteDialogComponent;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(WriteDialogComponent, { className: "WriteDialogComponent", filePath: "src/app/components/write-dialog/write-dialog.component.ts", lineNumber: 36 });
-})();
-
 // src/app/classes/emulated-ndef-reader.ts
 var EmulatedNdefReader = class {
   constructor(emulatorService) {
@@ -68678,14 +68490,7 @@ var _NfcService = class _NfcService {
     this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
     this.ndef.onreading = (tag) => this.handleReadWrite(tag);
     this.ndef.onreadingerror = (err) => this.handleError(err);
-    this.ndef.scan().then(() => {
-      this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
-      this.statusSubject.next("Scanning");
-    }).catch((e) => {
-      this.snackBar.open("Scan could not be started: " + e.type, "Dismiss", { duration: 1e3 });
-      console.log("Scan could not be started: " + e.type);
-      this.statusSubject.next("Error");
-    });
+    this.startScan();
   }
   spool$() {
     return this.readSubject;
@@ -68729,12 +68534,222 @@ var _NfcService = class _NfcService {
     console.log(error);
     this.snackBar.open("Error reading tag, try again?", "Dismiss", { duration: 1e3 });
   }
+  startScan() {
+    this.ndef.scan().then(() => {
+      this.snackBar.open("Starting scan...", "Dismiss", { duration: 1e3 });
+      this.statusSubject.next("Scanning");
+    }).catch((e) => {
+      this.snackBar.open("Scan could not be started: " + e, "Dismiss", { duration: 1e3 });
+      console.log("Scan could not be started", e);
+      this.statusSubject.next("Error");
+    });
+  }
 };
 _NfcService.\u0275fac = function NfcService_Factory(t) {
   return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService), \u0275\u0275inject(MatSnackBar));
 };
 _NfcService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _NfcService, factory: _NfcService.\u0275fac, providedIn: "root" });
 var NfcService = _NfcService;
+
+// src/app/components/help-dialog/help-dialog.component.ts
+var _HelpDialogComponent = class _HelpDialogComponent {
+  constructor(nfcService) {
+    this.nfcService = nfcService;
+  }
+  scan() {
+    this.nfcService.startScan();
+  }
+};
+_HelpDialogComponent.\u0275fac = function HelpDialogComponent_Factory(t) {
+  return new (t || _HelpDialogComponent)(\u0275\u0275directiveInject(NfcService));
+};
+_HelpDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HelpDialogComponent, selectors: [["app-help-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 9, vars: 0, consts: [["mat-dialog-title", ""], ["mat-button", "", "mat-dialog-close", ""], ["mat-button", "", 3, "click"]], template: function HelpDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275text(1, "Help");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content");
+    \u0275\u0275text(3, " content here\n");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "mat-dialog-actions")(5, "button", 1);
+    \u0275\u0275text(6, "Close");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "button", 2);
+    \u0275\u0275listener("click", function HelpDialogComponent_Template_button_click_7_listener() {
+      return ctx.scan();
+    });
+    \u0275\u0275text(8, "Scan");
+    \u0275\u0275elementEnd();
+  }
+}, dependencies: [
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatButton,
+  MatDialogClose
+], styles: ["\n\n/*# sourceMappingURL=help-dialog.component.css.map */"] });
+var HelpDialogComponent = _HelpDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HelpDialogComponent, { className: "HelpDialogComponent", filePath: "src/app/components/help-dialog/help-dialog.component.ts", lineNumber: 19 });
+})();
+
+// src/app/components/spool-card/spool-card.component.ts
+function SpoolCardComponent_Conditional_0_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275textInterpolate1(" Mat: ", ctx_r1.spool.material, " ");
+  }
+}
+function SpoolCardComponent_Conditional_0_Conditional_10_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "mat-card-actions")(1, "button", 0);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r3 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r3.edit());
+    });
+    \u0275\u0275text(2, "Edit");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "button", 0);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r5 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r5.remove());
+    });
+    \u0275\u0275text(4, "Remove");
+    \u0275\u0275elementEnd()();
+  }
+}
+function SpoolCardComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
+    \u0275\u0275text(3);
+    \u0275\u0275elementStart(4, "mat-icon");
+    \u0275\u0275text(5, "gesture");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "mat-card-subtitle");
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "mat-card-content");
+    \u0275\u0275template(9, SpoolCardComponent_Conditional_0_Conditional_9_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(10, SpoolCardComponent_Conditional_0_Conditional_10_Template, 5, 0, "mat-card-actions");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", ctx_r0.spool.name, " ");
+    \u0275\u0275advance();
+    \u0275\u0275styleMapInterpolate1("color: ", ctx_r0.spool.color, ";");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r0.spool.id);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(9, ctx_r0.spool.material ? 9 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(10, !ctx_r0.readOnly ? 10 : -1);
+  }
+}
+var _SpoolCardComponent = class _SpoolCardComponent {
+  constructor(dialog) {
+    this.dialog = dialog;
+    this.readOnly = false;
+    this.cardRemoved = new EventEmitter();
+    this.cardUpdated = new EventEmitter();
+  }
+  edit() {
+    const spool = __spreadValues({}, this.spool);
+    const dialog = this.dialog.open(SpoolModal, { data: { spool }, disableClose: true });
+    dialog.afterClosed().subscribe({
+      next: (r) => {
+        if (r === "update") {
+          this.update(spool);
+        }
+      }
+    });
+  }
+  remove() {
+    this.cardRemoved.next();
+  }
+  update(spool) {
+    this.cardUpdated.next(spool);
+  }
+};
+_SpoolCardComponent.\u0275fac = function SpoolCardComponent_Factory(t) {
+  return new (t || _SpoolCardComponent)(\u0275\u0275directiveInject(MatDialog));
+};
+_SpoolCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolCardComponent, selectors: [["app-spool-card"]], inputs: { spool: "spool", readOnly: "readOnly" }, outputs: { cardRemoved: "cardRemoved", cardUpdated: "cardUpdated" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [["mat-button", "", 3, "click"]], template: function SpoolCardComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, SpoolCardComponent_Conditional_0_Template, 11, 7, "mat-card");
+  }
+  if (rf & 2) {
+    \u0275\u0275conditional(0, ctx.spool ? 0 : -1);
+  }
+}, dependencies: [
+  MatCardTitle,
+  MatCard,
+  NgxColorsModule,
+  FormsModule,
+  MatIcon,
+  MatCardHeader,
+  MatCardContent,
+  MatCardActions,
+  MatCardSubtitle,
+  MatButton
+], styles: ["\n\n/*# sourceMappingURL=spool-card.component.css.map */"] });
+var SpoolCardComponent = _SpoolCardComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolCardComponent, { className: "SpoolCardComponent", filePath: "src/app/components/spool-card/spool-card.component.ts", lineNumber: 38 });
+})();
+
+// src/app/components/write-dialog/write-dialog.component.ts
+function WriteDialogComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "app-debug-nfc");
+  }
+}
+var _WriteDialogComponent = class _WriteDialogComponent {
+  constructor(data) {
+    this.data = data;
+    this.environment = environment;
+    this.spool = data.spool;
+  }
+};
+_WriteDialogComponent.\u0275fac = function WriteDialogComponent_Factory(t) {
+  return new (t || _WriteDialogComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
+};
+_WriteDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _WriteDialogComponent, selectors: [["app-write-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 3, consts: [["mat-dialog-title", ""], [3, "readOnly", "spool"]], template: function WriteDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275text(1, "Writing...");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content");
+    \u0275\u0275text(3, " Please tap this spool's tag with your phone: ");
+    \u0275\u0275element(4, "app-spool-card", 1)(5, "mat-spinner");
+    \u0275\u0275template(6, WriteDialogComponent_Conditional_6_Template, 1, 0, "app-debug-nfc");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(4);
+    \u0275\u0275property("readOnly", true)("spool", ctx.spool);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(6, ctx.environment.isDev ? 6 : -1);
+  }
+}, dependencies: [
+  MatProgressSpinner,
+  DebugNfcComponent,
+  MatDialogContent,
+  MatDialogTitle,
+  SpoolCardComponent
+], styles: ["\n\n/*# sourceMappingURL=write-dialog.component.css.map */"] });
+var WriteDialogComponent = _WriteDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(WriteDialogComponent, { className: "WriteDialogComponent", filePath: "src/app/components/write-dialog/write-dialog.component.ts", lineNumber: 36 });
+})();
 
 // src/app/app.component.ts
 var _forTrack02 = ($index, $item) => $item.id;
