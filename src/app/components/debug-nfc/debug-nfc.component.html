@@ -1,12 +1,31 @@
-@for (tag of tags; track tag.id) {
-  <mat-card>
-    <mat-card-header>{{ tag.id }}</mat-card-header>
-    <mat-card-content>{{ tag.material }}</mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="touch(tag.id)">Touch</button>
-<!--      <button mat-button (click)="deleteSpool(tag)">Delete</button>-->
-    </mat-card-actions>
-  </mat-card>
-}
+<mat-grid-list cols="4">
+  @for (spool of nfcEmulator.spools$()|async; track spool.id) {
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-header>{{ spool.id }}</mat-card-header>
+        <mat-card-content>{{ spool.material }}</mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="touch(spool.id)">
+            <mat-icon>style</mat-icon>
+          </button>
+          <button mat-button (click)="delete(spool.id)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  }
 
-<!--<button mat-button (click)="createTag()">Create</button>-->
+  <mat-grid-tile>
+    <mat-card>
+      <button mat-button (click)="error()">Error</button>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card>
+      <button mat-button (click)="create()">Create</button>
+    </mat-card>
+  </mat-grid-tile>
+
+</mat-grid-list>

@@ -3,7 +3,8 @@ import {NfcEmulatorService} from "../../services/nfc-emulator.service";
 import {AsyncPipe} from "@angular/common";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
-import {Spool} from "../../model/spool";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-debug-nfc',
@@ -14,33 +15,34 @@ import {Spool} from "../../model/spool";
     MatCardHeader,
     MatCardContent,
     MatCardActions,
-    MatButton
+    MatButton,
+    MatGridList,
+    MatGridTile,
+    MatIcon
   ],
   templateUrl: './debug-nfc.component.html',
   styleUrl: './debug-nfc.component.sass'
 })
 export class DebugNfcComponent {
 
-  constructor(private nfcEmulator: NfcEmulatorService) {
-    this.tags = nfcEmulator.getSpools();
+  constructor(protected nfcEmulator: NfcEmulatorService) {
+    nfcEmulator.spools$();
   }
-
-  protected tags: Spool[];
 
   protected touch(id: string) {
     this.nfcEmulator.touchTag(id);
   }
 
-  // protected createTag(): void {
-  //   const tags = (this.tags as BehaviorSubject<Spool[]>).getValue();
-  //
-  //   this.nfcEmulator.createSpool({
-  //     id: (parseInt(tags[tags.length - 1].id) + 1).toString(),
-  //   });
-  // }
+  protected error() {
+    this.nfcEmulator.readError("Invalid tag");
+  }
 
-  // protected deleteSpool(tag: Spool) {
-  //   this.nfcEmulator.deleteSpool(tag);
-  // }
+  protected delete(id: string) {
+    this.nfcEmulator.remove(id);
+  }
+
+  protected create() {
+    this.nfcEmulator.addSpool({id: crypto.randomUUID()});
+  }
 
 }
