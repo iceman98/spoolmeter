@@ -2,6 +2,10 @@
   <span>Spool-meter</span>
   <span class="spacer"></span>
   <span style="font-size: small">{{ nfcService.status$()|async }}</span>
+  &nbsp;
+  <a mat-button [href]="csvUrl" download="spool-meter-export.csv">
+    <mat-icon color="accent">download</mat-icon>
+  </a>
   <button mat-button (click)="showHelp()">
     <mat-icon>help</mat-icon>
   </button>

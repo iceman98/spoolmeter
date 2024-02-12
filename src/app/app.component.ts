@@ -11,7 +11,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatToolbar} from "@angular/material/toolbar";
-import {MatButton} from "@angular/material/button";
+import {MatAnchor, MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatDialog} from "@angular/material/dialog";
@@ -26,7 +26,7 @@ import {SpoolWizardComponent} from "./components/spool-wizard/spool-wizard.compo
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, DebugNfcComponent, NgIf, EditDialog, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatProgressSpinner, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent],
+  imports: [RouterOutlet, FormsModule, DebugNfcComponent, NgIf, EditDialog, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatProgressSpinner, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent, MatAnchor],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
@@ -119,4 +119,9 @@ export class AppComponent {
     });
   }
 
+  protected get csvUrl() {
+    const header = "id,name,brand,material,color,initialFilament,spool,remainingFilament,flowFactor,temperature";
+    const data = this.spools.map(s => `${s.id},${s.name?s.name:''},${s.brand?s.brand:''},${s.material?s.material:''},${s.color?s.color:''},${s.initialFilamentWeight?s.initialFilamentWeight:''},${s.spoolWeight?s.spoolWeight:''},${s.remainingFilamentWeight?s.remainingFilamentWeight:''},${s.flowFactor?s.flowFactor:''},${s.temperature?s.temperature:''}`).join("\n");
+    return `data:application/octet-stream;charset=utf-16;base64,${btoa(header + "\n" + data)}`;
+  }
 }
