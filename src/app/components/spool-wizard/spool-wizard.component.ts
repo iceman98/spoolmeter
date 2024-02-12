@@ -137,7 +137,7 @@ export class SpoolWizardComponent {
       this.spool.brand = this.brand;
       this.spool.material = this.material;
       this.spool.spoolWeight = this.spoolWeight;
-      this.spool.initialFilamentWeight = this.spentFilamentWeight;
+      this.spool.initialFilamentWeight = (this.spentFilamentWeight && this.remainingFilamentWeight) ? this.spentFilamentWeight + this.remainingFilamentWeight : undefined;
       this.spool.remainingFilamentWeight = this.remainingFilamentWeight;
       this.spool.flowFactor = this.flowFactor;
       this.spool.temperature = this.temperature;
