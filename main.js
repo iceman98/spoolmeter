@@ -53224,8 +53224,23 @@ var _NfcEmulatorService = class _NfcEmulatorService {
     this.converter = new MessageConverter();
     this.spools = new BehaviorSubject([]);
     this.tags = new Map(Object.entries({
-      "empty!": this.converter.spoolToMessage({ id: "empty!" }),
-      "red": this.converter.spoolToMessage({ id: "red", color: "#ff0000" })
+      "{new}": this.converter.spoolToMessage({ id: "{new}" }),
+      "{empty}": this.converter.spoolToMessage({ id: "{empty}", signature: "ic_v1" }),
+      "{named}": this.converter.spoolToMessage({ id: "{named}", signature: "ic_v1", name: "named" }),
+      "{colored}": this.converter.spoolToMessage({ id: "{colored}", signature: "ic_v1", color: "#ff0000" }),
+      "{complete}": this.converter.spoolToMessage({
+        id: "{complete}",
+        signature: "ic_v1",
+        name: "complete",
+        brand: "JAYO",
+        material: "PLA+",
+        color: "#ff0000",
+        temperature: 220,
+        flowFactor: 0.02,
+        spoolWeight: 120,
+        initialFilamentWeight: 1100,
+        remainingFilamentWeight: 750
+      })
     }));
     this.updateSpools();
   }
@@ -53324,7 +53339,7 @@ var _DebugNfcComponent = class _DebugNfcComponent {
     this.nfcEmulator.remove(id);
   }
   create() {
-    this.nfcEmulator.addSpool({ id: crypto.randomUUID() });
+    this.nfcEmulator.addSpool({ id: "{" + crypto.randomUUID() + "}" });
   }
 };
 _DebugNfcComponent.\u0275fac = function DebugNfcComponent_Factory(t) {
@@ -66979,9 +66994,9 @@ function EditDialog_Conditional_0_Conditional_2_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" Editing ", ctx_r3.spool.id, " ");
   }
 }
-function EditDialog_Conditional_0_For_14_Template(rf, ctx) {
+function EditDialog_Conditional_0_For_15_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 12);
+    \u0275\u0275elementStart(0, "mat-option", 13);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -66992,9 +67007,9 @@ function EditDialog_Conditional_0_For_14_Template(rf, ctx) {
     \u0275\u0275textInterpolate(brand_r8);
   }
 }
-function EditDialog_Conditional_0_For_22_Template(rf, ctx) {
+function EditDialog_Conditional_0_For_23_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-option", 12);
+    \u0275\u0275elementStart(0, "mat-option", 13);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -67011,123 +67026,123 @@ function EditDialog_Conditional_0_Template(rf, ctx) {
     \u0275\u0275elementStart(0, "h2", 0);
     \u0275\u0275template(1, EditDialog_Conditional_0_Conditional_1_Template, 1, 1)(2, EditDialog_Conditional_0_Conditional_2_Template, 1, 1);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "mat-dialog-content")(4, "mat-form-field")(5, "mat-label");
-    \u0275\u0275text(6, "Name");
+    \u0275\u0275elementStart(3, "mat-dialog-content")(4, "div", 1)(5, "mat-form-field")(6, "mat-label");
+    \u0275\u0275text(7, "Name");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "input", 1);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_7_listener($event) {
+    \u0275\u0275elementStart(8, "input", 2);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_8_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r18 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r18.spool.name = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "mat-form-field")(9, "mat-label");
-    \u0275\u0275text(10, "Brand");
+    \u0275\u0275elementStart(9, "mat-form-field")(10, "mat-label");
+    \u0275\u0275text(11, "Brand");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(11, "mat-autocomplete", null, 2);
-    \u0275\u0275repeaterCreate(13, EditDialog_Conditional_0_For_14_Template, 2, 2, "mat-option", 12, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(12, "mat-autocomplete", null, 3);
+    \u0275\u0275repeaterCreate(14, EditDialog_Conditional_0_For_15_Template, 2, 2, "mat-option", 13, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(15, "input", 3);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_15_listener($event) {
+    \u0275\u0275elementStart(16, "input", 4);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_16_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r20 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r20.spool.brand = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(16, "mat-form-field")(17, "mat-label");
-    \u0275\u0275text(18, "Material");
+    \u0275\u0275elementStart(17, "mat-form-field")(18, "mat-label");
+    \u0275\u0275text(19, "Material");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(19, "mat-autocomplete", null, 4);
-    \u0275\u0275repeaterCreate(21, EditDialog_Conditional_0_For_22_Template, 2, 2, "mat-option", 12, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(20, "mat-autocomplete", null, 5);
+    \u0275\u0275repeaterCreate(22, EditDialog_Conditional_0_For_23_Template, 2, 2, "mat-option", 13, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(23, "input", 5);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_23_listener($event) {
+    \u0275\u0275elementStart(24, "input", 6);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_24_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r21 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r21.spool.material = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(24, "mat-form-field")(25, "ngx-colors", 6);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_ngx_colors_ngModelChange_25_listener($event) {
+    \u0275\u0275elementStart(25, "mat-form-field")(26, "ngx-colors", 7);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_ngx_colors_ngModelChange_26_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r22 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r22.spool.color = $event);
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(26, "mat-label");
-    \u0275\u0275text(27, "Color");
+    \u0275\u0275elementStart(27, "mat-label");
+    \u0275\u0275text(28, "Color");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(28, "input", 7);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_28_listener($event) {
+    \u0275\u0275elementStart(29, "input", 8);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_29_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r23 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r23.spool.color = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(29, "mat-form-field")(30, "mat-label");
-    \u0275\u0275text(31, "Spool weight");
+    \u0275\u0275elementStart(30, "mat-form-field")(31, "mat-label");
+    \u0275\u0275text(32, "Spool weight");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(32, "input", 8);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_32_listener($event) {
+    \u0275\u0275elementStart(33, "input", 9);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_33_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r24 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r24.spool.spoolWeight = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(33, "mat-form-field")(34, "mat-label");
-    \u0275\u0275text(35, "Filament weight (initial)");
+    \u0275\u0275elementStart(34, "mat-form-field")(35, "mat-label");
+    \u0275\u0275text(36, "Filament weight (initial)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(36, "input", 8);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_36_listener($event) {
+    \u0275\u0275elementStart(37, "input", 9);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_37_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r25 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r25.spool.initialFilamentWeight = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(37, "mat-form-field")(38, "mat-label");
-    \u0275\u0275text(39, "Filament weight (remaining)");
+    \u0275\u0275elementStart(38, "mat-form-field")(39, "mat-label");
+    \u0275\u0275text(40, "Filament weight (remaining)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(40, "input", 8);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_40_listener($event) {
+    \u0275\u0275elementStart(41, "input", 9);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_41_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r26 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r26.spool.remainingFilamentWeight = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(41, "mat-form-field")(42, "mat-label");
-    \u0275\u0275text(43, "Flow calibration factor (K)");
+    \u0275\u0275elementStart(42, "mat-form-field")(43, "mat-label");
+    \u0275\u0275text(44, "Flow calibration factor (K)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(44, "input", 9);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_44_listener($event) {
+    \u0275\u0275elementStart(45, "input", 10);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_45_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r27 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r27.spool.flowFactor = $event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(45, "mat-form-field")(46, "mat-label");
-    \u0275\u0275text(47, "Temperature (\xBAC)");
+    \u0275\u0275elementStart(46, "mat-form-field")(47, "mat-label");
+    \u0275\u0275text(48, "Temperature (\xBAC)");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(48, "input", 8);
-    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_48_listener($event) {
+    \u0275\u0275elementStart(49, "input", 9);
+    \u0275\u0275listener("ngModelChange", function EditDialog_Conditional_0_Template_input_ngModelChange_49_listener($event) {
       \u0275\u0275restoreView(_r19);
       const ctx_r28 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r28.spool.temperature = $event);
     });
-    \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(49, "mat-dialog-actions")(50, "button", 10);
-    \u0275\u0275text(51, "Cancel");
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275elementStart(50, "mat-dialog-actions")(51, "button", 11);
+    \u0275\u0275text(52, "Cancel");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(52, "button", 11);
-    \u0275\u0275text(53, "Update");
+    \u0275\u0275elementStart(53, "button", 12);
+    \u0275\u0275text(54, "Update");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const _r4 = \u0275\u0275reference(12);
-    const _r6 = \u0275\u0275reference(20);
+    const _r4 = \u0275\u0275reference(13);
+    const _r6 = \u0275\u0275reference(21);
     const ctx_r0 = \u0275\u0275nextContext();
     \u0275\u0275advance();
     \u0275\u0275conditional(1, ctx_r0.spool.name ? 1 : 2);
-    \u0275\u0275advance(6);
+    \u0275\u0275advance(7);
     \u0275\u0275property("ngModel", ctx_r0.spool.name);
     \u0275\u0275advance(6);
     \u0275\u0275repeater(ctx_r0.brands);
@@ -67172,9 +67187,9 @@ var _EditDialog = class _EditDialog {
 _EditDialog.\u0275fac = function EditDialog_Factory(t) {
   return new (t || _EditDialog)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
 };
-_EditDialog.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _EditDialog, selectors: [["app-edit-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["mat-dialog-title", ""], ["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", "", "mat-dialog-close", "update"], [3, "value"]], template: function EditDialog_Template(rf, ctx) {
+_EditDialog.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _EditDialog, selectors: [["app-edit-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 2, vars: 1, consts: [["mat-dialog-title", ""], [1, "column"], ["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", "", "mat-dialog-close", "update"], [3, "value"]], template: function EditDialog_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, EditDialog_Conditional_0_Template, 54, 14)(1, EditDialog_Conditional_1_Template, 1, 0);
+    \u0275\u0275template(0, EditDialog_Conditional_0_Template, 55, 14)(1, EditDialog_Conditional_1_Template, 1, 0);
   }
   if (rf & 2) {
     \u0275\u0275conditional(0, ctx.spool ? 0 : 1);
@@ -67203,7 +67218,7 @@ _EditDialog.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _Edi
   MatDialogTitle,
   MatDialogContent,
   MatDialogActions
-], styles: ["\n\n/*# sourceMappingURL=edit-dialog.css.map */"] });
+], styles: ["\n\n.column[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n}\n/*# sourceMappingURL=edit-dialog.css.map */"] });
 var EditDialog = _EditDialog;
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(EditDialog, { className: "EditDialog", filePath: "src/app/components/edit-dialog/edit-dialog.component.ts", lineNumber: 52 });
@@ -67682,1154 +67697,746 @@ var HelpDialogComponent = _HelpDialogComponent;
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HelpDialogComponent, { className: "HelpDialogComponent", filePath: "src/app/components/help-dialog/help-dialog.component.ts", lineNumber: 18 });
 })();
 
-// src/app/components/spool-card/spool-card.component.ts
-function SpoolCardComponent_Conditional_0_Conditional_9_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0);
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1(" Mat: ", ctx_r1.spool.material, " ");
-  }
-}
-function SpoolCardComponent_Conditional_0_Conditional_10_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "mat-card-actions")(1, "button", 0);
-    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_1_listener() {
-      \u0275\u0275restoreView(_r4);
-      const ctx_r3 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r3.edit());
-    });
-    \u0275\u0275text(2, "Edit");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 0);
-    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_3_listener() {
-      \u0275\u0275restoreView(_r4);
-      const ctx_r5 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r5.remove());
-    });
-    \u0275\u0275text(4, "Remove");
-    \u0275\u0275elementEnd()();
-  }
-}
-function SpoolCardComponent_Conditional_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
-    \u0275\u0275text(3);
-    \u0275\u0275elementStart(4, "mat-icon");
-    \u0275\u0275text(5, "gesture");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "mat-card-subtitle");
-    \u0275\u0275text(7);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "mat-card-content");
-    \u0275\u0275template(9, SpoolCardComponent_Conditional_0_Conditional_9_Template, 1, 1);
-    \u0275\u0275elementEnd();
-    \u0275\u0275template(10, SpoolCardComponent_Conditional_0_Conditional_10_Template, 5, 0, "mat-card-actions");
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", ctx_r0.spool.name, " ");
-    \u0275\u0275advance();
-    \u0275\u0275styleMapInterpolate1("color: ", ctx_r0.spool.color, ";");
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(ctx_r0.spool.id);
-    \u0275\u0275advance(2);
-    \u0275\u0275conditional(9, ctx_r0.spool.material ? 9 : -1);
-    \u0275\u0275advance();
-    \u0275\u0275conditional(10, !ctx_r0.readOnly ? 10 : -1);
-  }
-}
-var _SpoolCardComponent = class _SpoolCardComponent {
-  constructor(dialog) {
-    this.dialog = dialog;
-    this.readOnly = false;
-    this.cardRemoved = new EventEmitter();
-    this.cardUpdated = new EventEmitter();
-  }
-  edit() {
-    const spool = __spreadValues({}, this.spool);
-    const dialog = this.dialog.open(EditDialog, { data: { spool }, disableClose: true });
-    dialog.afterClosed().subscribe({
-      next: (r) => {
-        if (r === "update") {
-          this.update(spool);
-        }
-      }
-    });
-  }
-  remove() {
-    this.cardRemoved.next();
-  }
-  update(spool) {
-    this.cardUpdated.next(spool);
+// node_modules/@angular/material/fesm2022/radio.mjs
+var _c013 = ["input"];
+var _c111 = ["formField"];
+var _c28 = ["*"];
+var nextUniqueId5 = 0;
+var MatRadioChange = class {
+  constructor(source, value) {
+    this.source = source;
+    this.value = value;
   }
 };
-_SpoolCardComponent.\u0275fac = function SpoolCardComponent_Factory(t) {
-  return new (t || _SpoolCardComponent)(\u0275\u0275directiveInject(MatDialog));
+var MAT_RADIO_GROUP_CONTROL_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => MatRadioGroup),
+  multi: true
 };
-_SpoolCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolCardComponent, selectors: [["app-spool-card"]], inputs: { spool: "spool", readOnly: "readOnly" }, outputs: { cardRemoved: "cardRemoved", cardUpdated: "cardUpdated" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [["mat-button", "", 3, "click"]], template: function SpoolCardComponent_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, SpoolCardComponent_Conditional_0_Template, 11, 7, "mat-card");
-  }
-  if (rf & 2) {
-    \u0275\u0275conditional(0, ctx.spool ? 0 : -1);
-  }
-}, dependencies: [
-  MatCardTitle,
-  MatCard,
-  NgxColorsModule,
-  FormsModule,
-  MatIcon,
-  MatCardHeader,
-  MatCardContent,
-  MatCardActions,
-  MatCardSubtitle,
-  MatButton
-], styles: ["\n\n/*# sourceMappingURL=spool-card.component.css.map */"] });
-var SpoolCardComponent = _SpoolCardComponent;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolCardComponent, { className: "SpoolCardComponent", filePath: "src/app/components/spool-card/spool-card.component.ts", lineNumber: 38 });
-})();
-
-// src/app/components/write-dialog/write-dialog.component.ts
-function WriteDialogComponent_Conditional_6_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "app-debug-nfc");
-  }
+var MAT_RADIO_GROUP = new InjectionToken("MatRadioGroup");
+var MAT_RADIO_DEFAULT_OPTIONS = new InjectionToken("mat-radio-default-options", {
+  providedIn: "root",
+  factory: MAT_RADIO_DEFAULT_OPTIONS_FACTORY
+});
+function MAT_RADIO_DEFAULT_OPTIONS_FACTORY() {
+  return {
+    color: "accent"
+  };
 }
-var _WriteDialogComponent = class _WriteDialogComponent {
-  constructor(data) {
-    this.data = data;
-    this.environment = environment;
-    this.spool = data.spool;
+var _MatRadioGroup = class _MatRadioGroup {
+  /** Name of the radio button group. All radio buttons inside this group will use this name. */
+  get name() {
+    return this._name;
   }
-};
-_WriteDialogComponent.\u0275fac = function WriteDialogComponent_Factory(t) {
-  return new (t || _WriteDialogComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
-};
-_WriteDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _WriteDialogComponent, selectors: [["app-write-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 3, consts: [["mat-dialog-title", ""], [3, "readOnly", "spool"]], template: function WriteDialogComponent_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "h2", 0);
-    \u0275\u0275text(1, "Writing...");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "mat-dialog-content");
-    \u0275\u0275text(3, " Please tap this spool's tag with your phone: ");
-    \u0275\u0275element(4, "app-spool-card", 1)(5, "mat-spinner");
-    \u0275\u0275template(6, WriteDialogComponent_Conditional_6_Template, 1, 0, "app-debug-nfc");
-    \u0275\u0275elementEnd();
+  set name(value) {
+    this._name = value;
+    this._updateRadioButtonNames();
   }
-  if (rf & 2) {
-    \u0275\u0275advance(4);
-    \u0275\u0275property("readOnly", true)("spool", ctx.spool);
-    \u0275\u0275advance(2);
-    \u0275\u0275conditional(6, ctx.environment.isDev ? 6 : -1);
+  /** Whether the labels should appear after or before the radio-buttons. Defaults to 'after' */
+  get labelPosition() {
+    return this._labelPosition;
   }
-}, dependencies: [
-  MatProgressSpinner,
-  DebugNfcComponent,
-  MatDialogContent,
-  MatDialogTitle,
-  SpoolCardComponent
-], styles: ["\n\n/*# sourceMappingURL=write-dialog.component.css.map */"] });
-var WriteDialogComponent = _WriteDialogComponent;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(WriteDialogComponent, { className: "WriteDialogComponent", filePath: "src/app/components/write-dialog/write-dialog.component.ts", lineNumber: 36 });
-})();
-
-// src/app/classes/emulated-ndef-reader.ts
-var EmulatedNdefReader = class {
-  constructor(emulatorService) {
-    this.emulatorService = emulatorService;
-    this.state = "idle";
-    this.onreading = (e) => null;
-    this.onreadingerror = (e) => null;
-    emulatorService.getEvents().subscribe({ next: (tag) => this.handleTap(tag) });
-    emulatorService.getErrors().subscribe({ next: (err) => this.handleError(err) });
-  }
-  addEventListener(type, callback, options) {
-    throw new Error("Method not implemented.");
-  }
-  dispatchEvent(event) {
-    throw new Error("Method not implemented.");
-  }
-  removeEventListener(type, callback, options) {
-    throw new Error("Method not implemented.");
-  }
-  scan() {
-    if (this.state === "idle") {
-      this.state = "scanning";
-      return Promise.resolve();
-    } else {
-      return Promise.reject(new Error("Already scanning!"));
-    }
-  }
-  write(message, options) {
-    return Promise.resolve();
-  }
-  makeReadOnly(options) {
-    return Promise.resolve();
-  }
-  handleTap(event) {
-    if (this.state === "scanning" && this.onreading) {
-      this.onreading(event);
-    }
-  }
-  handleError(err) {
-    if (this.state === "scanning" && this.onreadingerror) {
-      this.onreadingerror(new Event("error scanning: " + err.message));
-    }
-  }
-};
-
-// node_modules/@angular/material/fesm2022/snack-bar.mjs
-function SimpleSnackBar_Conditional_2_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r2 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 1)(1, "button", 2);
-    \u0275\u0275listener("click", function SimpleSnackBar_Conditional_2_Template_button_click_1_listener() {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.action());
-    });
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", ctx_r0.data.action, " ");
-  }
-}
-var _c013 = ["label"];
-function MatSnackBarContainer_ng_template_4_Template(rf, ctx) {
-}
-var MAX_TIMEOUT = Math.pow(2, 31) - 1;
-var MatSnackBarRef = class {
-  constructor(containerInstance, _overlayRef) {
-    this._overlayRef = _overlayRef;
-    this._afterDismissed = new Subject();
-    this._afterOpened = new Subject();
-    this._onAction = new Subject();
-    this._dismissedByAction = false;
-    this.containerInstance = containerInstance;
-    containerInstance._onExit.subscribe(() => this._finishDismiss());
-  }
-  /** Dismisses the snack bar. */
-  dismiss() {
-    if (!this._afterDismissed.closed) {
-      this.containerInstance.exit();
-    }
-    clearTimeout(this._durationTimeoutId);
-  }
-  /** Marks the snackbar action clicked. */
-  dismissWithAction() {
-    if (!this._onAction.closed) {
-      this._dismissedByAction = true;
-      this._onAction.next();
-      this._onAction.complete();
-      this.dismiss();
-    }
-    clearTimeout(this._durationTimeoutId);
+  set labelPosition(v) {
+    this._labelPosition = v === "before" ? "before" : "after";
+    this._markRadiosForCheck();
   }
   /**
-   * Marks the snackbar action clicked.
-   * @deprecated Use `dismissWithAction` instead.
-   * @breaking-change 8.0.0
+   * Value for the radio-group. Should equal the value of the selected radio button if there is
+   * a corresponding radio button with a matching value. If there is not such a corresponding
+   * radio button, this value persists to be applied in case a new radio button is added with a
+   * matching value.
    */
-  closeWithAction() {
-    this.dismissWithAction();
+  get value() {
+    return this._value;
   }
-  /** Dismisses the snack bar after some duration */
-  _dismissAfter(duration) {
-    this._durationTimeoutId = setTimeout(() => this.dismiss(), Math.min(duration, MAX_TIMEOUT));
-  }
-  /** Marks the snackbar as opened */
-  _open() {
-    if (!this._afterOpened.closed) {
-      this._afterOpened.next();
-      this._afterOpened.complete();
+  set value(newValue) {
+    if (this._value !== newValue) {
+      this._value = newValue;
+      this._updateSelectedRadioFromValue();
+      this._checkSelectedRadioButton();
     }
   }
-  /** Cleans up the DOM after closing. */
-  _finishDismiss() {
-    this._overlayRef.dispose();
-    if (!this._onAction.closed) {
-      this._onAction.complete();
+  _checkSelectedRadioButton() {
+    if (this._selected && !this._selected.checked) {
+      this._selected.checked = true;
     }
-    this._afterDismissed.next({
-      dismissedByAction: this._dismissedByAction
-    });
-    this._afterDismissed.complete();
-    this._dismissedByAction = false;
   }
-  /** Gets an observable that is notified when the snack bar is finished closing. */
-  afterDismissed() {
-    return this._afterDismissed;
+  /**
+   * The currently selected radio button. If set to a new radio button, the radio group value
+   * will be updated to match the new selected button.
+   */
+  get selected() {
+    return this._selected;
   }
-  /** Gets an observable that is notified when the snack bar has opened and appeared. */
-  afterOpened() {
-    return this.containerInstance._onEnter;
+  set selected(selected) {
+    this._selected = selected;
+    this.value = selected ? selected.value : null;
+    this._checkSelectedRadioButton();
   }
-  /** Gets an observable that is notified when the snack bar action is called. */
-  onAction() {
-    return this._onAction;
+  /** Whether the radio group is disabled */
+  get disabled() {
+    return this._disabled;
   }
-};
-var MAT_SNACK_BAR_DATA = new InjectionToken("MatSnackBarData");
-var MatSnackBarConfig = class {
-  constructor() {
-    this.politeness = "assertive";
-    this.announcementMessage = "";
-    this.duration = 0;
-    this.data = null;
-    this.horizontalPosition = "center";
-    this.verticalPosition = "bottom";
+  set disabled(value) {
+    this._disabled = value;
+    this._markRadiosForCheck();
   }
-};
-var _MatSnackBarLabel = class _MatSnackBarLabel {
-};
-_MatSnackBarLabel.\u0275fac = function MatSnackBarLabel_Factory(t) {
-  return new (t || _MatSnackBarLabel)();
-};
-_MatSnackBarLabel.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
-  type: _MatSnackBarLabel,
-  selectors: [["", "matSnackBarLabel", ""]],
-  hostAttrs: [1, "mat-mdc-snack-bar-label", "mdc-snackbar__label"],
-  standalone: true
-});
-var MatSnackBarLabel = _MatSnackBarLabel;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarLabel, [{
-    type: Directive,
-    args: [{
-      selector: `[matSnackBarLabel]`,
-      standalone: true,
-      host: {
-        "class": "mat-mdc-snack-bar-label mdc-snackbar__label"
-      }
-    }]
-  }], null, null);
-})();
-var _MatSnackBarActions = class _MatSnackBarActions {
-};
-_MatSnackBarActions.\u0275fac = function MatSnackBarActions_Factory(t) {
-  return new (t || _MatSnackBarActions)();
-};
-_MatSnackBarActions.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
-  type: _MatSnackBarActions,
-  selectors: [["", "matSnackBarActions", ""]],
-  hostAttrs: [1, "mat-mdc-snack-bar-actions", "mdc-snackbar__actions"],
-  standalone: true
-});
-var MatSnackBarActions = _MatSnackBarActions;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarActions, [{
-    type: Directive,
-    args: [{
-      selector: `[matSnackBarActions]`,
-      standalone: true,
-      host: {
-        "class": "mat-mdc-snack-bar-actions mdc-snackbar__actions"
-      }
-    }]
-  }], null, null);
-})();
-var _MatSnackBarAction = class _MatSnackBarAction {
-};
-_MatSnackBarAction.\u0275fac = function MatSnackBarAction_Factory(t) {
-  return new (t || _MatSnackBarAction)();
-};
-_MatSnackBarAction.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
-  type: _MatSnackBarAction,
-  selectors: [["", "matSnackBarAction", ""]],
-  hostAttrs: [1, "mat-mdc-snack-bar-action", "mdc-snackbar__action"],
-  standalone: true
-});
-var MatSnackBarAction = _MatSnackBarAction;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarAction, [{
-    type: Directive,
-    args: [{
-      selector: `[matSnackBarAction]`,
-      standalone: true,
-      host: {
-        "class": "mat-mdc-snack-bar-action mdc-snackbar__action"
-      }
-    }]
-  }], null, null);
-})();
-var _SimpleSnackBar = class _SimpleSnackBar {
-  constructor(snackBarRef, data) {
-    this.snackBarRef = snackBarRef;
-    this.data = data;
+  /** Whether the radio group is required */
+  get required() {
+    return this._required;
   }
-  /** Performs the action on the snack bar. */
-  action() {
-    this.snackBarRef.dismissWithAction();
+  set required(value) {
+    this._required = value;
+    this._markRadiosForCheck();
   }
-  /** If the action button should be shown. */
-  get hasAction() {
-    return !!this.data.action;
-  }
-};
-_SimpleSnackBar.\u0275fac = function SimpleSnackBar_Factory(t) {
-  return new (t || _SimpleSnackBar)(\u0275\u0275directiveInject(MatSnackBarRef), \u0275\u0275directiveInject(MAT_SNACK_BAR_DATA));
-};
-_SimpleSnackBar.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-  type: _SimpleSnackBar,
-  selectors: [["simple-snack-bar"]],
-  hostAttrs: [1, "mat-mdc-simple-snack-bar"],
-  exportAs: ["matSnackBar"],
-  standalone: true,
-  features: [\u0275\u0275StandaloneFeature],
-  decls: 3,
-  vars: 2,
-  consts: [["matSnackBarLabel", ""], ["matSnackBarActions", ""], ["mat-button", "", "matSnackBarAction", "", 3, "click"]],
-  template: function SimpleSnackBar_Template(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0);
-      \u0275\u0275text(1);
-      \u0275\u0275elementEnd();
-      \u0275\u0275template(2, SimpleSnackBar_Conditional_2_Template, 3, 1, "div", 1);
-    }
-    if (rf & 2) {
-      \u0275\u0275advance();
-      \u0275\u0275textInterpolate1(" ", ctx.data.message, "\n");
-      \u0275\u0275advance();
-      \u0275\u0275conditional(2, ctx.hasAction ? 2 : -1);
-    }
-  },
-  dependencies: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
-  styles: [".mat-mdc-simple-snack-bar{display:flex}"],
-  encapsulation: 2,
-  changeDetection: 0
-});
-var SimpleSnackBar = _SimpleSnackBar;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SimpleSnackBar, [{
-    type: Component,
-    args: [{
-      selector: "simple-snack-bar",
-      exportAs: "matSnackBar",
-      encapsulation: ViewEncapsulation$1.None,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
-      standalone: true,
-      host: {
-        "class": "mat-mdc-simple-snack-bar"
-      },
-      template: '<div matSnackBarLabel>\n  {{data.message}}\n</div>\n\n@if (hasAction) {\n  <div matSnackBarActions>\n    <button mat-button matSnackBarAction (click)="action()">\n      {{data.action}}\n    </button>\n  </div>\n}\n',
-      styles: [".mat-mdc-simple-snack-bar{display:flex}"]
-    }]
-  }], () => [{
-    type: MatSnackBarRef
-  }, {
-    type: void 0,
-    decorators: [{
-      type: Inject,
-      args: [MAT_SNACK_BAR_DATA]
-    }]
-  }], null);
-})();
-var matSnackBarAnimations = {
-  /** Animation that shows and hides a snack bar. */
-  snackBarState: trigger("state", [state("void, hidden", style({
-    transform: "scale(0.8)",
-    opacity: 0
-  })), state("visible", style({
-    transform: "scale(1)",
-    opacity: 1
-  })), transition("* => visible", animate("150ms cubic-bezier(0, 0, 0.2, 1)")), transition("* => void, * => hidden", animate("75ms cubic-bezier(0.4, 0.0, 1, 1)", style({
-    opacity: 0
-  })))])
-};
-var uniqueId3 = 0;
-var _MatSnackBarContainer = class _MatSnackBarContainer extends BasePortalOutlet {
-  constructor(_ngZone, _elementRef, _changeDetectorRef, _platform, snackBarConfig) {
-    super();
-    this._ngZone = _ngZone;
-    this._elementRef = _elementRef;
-    this._changeDetectorRef = _changeDetectorRef;
-    this._platform = _platform;
-    this.snackBarConfig = snackBarConfig;
-    this._document = inject(DOCUMENT2);
-    this._trackedModals = /* @__PURE__ */ new Set();
-    this._announceDelay = 150;
-    this._destroyed = false;
-    this._onAnnounce = new Subject();
-    this._onExit = new Subject();
-    this._onEnter = new Subject();
-    this._animationState = "void";
-    this._liveElementId = `mat-snack-bar-container-live-${uniqueId3++}`;
-    this.attachDomPortal = (portal) => {
-      this._assertNotAttached();
-      const result = this._portalOutlet.attachDomPortal(portal);
-      this._afterPortalAttached();
-      return result;
+  constructor(_changeDetector) {
+    this._changeDetector = _changeDetector;
+    this._value = null;
+    this._name = `mat-radio-group-${nextUniqueId5++}`;
+    this._selected = null;
+    this._isInitialized = false;
+    this._labelPosition = "after";
+    this._disabled = false;
+    this._required = false;
+    this._controlValueAccessorChangeFn = () => {
     };
-    if (snackBarConfig.politeness === "assertive" && !snackBarConfig.announcementMessage) {
-      this._live = "assertive";
-    } else if (snackBarConfig.politeness === "off") {
-      this._live = "off";
-    } else {
-      this._live = "polite";
-    }
-    if (this._platform.FIREFOX) {
-      if (this._live === "polite") {
-        this._role = "status";
+    this.onTouched = () => {
+    };
+    this.change = new EventEmitter();
+  }
+  /**
+   * Initialize properties once content children are available.
+   * This allows us to propagate relevant attributes to associated buttons.
+   */
+  ngAfterContentInit() {
+    this._isInitialized = true;
+    this._buttonChanges = this._radios.changes.subscribe(() => {
+      if (this.selected && !this._radios.find((radio) => radio === this.selected)) {
+        this._selected = null;
       }
-      if (this._live === "assertive") {
-        this._role = "alert";
-      }
-    }
-  }
-  /** Attach a component portal as content to this snack bar container. */
-  attachComponentPortal(portal) {
-    this._assertNotAttached();
-    const result = this._portalOutlet.attachComponentPortal(portal);
-    this._afterPortalAttached();
-    return result;
-  }
-  /** Attach a template portal as content to this snack bar container. */
-  attachTemplatePortal(portal) {
-    this._assertNotAttached();
-    const result = this._portalOutlet.attachTemplatePortal(portal);
-    this._afterPortalAttached();
-    return result;
-  }
-  /** Handle end of animations, updating the state of the snackbar. */
-  onAnimationEnd(event) {
-    const {
-      fromState,
-      toState
-    } = event;
-    if (toState === "void" && fromState !== "void" || toState === "hidden") {
-      this._completeExit();
-    }
-    if (toState === "visible") {
-      const onEnter2 = this._onEnter;
-      this._ngZone.run(() => {
-        onEnter2.next();
-        onEnter2.complete();
-      });
-    }
-  }
-  /** Begin animation of snack bar entrance into view. */
-  enter() {
-    if (!this._destroyed) {
-      this._animationState = "visible";
-      this._changeDetectorRef.markForCheck();
-      this._changeDetectorRef.detectChanges();
-      this._screenReaderAnnounce();
-    }
-  }
-  /** Begin animation of the snack bar exiting from view. */
-  exit() {
-    this._ngZone.run(() => {
-      this._animationState = "hidden";
-      this._changeDetectorRef.markForCheck();
-      this._elementRef.nativeElement.setAttribute("mat-exit", "");
-      clearTimeout(this._announceTimeoutId);
     });
-    return this._onExit;
   }
-  /** Makes sure the exit callbacks have been invoked when the element is destroyed. */
   ngOnDestroy() {
-    this._destroyed = true;
-    this._clearFromModals();
-    this._completeExit();
+    this._buttonChanges?.unsubscribe();
   }
   /**
-   * Removes the element in a microtask. Helps prevent errors where we end up
-   * removing an element which is in the middle of an animation.
+   * Mark this group as being "touched" (for ngModel). Meant to be called by the contained
+   * radio buttons upon their blur.
    */
-  _completeExit() {
-    queueMicrotask(() => {
-      this._onExit.next();
-      this._onExit.complete();
-    });
-  }
-  /**
-   * Called after the portal contents have been attached. Can be
-   * used to modify the DOM once it's guaranteed to be in place.
-   */
-  _afterPortalAttached() {
-    const element = this._elementRef.nativeElement;
-    const panelClasses = this.snackBarConfig.panelClass;
-    if (panelClasses) {
-      if (Array.isArray(panelClasses)) {
-        panelClasses.forEach((cssClass) => element.classList.add(cssClass));
-      } else {
-        element.classList.add(panelClasses);
-      }
-    }
-    this._exposeToModals();
-    const label = this._label.nativeElement;
-    const labelClass = "mdc-snackbar__label";
-    label.classList.toggle(labelClass, !label.querySelector(`.${labelClass}`));
-  }
-  /**
-   * Some browsers won't expose the accessibility node of the live element if there is an
-   * `aria-modal` and the live element is outside of it. This method works around the issue by
-   * pointing the `aria-owns` of all modals to the live element.
-   */
-  _exposeToModals() {
-    const id = this._liveElementId;
-    const modals = this._document.querySelectorAll('body > .cdk-overlay-container [aria-modal="true"]');
-    for (let i = 0; i < modals.length; i++) {
-      const modal = modals[i];
-      const ariaOwns = modal.getAttribute("aria-owns");
-      this._trackedModals.add(modal);
-      if (!ariaOwns) {
-        modal.setAttribute("aria-owns", id);
-      } else if (ariaOwns.indexOf(id) === -1) {
-        modal.setAttribute("aria-owns", ariaOwns + " " + id);
-      }
+  _touch() {
+    if (this.onTouched) {
+      this.onTouched();
     }
   }
-  /** Clears the references to the live element from any modals it was added to. */
-  _clearFromModals() {
-    this._trackedModals.forEach((modal) => {
-      const ariaOwns = modal.getAttribute("aria-owns");
-      if (ariaOwns) {
-        const newValue = ariaOwns.replace(this._liveElementId, "").trim();
-        if (newValue.length > 0) {
-          modal.setAttribute("aria-owns", newValue);
-        } else {
-          modal.removeAttribute("aria-owns");
-        }
-      }
-    });
-    this._trackedModals.clear();
-  }
-  /** Asserts that no content is already attached to the container. */
-  _assertNotAttached() {
-    if (this._portalOutlet.hasAttached() && (typeof ngDevMode === "undefined" || ngDevMode)) {
-      throw Error("Attempting to attach snack bar content after content is already attached");
-    }
-  }
-  /**
-   * Starts a timeout to move the snack bar content to the live region so screen readers will
-   * announce it.
-   */
-  _screenReaderAnnounce() {
-    if (!this._announceTimeoutId) {
-      this._ngZone.runOutsideAngular(() => {
-        this._announceTimeoutId = setTimeout(() => {
-          const inertElement = this._elementRef.nativeElement.querySelector("[aria-hidden]");
-          const liveElement = this._elementRef.nativeElement.querySelector("[aria-live]");
-          if (inertElement && liveElement) {
-            let focusedElement = null;
-            if (this._platform.isBrowser && document.activeElement instanceof HTMLElement && inertElement.contains(document.activeElement)) {
-              focusedElement = document.activeElement;
-            }
-            inertElement.removeAttribute("aria-hidden");
-            liveElement.appendChild(inertElement);
-            focusedElement?.focus();
-            this._onAnnounce.next();
-            this._onAnnounce.complete();
-          }
-        }, this._announceDelay);
+  _updateRadioButtonNames() {
+    if (this._radios) {
+      this._radios.forEach((radio) => {
+        radio.name = this.name;
+        radio._markForCheck();
       });
     }
   }
+  /** Updates the `selected` radio button from the internal _value state. */
+  _updateSelectedRadioFromValue() {
+    const isAlreadySelected = this._selected !== null && this._selected.value === this._value;
+    if (this._radios && !isAlreadySelected) {
+      this._selected = null;
+      this._radios.forEach((radio) => {
+        radio.checked = this.value === radio.value;
+        if (radio.checked) {
+          this._selected = radio;
+        }
+      });
+    }
+  }
+  /** Dispatch change event with current selection and group value. */
+  _emitChangeEvent() {
+    if (this._isInitialized) {
+      this.change.emit(new MatRadioChange(this._selected, this._value));
+    }
+  }
+  _markRadiosForCheck() {
+    if (this._radios) {
+      this._radios.forEach((radio) => radio._markForCheck());
+    }
+  }
+  /**
+   * Sets the model value. Implemented as part of ControlValueAccessor.
+   * @param value
+   */
+  writeValue(value) {
+    this.value = value;
+    this._changeDetector.markForCheck();
+  }
+  /**
+   * Registers a callback to be triggered when the model value changes.
+   * Implemented as part of ControlValueAccessor.
+   * @param fn Callback to be registered.
+   */
+  registerOnChange(fn) {
+    this._controlValueAccessorChangeFn = fn;
+  }
+  /**
+   * Registers a callback to be triggered when the control is touched.
+   * Implemented as part of ControlValueAccessor.
+   * @param fn Callback to be registered.
+   */
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+  /**
+   * Sets the disabled state of the control. Implemented as a part of ControlValueAccessor.
+   * @param isDisabled Whether the control should be disabled.
+   */
+  setDisabledState(isDisabled) {
+    this.disabled = isDisabled;
+    this._changeDetector.markForCheck();
+  }
 };
-_MatSnackBarContainer.\u0275fac = function MatSnackBarContainer_Factory(t) {
-  return new (t || _MatSnackBarContainer)(\u0275\u0275directiveInject(NgZone), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(Platform), \u0275\u0275directiveInject(MatSnackBarConfig));
+_MatRadioGroup.\u0275fac = function MatRadioGroup_Factory(t) {
+  return new (t || _MatRadioGroup)(\u0275\u0275directiveInject(ChangeDetectorRef));
 };
-_MatSnackBarContainer.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-  type: _MatSnackBarContainer,
-  selectors: [["mat-snack-bar-container"]],
-  viewQuery: function MatSnackBarContainer_Query(rf, ctx) {
+_MatRadioGroup.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatRadioGroup,
+  selectors: [["mat-radio-group"]],
+  contentQueries: function MatRadioGroup_ContentQueries(rf, ctx, dirIndex) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(CdkPortalOutlet, 7);
-      \u0275\u0275viewQuery(_c013, 7);
+      \u0275\u0275contentQuery(dirIndex, MatRadioButton, 5);
     }
     if (rf & 2) {
       let _t;
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._portalOutlet = _t.first);
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._label = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._radios = _t);
     }
   },
-  hostAttrs: [1, "mdc-snackbar", "mat-mdc-snack-bar-container", "mdc-snackbar--open"],
-  hostVars: 1,
-  hostBindings: function MatSnackBarContainer_HostBindings(rf, ctx) {
+  hostAttrs: ["role", "radiogroup", 1, "mat-mdc-radio-group"],
+  inputs: {
+    color: "color",
+    name: "name",
+    labelPosition: "labelPosition",
+    value: "value",
+    selected: "selected",
+    disabled: [InputFlags.HasDecoratorInputTransform, "disabled", "disabled", booleanAttribute],
+    required: [InputFlags.HasDecoratorInputTransform, "required", "required", booleanAttribute]
+  },
+  outputs: {
+    change: "change"
+  },
+  exportAs: ["matRadioGroup"],
+  standalone: true,
+  features: [\u0275\u0275ProvidersFeature([MAT_RADIO_GROUP_CONTROL_VALUE_ACCESSOR, {
+    provide: MAT_RADIO_GROUP,
+    useExisting: _MatRadioGroup
+  }]), \u0275\u0275InputTransformsFeature]
+});
+var MatRadioGroup = _MatRadioGroup;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRadioGroup, [{
+    type: Directive,
+    args: [{
+      selector: "mat-radio-group",
+      exportAs: "matRadioGroup",
+      providers: [MAT_RADIO_GROUP_CONTROL_VALUE_ACCESSOR, {
+        provide: MAT_RADIO_GROUP,
+        useExisting: MatRadioGroup
+      }],
+      host: {
+        "role": "radiogroup",
+        "class": "mat-mdc-radio-group"
+      },
+      standalone: true
+    }]
+  }], () => [{
+    type: ChangeDetectorRef
+  }], {
+    change: [{
+      type: Output
+    }],
+    _radios: [{
+      type: ContentChildren,
+      args: [forwardRef(() => MatRadioButton), {
+        descendants: true
+      }]
+    }],
+    color: [{
+      type: Input
+    }],
+    name: [{
+      type: Input
+    }],
+    labelPosition: [{
+      type: Input
+    }],
+    value: [{
+      type: Input
+    }],
+    selected: [{
+      type: Input
+    }],
+    disabled: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    required: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }]
+  });
+})();
+var _MatRadioButton = class _MatRadioButton {
+  /** Whether this radio button is checked. */
+  get checked() {
+    return this._checked;
+  }
+  set checked(value) {
+    if (this._checked !== value) {
+      this._checked = value;
+      if (value && this.radioGroup && this.radioGroup.value !== this.value) {
+        this.radioGroup.selected = this;
+      } else if (!value && this.radioGroup && this.radioGroup.value === this.value) {
+        this.radioGroup.selected = null;
+      }
+      if (value) {
+        this._radioDispatcher.notify(this.id, this.name);
+      }
+      this._changeDetector.markForCheck();
+    }
+  }
+  /** The value of this radio button. */
+  get value() {
+    return this._value;
+  }
+  set value(value) {
+    if (this._value !== value) {
+      this._value = value;
+      if (this.radioGroup !== null) {
+        if (!this.checked) {
+          this.checked = this.radioGroup.value === value;
+        }
+        if (this.checked) {
+          this.radioGroup.selected = this;
+        }
+      }
+    }
+  }
+  /** Whether the label should appear after or before the radio button. Defaults to 'after' */
+  get labelPosition() {
+    return this._labelPosition || this.radioGroup && this.radioGroup.labelPosition || "after";
+  }
+  set labelPosition(value) {
+    this._labelPosition = value;
+  }
+  /** Whether the radio button is disabled. */
+  get disabled() {
+    return this._disabled || this.radioGroup !== null && this.radioGroup.disabled;
+  }
+  set disabled(value) {
+    this._setDisabled(value);
+  }
+  /** Whether the radio button is required. */
+  get required() {
+    return this._required || this.radioGroup && this.radioGroup.required;
+  }
+  set required(value) {
+    this._required = value;
+  }
+  /** Theme color of the radio button. */
+  get color() {
+    return this._color || this.radioGroup && this.radioGroup.color || this._providerOverride && this._providerOverride.color || "accent";
+  }
+  set color(newValue) {
+    this._color = newValue;
+  }
+  /** ID of the native input element inside `<mat-radio-button>` */
+  get inputId() {
+    return `${this.id || this._uniqueId}-input`;
+  }
+  constructor(radioGroup, _elementRef, _changeDetector, _focusMonitor, _radioDispatcher, animationMode, _providerOverride, tabIndex) {
+    this._elementRef = _elementRef;
+    this._changeDetector = _changeDetector;
+    this._focusMonitor = _focusMonitor;
+    this._radioDispatcher = _radioDispatcher;
+    this._providerOverride = _providerOverride;
+    this._uniqueId = `mat-radio-${++nextUniqueId5}`;
+    this.id = this._uniqueId;
+    this.disableRipple = false;
+    this.tabIndex = 0;
+    this.change = new EventEmitter();
+    this._checked = false;
+    this._value = null;
+    this._removeUniqueSelectionListener = () => {
+    };
+    this.radioGroup = radioGroup;
+    this._noopAnimations = animationMode === "NoopAnimations";
+    if (tabIndex) {
+      this.tabIndex = numberAttribute(tabIndex, 0);
+    }
+  }
+  /** Focuses the radio button. */
+  focus(options, origin) {
+    if (origin) {
+      this._focusMonitor.focusVia(this._inputElement, origin, options);
+    } else {
+      this._inputElement.nativeElement.focus(options);
+    }
+  }
+  /**
+   * Marks the radio button as needing checking for change detection.
+   * This method is exposed because the parent radio group will directly
+   * update bound properties of the radio button.
+   */
+  _markForCheck() {
+    this._changeDetector.markForCheck();
+  }
+  ngOnInit() {
+    if (this.radioGroup) {
+      this.checked = this.radioGroup.value === this._value;
+      if (this.checked) {
+        this.radioGroup.selected = this;
+      }
+      this.name = this.radioGroup.name;
+    }
+    this._removeUniqueSelectionListener = this._radioDispatcher.listen((id, name) => {
+      if (id !== this.id && name === this.name) {
+        this.checked = false;
+      }
+    });
+  }
+  ngDoCheck() {
+    this._updateTabIndex();
+  }
+  ngAfterViewInit() {
+    this._updateTabIndex();
+    this._focusMonitor.monitor(this._elementRef, true).subscribe((focusOrigin) => {
+      if (!focusOrigin && this.radioGroup) {
+        this.radioGroup._touch();
+      }
+    });
+  }
+  ngOnDestroy() {
+    this._focusMonitor.stopMonitoring(this._elementRef);
+    this._removeUniqueSelectionListener();
+  }
+  /** Dispatch change event with current value. */
+  _emitChangeEvent() {
+    this.change.emit(new MatRadioChange(this, this._value));
+  }
+  _isRippleDisabled() {
+    return this.disableRipple || this.disabled;
+  }
+  _onInputClick(event) {
+    event.stopPropagation();
+  }
+  /** Triggered when the radio button receives an interaction from the user. */
+  _onInputInteraction(event) {
+    event.stopPropagation();
+    if (!this.checked && !this.disabled) {
+      const groupValueChanged = this.radioGroup && this.value !== this.radioGroup.value;
+      this.checked = true;
+      this._emitChangeEvent();
+      if (this.radioGroup) {
+        this.radioGroup._controlValueAccessorChangeFn(this.value);
+        if (groupValueChanged) {
+          this.radioGroup._emitChangeEvent();
+        }
+      }
+    }
+  }
+  /** Triggered when the user clicks on the touch target. */
+  _onTouchTargetClick(event) {
+    this._onInputInteraction(event);
+    if (!this.disabled) {
+      this._inputElement.nativeElement.focus();
+    }
+  }
+  /** Sets the disabled state and marks for check if a change occurred. */
+  _setDisabled(value) {
+    if (this._disabled !== value) {
+      this._disabled = value;
+      this._changeDetector.markForCheck();
+    }
+  }
+  /** Gets the tabindex for the underlying input element. */
+  _updateTabIndex() {
+    const group2 = this.radioGroup;
+    let value;
+    if (!group2 || !group2.selected || this.disabled) {
+      value = this.tabIndex;
+    } else {
+      value = group2.selected === this ? this.tabIndex : -1;
+    }
+    if (value !== this._previousTabIndex) {
+      const input2 = this._inputElement?.nativeElement;
+      if (input2) {
+        input2.setAttribute("tabindex", value + "");
+        this._previousTabIndex = value;
+      }
+    }
+  }
+};
+_MatRadioButton.\u0275fac = function MatRadioButton_Factory(t) {
+  return new (t || _MatRadioButton)(\u0275\u0275directiveInject(MAT_RADIO_GROUP, 8), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(FocusMonitor), \u0275\u0275directiveInject(UniqueSelectionDispatcher), \u0275\u0275directiveInject(ANIMATION_MODULE_TYPE, 8), \u0275\u0275directiveInject(MAT_RADIO_DEFAULT_OPTIONS, 8), \u0275\u0275injectAttribute("tabindex"));
+};
+_MatRadioButton.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatRadioButton,
+  selectors: [["mat-radio-button"]],
+  viewQuery: function MatRadioButton_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275syntheticHostListener("@state.done", function MatSnackBarContainer_animation_state_done_HostBindingHandler($event) {
-        return ctx.onAnimationEnd($event);
+      \u0275\u0275viewQuery(_c013, 5);
+      \u0275\u0275viewQuery(_c111, 7, ElementRef);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._inputElement = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._rippleTrigger = _t.first);
+    }
+  },
+  hostAttrs: [1, "mat-mdc-radio-button"],
+  hostVars: 15,
+  hostBindings: function MatRadioButton_HostBindings(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275listener("focus", function MatRadioButton_focus_HostBindingHandler() {
+        return ctx._inputElement.nativeElement.focus();
       });
     }
     if (rf & 2) {
-      \u0275\u0275syntheticHostProperty("@state", ctx._animationState);
+      \u0275\u0275attribute("id", ctx.id)("tabindex", null)("aria-label", null)("aria-labelledby", null)("aria-describedby", null);
+      \u0275\u0275classProp("mat-primary", ctx.color === "primary")("mat-accent", ctx.color === "accent")("mat-warn", ctx.color === "warn")("mat-mdc-radio-checked", ctx.checked)("_mat-animation-noopable", ctx._noopAnimations);
     }
   },
+  inputs: {
+    id: "id",
+    name: "name",
+    ariaLabel: [InputFlags.None, "aria-label", "ariaLabel"],
+    ariaLabelledby: [InputFlags.None, "aria-labelledby", "ariaLabelledby"],
+    ariaDescribedby: [InputFlags.None, "aria-describedby", "ariaDescribedby"],
+    disableRipple: [InputFlags.HasDecoratorInputTransform, "disableRipple", "disableRipple", booleanAttribute],
+    tabIndex: [InputFlags.HasDecoratorInputTransform, "tabIndex", "tabIndex", (value) => value == null ? 0 : numberAttribute(value)],
+    checked: [InputFlags.HasDecoratorInputTransform, "checked", "checked", booleanAttribute],
+    value: "value",
+    labelPosition: "labelPosition",
+    disabled: [InputFlags.HasDecoratorInputTransform, "disabled", "disabled", booleanAttribute],
+    required: [InputFlags.HasDecoratorInputTransform, "required", "required", booleanAttribute],
+    color: "color"
+  },
+  outputs: {
+    change: "change"
+  },
+  exportAs: ["matRadioButton"],
   standalone: true,
-  features: [\u0275\u0275InheritDefinitionFeature, \u0275\u0275StandaloneFeature],
-  decls: 6,
-  vars: 3,
-  consts: [[1, "mdc-snackbar__surface"], [1, "mat-mdc-snack-bar-label"], ["label", ""], ["aria-hidden", "true"], ["cdkPortalOutlet", ""]],
-  template: function MatSnackBarContainer_Template(rf, ctx) {
+  features: [\u0275\u0275InputTransformsFeature, \u0275\u0275StandaloneFeature],
+  ngContentSelectors: _c28,
+  decls: 13,
+  vars: 16,
+  consts: [["mat-internal-form-field", "", 3, "labelPosition"], ["formField", ""], [1, "mdc-radio"], [1, "mat-mdc-radio-touch-target", 3, "click"], ["type", "radio", 1, "mdc-radio__native-control", 3, "id", "checked", "disabled", "required", "change"], ["input", ""], [1, "mdc-radio__background"], [1, "mdc-radio__outer-circle"], [1, "mdc-radio__inner-circle"], ["mat-ripple", "", 1, "mat-radio-ripple", "mat-mdc-focus-indicator", 3, "matRippleTrigger", "matRippleDisabled", "matRippleCentered"], [1, "mat-ripple-element", "mat-radio-persistent-ripple"], [1, "mdc-label", 3, "for"]],
+  template: function MatRadioButton_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1, 2)(3, "div", 3);
-      \u0275\u0275template(4, MatSnackBarContainer_ng_template_4_Template, 0, 0, "ng-template", 4);
+      \u0275\u0275projectionDef();
+      \u0275\u0275elementStart(0, "div", 0, 1)(2, "div", 2)(3, "div", 3);
+      \u0275\u0275listener("click", function MatRadioButton_Template_div_click_3_listener($event) {
+        return ctx._onTouchTargetClick($event);
+      });
       \u0275\u0275elementEnd();
-      \u0275\u0275element(5, "div");
+      \u0275\u0275elementStart(4, "input", 4, 5);
+      \u0275\u0275listener("change", function MatRadioButton_Template_input_change_4_listener($event) {
+        return ctx._onInputInteraction($event);
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(6, "div", 6);
+      \u0275\u0275element(7, "div", 7)(8, "div", 8);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(9, "div", 9);
+      \u0275\u0275element(10, "div", 10);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(11, "label", 11);
+      \u0275\u0275projection(12);
       \u0275\u0275elementEnd()();
     }
     if (rf & 2) {
+      \u0275\u0275property("labelPosition", ctx.labelPosition);
+      \u0275\u0275advance(2);
+      \u0275\u0275classProp("mdc-radio--disabled", ctx.disabled);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("id", ctx.inputId)("checked", ctx.checked)("disabled", ctx.disabled)("required", ctx.required);
+      \u0275\u0275attribute("name", ctx.name)("value", ctx.value)("aria-label", ctx.ariaLabel)("aria-labelledby", ctx.ariaLabelledby)("aria-describedby", ctx.ariaDescribedby);
       \u0275\u0275advance(5);
-      \u0275\u0275attribute("aria-live", ctx._live)("role", ctx._role)("id", ctx._liveElementId);
+      \u0275\u0275property("matRippleTrigger", ctx._rippleTrigger.nativeElement)("matRippleDisabled", ctx._isRippleDisabled())("matRippleCentered", true);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("for", ctx.inputId);
     }
   },
-  dependencies: [CdkPortalOutlet],
-  styles: ['.mdc-snackbar{display:none;position:fixed;right:0;bottom:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;pointer-events:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-snackbar--opening,.mdc-snackbar--open,.mdc-snackbar--closing{display:flex}.mdc-snackbar--open .mdc-snackbar__label,.mdc-snackbar--open .mdc-snackbar__actions{visibility:visible}.mdc-snackbar__surface{padding-left:0;padding-right:8px;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;transform:scale(0.8);opacity:0}.mdc-snackbar__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-snackbar__surface::before{border-color:CanvasText}}[dir=rtl] .mdc-snackbar__surface,.mdc-snackbar__surface[dir=rtl]{padding-left:8px;padding-right:0}.mdc-snackbar--open .mdc-snackbar__surface{transform:scale(1);opacity:1;pointer-events:auto}.mdc-snackbar--closing .mdc-snackbar__surface{transform:scale(1)}.mdc-snackbar__label{padding-left:16px;padding-right:8px;width:100%;flex-grow:1;box-sizing:border-box;margin:0;visibility:hidden;padding-top:14px;padding-bottom:14px}[dir=rtl] .mdc-snackbar__label,.mdc-snackbar__label[dir=rtl]{padding-left:8px;padding-right:16px}.mdc-snackbar__label::before{display:inline;content:attr(data-mdc-snackbar-label-text)}.mdc-snackbar__actions{display:flex;flex-shrink:0;align-items:center;box-sizing:border-box;visibility:hidden}.mdc-snackbar__action+.mdc-snackbar__dismiss{margin-left:8px;margin-right:0}[dir=rtl] .mdc-snackbar__action+.mdc-snackbar__dismiss,.mdc-snackbar__action+.mdc-snackbar__dismiss[dir=rtl]{margin-left:0;margin-right:8px}.mat-mdc-snack-bar-container{margin:8px;position:static}.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:344px}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:100%}}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container{width:100vw}}.mat-mdc-snack-bar-container .mdc-snackbar__surface{max-width:672px}.mat-mdc-snack-bar-container .mdc-snackbar__surface{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{background-color:var(--mdc-snackbar-container-color)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{border-radius:var(--mdc-snackbar-container-shape)}.mat-mdc-snack-bar-container .mdc-snackbar__label{color:var(--mdc-snackbar-supporting-text-color)}.mat-mdc-snack-bar-container .mdc-snackbar__label{font-size:var(--mdc-snackbar-supporting-text-size);font-family:var(--mdc-snackbar-supporting-text-font);font-weight:var(--mdc-snackbar-supporting-text-weight);line-height:var(--mdc-snackbar-supporting-text-line-height)}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled){color:var(--mat-snack-bar-button-color);--mat-text-button-state-layer-color:currentColor;--mat-text-button-ripple-color:currentColor}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) .mat-ripple-element{opacity:.1}.mat-mdc-snack-bar-container .mdc-snackbar__label::before{display:none}.mat-mdc-snack-bar-handset,.mat-mdc-snack-bar-container,.mat-mdc-snack-bar-label{flex:1 1 auto}.mat-mdc-snack-bar-handset .mdc-snackbar__surface{width:100%}'],
+  dependencies: [MatRipple, _MatInternalFormField],
+  styles: ['.mdc-radio{display:inline-block;position:relative;flex:0 0 auto;box-sizing:content-box;width:20px;height:20px;cursor:pointer;will-change:opacity,transform,border-color,color}.mdc-radio[hidden]{display:none}.mdc-radio__background{display:inline-block;position:relative;box-sizing:border-box;width:20px;height:20px}.mdc-radio__background::before{position:absolute;transform:scale(0, 0);border-radius:50%;opacity:0;pointer-events:none;content:"";transition:opacity 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__outer-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;border-width:2px;border-style:solid;border-radius:50%;transition:border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__inner-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;transform:scale(0, 0);border-width:10px;border-style:solid;border-radius:50%;transition:transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit;z-index:1}.mdc-radio--touch{margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-radio--touch .mdc-radio__native-control{top:calc((40px - 48px) / 2);right:calc((40px - 48px) / 2);left:calc((40px - 48px) / 2);width:48px;height:48px}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{pointer-events:none;border:2px solid rgba(0,0,0,0);border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:100%;width:100%}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{border-color:CanvasText}}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{content:"";border:2px solid rgba(0,0,0,0);border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{border-color:CanvasText}}.mdc-radio__native-control:checked+.mdc-radio__background,.mdc-radio__native-control:disabled+.mdc-radio__background{transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__outer-circle{transition:border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio--disabled{cursor:default;pointer-events:none}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle{transform:scale(0.5);transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:disabled+.mdc-radio__background,[aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background{cursor:default}.mdc-radio__native-control:focus+.mdc-radio__background::before{transform:scale(1);opacity:.12;transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mat-mdc-radio-button{-webkit-tap-highlight-color:rgba(0,0,0,0)}.mat-mdc-radio-button .mdc-radio{padding:calc((var(--mdc-radio-state-layer-size) - 20px) / 2)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-unselected-icon-opacity)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{top:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);left:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control{top:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);right:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);left:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{background-color:var(--mat-radio-ripple-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:not([disabled]):not(:focus)~.mdc-radio__background::before{opacity:.04;transform:scale(1)}.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button .mdc-radio--disabled+label{color:var(--mat-radio-disabled-label-color)}.mat-mdc-radio-button .mat-radio-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none;border-radius:50%}.mat-mdc-radio-button .mat-radio-ripple .mat-ripple-element{opacity:.14}.mat-mdc-radio-button .mat-radio-ripple::before{border-radius:50%}.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__background::before,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__outer-circle,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__inner-circle{transition:none !important}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:focus:enabled:not(:checked)~.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-focus-icon-color, black)}.mat-mdc-radio-button.cdk-focused .mat-mdc-focus-indicator::before{content:""}.mat-mdc-radio-touch-target{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}[dir=rtl] .mat-mdc-radio-touch-target{left:0;right:50%;transform:translate(50%, -50%)}'],
   encapsulation: 2,
-  data: {
-    animation: [matSnackBarAnimations.snackBarState]
-  }
+  changeDetection: 0
 });
-var MatSnackBarContainer = _MatSnackBarContainer;
+var MatRadioButton = _MatRadioButton;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarContainer, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRadioButton, [{
     type: Component,
     args: [{
-      selector: "mat-snack-bar-container",
-      changeDetection: ChangeDetectionStrategy.Default,
-      encapsulation: ViewEncapsulation$1.None,
-      animations: [matSnackBarAnimations.snackBarState],
-      standalone: true,
-      imports: [CdkPortalOutlet],
+      selector: "mat-radio-button",
       host: {
-        "class": "mdc-snackbar mat-mdc-snack-bar-container mdc-snackbar--open",
-        "[@state]": "_animationState",
-        "(@state.done)": "onAnimationEnd($event)"
+        "class": "mat-mdc-radio-button",
+        "[attr.id]": "id",
+        "[class.mat-primary]": 'color === "primary"',
+        "[class.mat-accent]": 'color === "accent"',
+        "[class.mat-warn]": 'color === "warn"',
+        "[class.mat-mdc-radio-checked]": "checked",
+        "[class._mat-animation-noopable]": "_noopAnimations",
+        // Needs to be removed since it causes some a11y issues (see #21266).
+        "[attr.tabindex]": "null",
+        "[attr.aria-label]": "null",
+        "[attr.aria-labelledby]": "null",
+        "[attr.aria-describedby]": "null",
+        // Note: under normal conditions focus shouldn't land on this element, however it may be
+        // programmatically set, for example inside of a focus trap, in this case we want to forward
+        // the focus to the native element.
+        "(focus)": "_inputElement.nativeElement.focus()"
       },
-      template: '<div class="mdc-snackbar__surface">\n  <!--\n    This outer label wrapper will have the class `mdc-snackbar__label` applied if\n    the attached template/component does not contain it.\n  -->\n  <div class="mat-mdc-snack-bar-label" #label>\n    <!-- Initialy holds the snack bar content, will be empty after announcing to screen readers. -->\n    <div aria-hidden="true">\n      <ng-template cdkPortalOutlet />\n    </div>\n\n    <!-- Will receive the snack bar content from the non-live div, move will happen a short delay after opening -->\n    <div [attr.aria-live]="_live" [attr.role]="_role" [attr.id]="_liveElementId"></div>\n  </div>\n</div>\n',
-      styles: ['.mdc-snackbar{display:none;position:fixed;right:0;bottom:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;pointer-events:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-snackbar--opening,.mdc-snackbar--open,.mdc-snackbar--closing{display:flex}.mdc-snackbar--open .mdc-snackbar__label,.mdc-snackbar--open .mdc-snackbar__actions{visibility:visible}.mdc-snackbar__surface{padding-left:0;padding-right:8px;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;transform:scale(0.8);opacity:0}.mdc-snackbar__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-snackbar__surface::before{border-color:CanvasText}}[dir=rtl] .mdc-snackbar__surface,.mdc-snackbar__surface[dir=rtl]{padding-left:8px;padding-right:0}.mdc-snackbar--open .mdc-snackbar__surface{transform:scale(1);opacity:1;pointer-events:auto}.mdc-snackbar--closing .mdc-snackbar__surface{transform:scale(1)}.mdc-snackbar__label{padding-left:16px;padding-right:8px;width:100%;flex-grow:1;box-sizing:border-box;margin:0;visibility:hidden;padding-top:14px;padding-bottom:14px}[dir=rtl] .mdc-snackbar__label,.mdc-snackbar__label[dir=rtl]{padding-left:8px;padding-right:16px}.mdc-snackbar__label::before{display:inline;content:attr(data-mdc-snackbar-label-text)}.mdc-snackbar__actions{display:flex;flex-shrink:0;align-items:center;box-sizing:border-box;visibility:hidden}.mdc-snackbar__action+.mdc-snackbar__dismiss{margin-left:8px;margin-right:0}[dir=rtl] .mdc-snackbar__action+.mdc-snackbar__dismiss,.mdc-snackbar__action+.mdc-snackbar__dismiss[dir=rtl]{margin-left:0;margin-right:8px}.mat-mdc-snack-bar-container{margin:8px;position:static}.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:344px}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:100%}}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container{width:100vw}}.mat-mdc-snack-bar-container .mdc-snackbar__surface{max-width:672px}.mat-mdc-snack-bar-container .mdc-snackbar__surface{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{background-color:var(--mdc-snackbar-container-color)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{border-radius:var(--mdc-snackbar-container-shape)}.mat-mdc-snack-bar-container .mdc-snackbar__label{color:var(--mdc-snackbar-supporting-text-color)}.mat-mdc-snack-bar-container .mdc-snackbar__label{font-size:var(--mdc-snackbar-supporting-text-size);font-family:var(--mdc-snackbar-supporting-text-font);font-weight:var(--mdc-snackbar-supporting-text-weight);line-height:var(--mdc-snackbar-supporting-text-line-height)}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled){color:var(--mat-snack-bar-button-color);--mat-text-button-state-layer-color:currentColor;--mat-text-button-ripple-color:currentColor}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) .mat-ripple-element{opacity:.1}.mat-mdc-snack-bar-container .mdc-snackbar__label::before{display:none}.mat-mdc-snack-bar-handset,.mat-mdc-snack-bar-container,.mat-mdc-snack-bar-label{flex:1 1 auto}.mat-mdc-snack-bar-handset .mdc-snackbar__surface{width:100%}']
+      exportAs: "matRadioButton",
+      encapsulation: ViewEncapsulation$1.None,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      standalone: true,
+      imports: [MatRipple, _MatInternalFormField],
+      template: '<div mat-internal-form-field [labelPosition]="labelPosition" #formField>\n  <div class="mdc-radio" [class.mdc-radio--disabled]="disabled">\n    <!-- Render this element first so the input is on top. -->\n    <div class="mat-mdc-radio-touch-target" (click)="_onTouchTargetClick($event)"></div>\n    <input #input class="mdc-radio__native-control" type="radio"\n           [id]="inputId"\n           [checked]="checked"\n           [disabled]="disabled"\n           [attr.name]="name"\n           [attr.value]="value"\n           [required]="required"\n           [attr.aria-label]="ariaLabel"\n           [attr.aria-labelledby]="ariaLabelledby"\n           [attr.aria-describedby]="ariaDescribedby"\n           (change)="_onInputInteraction($event)">\n    <div class="mdc-radio__background">\n      <div class="mdc-radio__outer-circle"></div>\n      <div class="mdc-radio__inner-circle"></div>\n    </div>\n    <div mat-ripple class="mat-radio-ripple mat-mdc-focus-indicator"\n         [matRippleTrigger]="_rippleTrigger.nativeElement"\n         [matRippleDisabled]="_isRippleDisabled()"\n         [matRippleCentered]="true">\n      <div class="mat-ripple-element mat-radio-persistent-ripple"></div>\n    </div>\n  </div>\n  <label class="mdc-label" [for]="inputId">\n    <ng-content></ng-content>\n  </label>\n</div>\n',
+      styles: ['.mdc-radio{display:inline-block;position:relative;flex:0 0 auto;box-sizing:content-box;width:20px;height:20px;cursor:pointer;will-change:opacity,transform,border-color,color}.mdc-radio[hidden]{display:none}.mdc-radio__background{display:inline-block;position:relative;box-sizing:border-box;width:20px;height:20px}.mdc-radio__background::before{position:absolute;transform:scale(0, 0);border-radius:50%;opacity:0;pointer-events:none;content:"";transition:opacity 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__outer-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;border-width:2px;border-style:solid;border-radius:50%;transition:border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__inner-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;transform:scale(0, 0);border-width:10px;border-style:solid;border-radius:50%;transition:transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit;z-index:1}.mdc-radio--touch{margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-radio--touch .mdc-radio__native-control{top:calc((40px - 48px) / 2);right:calc((40px - 48px) / 2);left:calc((40px - 48px) / 2);width:48px;height:48px}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{pointer-events:none;border:2px solid rgba(0,0,0,0);border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:100%;width:100%}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{border-color:CanvasText}}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{content:"";border:2px solid rgba(0,0,0,0);border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{border-color:CanvasText}}.mdc-radio__native-control:checked+.mdc-radio__background,.mdc-radio__native-control:disabled+.mdc-radio__background{transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__outer-circle{transition:border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio--disabled{cursor:default;pointer-events:none}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle{transform:scale(0.5);transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:disabled+.mdc-radio__background,[aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background{cursor:default}.mdc-radio__native-control:focus+.mdc-radio__background::before{transform:scale(1);opacity:.12;transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mat-mdc-radio-button{-webkit-tap-highlight-color:rgba(0,0,0,0)}.mat-mdc-radio-button .mdc-radio{padding:calc((var(--mdc-radio-state-layer-size) - 20px) / 2)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-unselected-icon-opacity)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{top:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);left:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control{top:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);right:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);left:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{background-color:var(--mat-radio-ripple-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:not([disabled]):not(:focus)~.mdc-radio__background::before{opacity:.04;transform:scale(1)}.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button .mdc-radio--disabled+label{color:var(--mat-radio-disabled-label-color)}.mat-mdc-radio-button .mat-radio-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none;border-radius:50%}.mat-mdc-radio-button .mat-radio-ripple .mat-ripple-element{opacity:.14}.mat-mdc-radio-button .mat-radio-ripple::before{border-radius:50%}.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__background::before,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__outer-circle,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__inner-circle{transition:none !important}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:focus:enabled:not(:checked)~.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-focus-icon-color, black)}.mat-mdc-radio-button.cdk-focused .mat-mdc-focus-indicator::before{content:""}.mat-mdc-radio-touch-target{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}[dir=rtl] .mat-mdc-radio-touch-target{left:0;right:50%;transform:translate(50%, -50%)}']
     }]
   }], () => [{
-    type: NgZone
+    type: MatRadioGroup,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [MAT_RADIO_GROUP]
+    }]
   }, {
     type: ElementRef
   }, {
     type: ChangeDetectorRef
   }, {
-    type: Platform
+    type: FocusMonitor
   }, {
-    type: MatSnackBarConfig
+    type: UniqueSelectionDispatcher
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [ANIMATION_MODULE_TYPE]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [MAT_RADIO_DEFAULT_OPTIONS]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Attribute,
+      args: ["tabindex"]
+    }]
   }], {
-    _portalOutlet: [{
-      type: ViewChild,
-      args: [CdkPortalOutlet, {
-        static: true
+    id: [{
+      type: Input
+    }],
+    name: [{
+      type: Input
+    }],
+    ariaLabel: [{
+      type: Input,
+      args: ["aria-label"]
+    }],
+    ariaLabelledby: [{
+      type: Input,
+      args: ["aria-labelledby"]
+    }],
+    ariaDescribedby: [{
+      type: Input,
+      args: ["aria-describedby"]
+    }],
+    disableRipple: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
       }]
     }],
-    _label: [{
+    tabIndex: [{
+      type: Input,
+      args: [{
+        transform: (value) => value == null ? 0 : numberAttribute(value)
+      }]
+    }],
+    checked: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    value: [{
+      type: Input
+    }],
+    labelPosition: [{
+      type: Input
+    }],
+    disabled: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    required: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    color: [{
+      type: Input
+    }],
+    change: [{
+      type: Output
+    }],
+    _inputElement: [{
       type: ViewChild,
-      args: ["label", {
+      args: ["input"]
+    }],
+    _rippleTrigger: [{
+      type: ViewChild,
+      args: ["formField", {
+        read: ElementRef,
         static: true
       }]
     }]
   });
 })();
-function MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY() {
-  return new MatSnackBarConfig();
-}
-var MAT_SNACK_BAR_DEFAULT_OPTIONS = new InjectionToken("mat-snack-bar-default-options", {
-  providedIn: "root",
-  factory: MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY
-});
-var _MatSnackBar = class _MatSnackBar {
-  /** Reference to the currently opened snackbar at *any* level. */
-  get _openedSnackBarRef() {
-    const parent = this._parentSnackBar;
-    return parent ? parent._openedSnackBarRef : this._snackBarRefAtThisLevel;
-  }
-  set _openedSnackBarRef(value) {
-    if (this._parentSnackBar) {
-      this._parentSnackBar._openedSnackBarRef = value;
-    } else {
-      this._snackBarRefAtThisLevel = value;
-    }
-  }
-  constructor(_overlay, _live, _injector, _breakpointObserver, _parentSnackBar, _defaultConfig) {
-    this._overlay = _overlay;
-    this._live = _live;
-    this._injector = _injector;
-    this._breakpointObserver = _breakpointObserver;
-    this._parentSnackBar = _parentSnackBar;
-    this._defaultConfig = _defaultConfig;
-    this._snackBarRefAtThisLevel = null;
-    this.simpleSnackBarComponent = SimpleSnackBar;
-    this.snackBarContainerComponent = MatSnackBarContainer;
-    this.handsetCssClass = "mat-mdc-snack-bar-handset";
-  }
-  /**
-   * Creates and dispatches a snack bar with a custom component for the content, removing any
-   * currently opened snack bars.
-   *
-   * @param component Component to be instantiated.
-   * @param config Extra configuration for the snack bar.
-   */
-  openFromComponent(component, config2) {
-    return this._attach(component, config2);
-  }
-  /**
-   * Creates and dispatches a snack bar with a custom template for the content, removing any
-   * currently opened snack bars.
-   *
-   * @param template Template to be instantiated.
-   * @param config Extra configuration for the snack bar.
-   */
-  openFromTemplate(template, config2) {
-    return this._attach(template, config2);
-  }
-  /**
-   * Opens a snackbar with a message and an optional action.
-   * @param message The message to show in the snackbar.
-   * @param action The label for the snackbar action.
-   * @param config Additional configuration options for the snackbar.
-   */
-  open(message, action = "", config2) {
-    const _config = __spreadValues(__spreadValues({}, this._defaultConfig), config2);
-    _config.data = {
-      message,
-      action
-    };
-    if (_config.announcementMessage === message) {
-      _config.announcementMessage = void 0;
-    }
-    return this.openFromComponent(this.simpleSnackBarComponent, _config);
-  }
-  /**
-   * Dismisses the currently-visible snack bar.
-   */
-  dismiss() {
-    if (this._openedSnackBarRef) {
-      this._openedSnackBarRef.dismiss();
-    }
-  }
-  ngOnDestroy() {
-    if (this._snackBarRefAtThisLevel) {
-      this._snackBarRefAtThisLevel.dismiss();
-    }
-  }
-  /**
-   * Attaches the snack bar container component to the overlay.
-   */
-  _attachSnackBarContainer(overlayRef, config2) {
-    const userInjector = config2 && config2.viewContainerRef && config2.viewContainerRef.injector;
-    const injector = Injector.create({
-      parent: userInjector || this._injector,
-      providers: [{
-        provide: MatSnackBarConfig,
-        useValue: config2
-      }]
-    });
-    const containerPortal = new ComponentPortal(this.snackBarContainerComponent, config2.viewContainerRef, injector);
-    const containerRef = overlayRef.attach(containerPortal);
-    containerRef.instance.snackBarConfig = config2;
-    return containerRef.instance;
-  }
-  /**
-   * Places a new component or a template as the content of the snack bar container.
-   */
-  _attach(content, userConfig) {
-    const config2 = __spreadValues(__spreadValues(__spreadValues({}, new MatSnackBarConfig()), this._defaultConfig), userConfig);
-    const overlayRef = this._createOverlay(config2);
-    const container = this._attachSnackBarContainer(overlayRef, config2);
-    const snackBarRef = new MatSnackBarRef(container, overlayRef);
-    if (content instanceof TemplateRef) {
-      const portal = new TemplatePortal(content, null, {
-        $implicit: config2.data,
-        snackBarRef
-      });
-      snackBarRef.instance = container.attachTemplatePortal(portal);
-    } else {
-      const injector = this._createInjector(config2, snackBarRef);
-      const portal = new ComponentPortal(content, void 0, injector);
-      const contentRef = container.attachComponentPortal(portal);
-      snackBarRef.instance = contentRef.instance;
-    }
-    this._breakpointObserver.observe(Breakpoints.HandsetPortrait).pipe(takeUntil(overlayRef.detachments())).subscribe((state2) => {
-      overlayRef.overlayElement.classList.toggle(this.handsetCssClass, state2.matches);
-    });
-    if (config2.announcementMessage) {
-      container._onAnnounce.subscribe(() => {
-        this._live.announce(config2.announcementMessage, config2.politeness);
-      });
-    }
-    this._animateSnackBar(snackBarRef, config2);
-    this._openedSnackBarRef = snackBarRef;
-    return this._openedSnackBarRef;
-  }
-  /** Animates the old snack bar out and the new one in. */
-  _animateSnackBar(snackBarRef, config2) {
-    snackBarRef.afterDismissed().subscribe(() => {
-      if (this._openedSnackBarRef == snackBarRef) {
-        this._openedSnackBarRef = null;
-      }
-      if (config2.announcementMessage) {
-        this._live.clear();
-      }
-    });
-    if (this._openedSnackBarRef) {
-      this._openedSnackBarRef.afterDismissed().subscribe(() => {
-        snackBarRef.containerInstance.enter();
-      });
-      this._openedSnackBarRef.dismiss();
-    } else {
-      snackBarRef.containerInstance.enter();
-    }
-    if (config2.duration && config2.duration > 0) {
-      snackBarRef.afterOpened().subscribe(() => snackBarRef._dismissAfter(config2.duration));
-    }
-  }
-  /**
-   * Creates a new overlay and places it in the correct location.
-   * @param config The user-specified snack bar config.
-   */
-  _createOverlay(config2) {
-    const overlayConfig = new OverlayConfig();
-    overlayConfig.direction = config2.direction;
-    let positionStrategy = this._overlay.position().global();
-    const isRtl = config2.direction === "rtl";
-    const isLeft = config2.horizontalPosition === "left" || config2.horizontalPosition === "start" && !isRtl || config2.horizontalPosition === "end" && isRtl;
-    const isRight = !isLeft && config2.horizontalPosition !== "center";
-    if (isLeft) {
-      positionStrategy.left("0");
-    } else if (isRight) {
-      positionStrategy.right("0");
-    } else {
-      positionStrategy.centerHorizontally();
-    }
-    if (config2.verticalPosition === "top") {
-      positionStrategy.top("0");
-    } else {
-      positionStrategy.bottom("0");
-    }
-    overlayConfig.positionStrategy = positionStrategy;
-    return this._overlay.create(overlayConfig);
-  }
-  /**
-   * Creates an injector to be used inside of a snack bar component.
-   * @param config Config that was used to create the snack bar.
-   * @param snackBarRef Reference to the snack bar.
-   */
-  _createInjector(config2, snackBarRef) {
-    const userInjector = config2 && config2.viewContainerRef && config2.viewContainerRef.injector;
-    return Injector.create({
-      parent: userInjector || this._injector,
-      providers: [{
-        provide: MatSnackBarRef,
-        useValue: snackBarRef
-      }, {
-        provide: MAT_SNACK_BAR_DATA,
-        useValue: config2.data
-      }]
-    });
-  }
+var _MatRadioModule = class _MatRadioModule {
 };
-_MatSnackBar.\u0275fac = function MatSnackBar_Factory(t) {
-  return new (t || _MatSnackBar)(\u0275\u0275inject(Overlay), \u0275\u0275inject(LiveAnnouncer), \u0275\u0275inject(Injector), \u0275\u0275inject(BreakpointObserver), \u0275\u0275inject(_MatSnackBar, 12), \u0275\u0275inject(MAT_SNACK_BAR_DEFAULT_OPTIONS));
+_MatRadioModule.\u0275fac = function MatRadioModule_Factory(t) {
+  return new (t || _MatRadioModule)();
 };
-_MatSnackBar.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
-  token: _MatSnackBar,
-  factory: _MatSnackBar.\u0275fac,
-  providedIn: "root"
+_MatRadioModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatRadioModule
 });
-var MatSnackBar = _MatSnackBar;
+_MatRadioModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  imports: [MatCommonModule, CommonModule, MatRippleModule, MatRadioButton, MatCommonModule]
+});
+var MatRadioModule = _MatRadioModule;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBar, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [{
-    type: Overlay
-  }, {
-    type: LiveAnnouncer
-  }, {
-    type: Injector
-  }, {
-    type: BreakpointObserver
-  }, {
-    type: MatSnackBar,
-    decorators: [{
-      type: Optional
-    }, {
-      type: SkipSelf
-    }]
-  }, {
-    type: MatSnackBarConfig,
-    decorators: [{
-      type: Inject,
-      args: [MAT_SNACK_BAR_DEFAULT_OPTIONS]
-    }]
-  }], null);
-})();
-var DIRECTIVES2 = [MatSnackBarContainer, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction];
-var _MatSnackBarModule = class _MatSnackBarModule {
-};
-_MatSnackBarModule.\u0275fac = function MatSnackBarModule_Factory(t) {
-  return new (t || _MatSnackBarModule)();
-};
-_MatSnackBarModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
-  type: _MatSnackBarModule
-});
-_MatSnackBarModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
-  providers: [MatSnackBar],
-  imports: [OverlayModule, PortalModule, MatButtonModule, MatCommonModule, SimpleSnackBar, MatCommonModule]
-});
-var MatSnackBarModule = _MatSnackBarModule;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarModule, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRadioModule, [{
     type: NgModule,
     args: [{
-      imports: [OverlayModule, PortalModule, MatButtonModule, MatCommonModule, SimpleSnackBar, ...DIRECTIVES2],
-      exports: [MatCommonModule, ...DIRECTIVES2],
-      providers: [MatSnackBar]
+      imports: [MatCommonModule, CommonModule, MatRippleModule, MatRadioGroup, MatRadioButton],
+      exports: [MatCommonModule, MatRadioGroup, MatRadioButton]
     }]
   }], null, null);
-})();
-
-// src/app/services/toast.service.ts
-var _ToastService = class _ToastService {
-  constructor(zone, snackbar) {
-    this.zone = zone;
-    this.snackbar = snackbar;
-  }
-  showToast(message, timeout) {
-    this.zone.run(() => {
-      this.snackbar.open(message, "Dismiss", timeout ? { duration: timeout } : void 0);
-    });
-  }
-};
-_ToastService.\u0275fac = function ToastService_Factory(t) {
-  return new (t || _ToastService)(\u0275\u0275inject(NgZone), \u0275\u0275inject(MatSnackBar));
-};
-_ToastService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ToastService, factory: _ToastService.\u0275fac, providedIn: "root" });
-var ToastService = _ToastService;
-
-// src/app/services/nfc.service.ts
-var _NfcService = class _NfcService {
-  constructor(nfcEmulator, toastService) {
-    this.nfcEmulator = nfcEmulator;
-    this.toastService = toastService;
-    this.converter = new MessageConverter();
-    this.statusSubject = new BehaviorSubject("idle");
-    this.readSubject = new Subject();
-    this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
-    this.ndef.onreading = (tag) => this.handleReadWrite(tag);
-    this.ndef.onreadingerror = (err) => this.handleError(err);
-    this.startScan();
-  }
-  spool$() {
-    return this.readSubject;
-  }
-  status$() {
-    return this.statusSubject;
-  }
-  updateSpool(spool) {
-    if (!this.writing) {
-      this.statusSubject.next("writing");
-      this.writing = {
-        id: spool.id,
-        message: { records: this.converter.spoolToMessage(spool).records.map((r) => r) },
-        subject: new AsyncSubject()
-      };
-      return this.writing.subject;
-    } else {
-      return throwError(new Error("Already writing"));
-    }
-  }
-  handleReadWrite(tag) {
-    if (!this.writing) {
-      this.readSubject.next(this.converter.messageToSpool(tag.serialNumber, tag.message));
-    }
-    if (this.writing) {
-      if (tag.serialNumber === this.writing.id) {
-        this.ndef.write(this.writing.message, { overwrite: true }).then(() => {
-          this.statusSubject.next("reading");
-          this.writing?.subject.complete();
-          this.writing = void 0;
-        }).catch((e) => {
-          console.log(e);
-          this.writing?.subject.error(new Error("Could not write tag, try again?"));
-        }).finally();
-      } else {
-        this.toastService.showToast("Not the correct tag, try again", 1e3);
-      }
-    }
-  }
-  handleError(error) {
-    console.log(error);
-    this.toastService.showToast("Error reading tag, try again?", 1e3);
-  }
-  startScan() {
-    this.ndef.scan().then(() => {
-      this.toastService.showToast("Starting scan...", 1e3);
-      this.statusSubject.next("reading");
-    }).catch((e) => {
-      this.toastService.showToast("Scan could not be started: " + e, 1e3);
-      console.log("Scan could not be started", e);
-      this.statusSubject.next("error");
-    });
-  }
-};
-_NfcService.\u0275fac = function NfcService_Factory(t) {
-  return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService), \u0275\u0275inject(ToastService));
-};
-_NfcService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _NfcService, factory: _NfcService.\u0275fac, providedIn: "root" });
-var NfcService = _NfcService;
-
-// src/app/components/permission-dialog/permission-dialog.component.ts
-var _PermissionDialogComponent = class _PermissionDialogComponent {
-  constructor(nfcService, dialogRef) {
-    this.nfcService = nfcService;
-    this.dialogRef = dialogRef;
-  }
-  scan() {
-    const reader = new NDEFReader();
-    const abort = new AbortController();
-    reader.scan({ signal: abort.signal }).then(() => {
-      abort.abort();
-      this.dialogRef.close();
-      this.nfcService.startScan();
-    });
-  }
-};
-_PermissionDialogComponent.\u0275fac = function PermissionDialogComponent_Factory(t) {
-  return new (t || _PermissionDialogComponent)(\u0275\u0275directiveInject(NfcService), \u0275\u0275directiveInject(MatDialogRef));
-};
-_PermissionDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PermissionDialogComponent, selectors: [["app-permission-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 0, consts: [["mat-dialog-title", ""], ["mat-button", "", 3, "click"]], template: function PermissionDialogComponent_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "h2", 0);
-    \u0275\u0275text(1, "NFC Permission");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "mat-dialog-content");
-    \u0275\u0275text(3, " You have to give permission to use the NFC reader on your phone. Click the button to request the permission.\n");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "mat-dialog-actions")(5, "button", 1);
-    \u0275\u0275listener("click", function PermissionDialogComponent_Template_button_click_5_listener() {
-      return ctx.scan();
-    });
-    \u0275\u0275text(6, "Scan");
-    \u0275\u0275elementEnd()();
-  }
-}, dependencies: [
-  MatButton,
-  MatDialogActions,
-  MatDialogContent,
-  MatDialogTitle
-], styles: ["\n\n/*# sourceMappingURL=permission-dialog.component.css.map */"] });
-var PermissionDialogComponent = _PermissionDialogComponent;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PermissionDialogComponent, { className: "PermissionDialogComponent", filePath: "src/app/components/permission-dialog/permission-dialog.component.ts", lineNumber: 25 });
 })();
 
 // node_modules/@angular/cdk/fesm2022/stepper.mjs
@@ -69657,7 +69264,7 @@ function MatStepper_Case_1_For_3_Conditional_1_Template(rf, ctx) {
     \u0275\u0275element(0, "div", 6);
   }
 }
-var _c111 = (a0, a1) => ({
+var _c112 = (a0, a1) => ({
   step: a0,
   i: a1
 });
@@ -69672,12 +69279,12 @@ function MatStepper_Case_1_For_3_Template(rf, ctx) {
     const $count_r10 = ctx.$count;
     \u0275\u0275nextContext(2);
     const _r4 = \u0275\u0275reference(4);
-    \u0275\u0275property("ngTemplateOutlet", _r4)("ngTemplateOutletContext", \u0275\u0275pureFunction2(3, _c111, step_r7, i_r8));
+    \u0275\u0275property("ngTemplateOutlet", _r4)("ngTemplateOutletContext", \u0275\u0275pureFunction2(3, _c112, step_r7, i_r8));
     \u0275\u0275advance();
     \u0275\u0275conditional(1, !(i_r8 === $count_r10 - 1) ? 1 : -1);
   }
 }
-var _c28 = (a0) => ({
+var _c29 = (a0) => ({
   "animationDuration": a0
 });
 var _c38 = (a0, a1) => ({
@@ -69701,7 +69308,7 @@ function MatStepper_Case_1_For_6_Template(rf, ctx) {
     const i_r14 = ctx.$index;
     const ctx_r6 = \u0275\u0275nextContext(2);
     \u0275\u0275classProp("mat-horizontal-stepper-content-inactive", ctx_r6.selectedIndex !== i_r14);
-    \u0275\u0275property("@horizontalStepTransition", \u0275\u0275pureFunction2(8, _c38, ctx_r6._getAnimationDirection(i_r14), \u0275\u0275pureFunction1(6, _c28, ctx_r6._getAnimationDuration())))("id", ctx_r6._getStepContentId(i_r14));
+    \u0275\u0275property("@horizontalStepTransition", \u0275\u0275pureFunction2(8, _c38, ctx_r6._getAnimationDirection(i_r14), \u0275\u0275pureFunction1(6, _c29, ctx_r6._getAnimationDuration())))("id", ctx_r6._getStepContentId(i_r14));
     \u0275\u0275attribute("aria-labelledby", ctx_r6._getStepLabelId(i_r14));
     \u0275\u0275advance();
     \u0275\u0275property("ngTemplateOutlet", step_r13.content);
@@ -69746,12 +69353,12 @@ function MatStepper_Case_2_For_1_Template(rf, ctx) {
     const ctx_r20 = \u0275\u0275nextContext(2);
     const _r4 = \u0275\u0275reference(4);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", _r4)("ngTemplateOutletContext", \u0275\u0275pureFunction2(10, _c111, step_r21, i_r22));
+    \u0275\u0275property("ngTemplateOutlet", _r4)("ngTemplateOutletContext", \u0275\u0275pureFunction2(10, _c112, step_r21, i_r22));
     \u0275\u0275advance();
     \u0275\u0275classProp("mat-stepper-vertical-line", !(i_r22 === $count_r24 - 1));
     \u0275\u0275advance();
     \u0275\u0275classProp("mat-vertical-stepper-content-inactive", ctx_r20.selectedIndex !== i_r22);
-    \u0275\u0275property("@verticalStepTransition", \u0275\u0275pureFunction2(15, _c38, ctx_r20._getAnimationDirection(i_r22), \u0275\u0275pureFunction1(13, _c28, ctx_r20._getAnimationDuration())))("id", ctx_r20._getStepContentId(i_r22));
+    \u0275\u0275property("@verticalStepTransition", \u0275\u0275pureFunction2(15, _c38, ctx_r20._getAnimationDirection(i_r22), \u0275\u0275pureFunction1(13, _c29, ctx_r20._getAnimationDuration())))("id", ctx_r20._getStepContentId(i_r22));
     \u0275\u0275attribute("aria-labelledby", ctx_r20._getStepLabelId(i_r22));
     \u0275\u0275advance(2);
     \u0275\u0275property("ngTemplateOutlet", step_r21.content);
@@ -70711,746 +70318,1465 @@ var MatStepperModule = _MatStepperModule;
   }], null, null);
 })();
 
-// node_modules/@angular/material/fesm2022/radio.mjs
-var _c016 = ["input"];
-var _c112 = ["formField"];
-var _c29 = ["*"];
-var nextUniqueId5 = 0;
-var MatRadioChange = class {
-  constructor(source, value) {
-    this.source = source;
-    this.value = value;
+// src/app/components/weight-in-dialog/weigh-in-dialog.component.ts
+function WeighInDialogComponent_Conditional_66_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "button", 14);
+    \u0275\u0275text(1, "Confirm and write");
+    \u0275\u0275elementEnd();
   }
-};
-var MAT_RADIO_GROUP_CONTROL_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => MatRadioGroup),
-  multi: true
-};
-var MAT_RADIO_GROUP = new InjectionToken("MatRadioGroup");
-var MAT_RADIO_DEFAULT_OPTIONS = new InjectionToken("mat-radio-default-options", {
-  providedIn: "root",
-  factory: MAT_RADIO_DEFAULT_OPTIONS_FACTORY
-});
-function MAT_RADIO_DEFAULT_OPTIONS_FACTORY() {
-  return {
-    color: "accent"
-  };
 }
-var _MatRadioGroup = class _MatRadioGroup {
-  /** Name of the radio button group. All radio buttons inside this group will use this name. */
-  get name() {
-    return this._name;
+function WeighInDialogComponent_Conditional_67_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 15);
+    \u0275\u0275listener("click", function WeighInDialogComponent_Conditional_67_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r4);
+      \u0275\u0275nextContext();
+      const _r0 = \u0275\u0275reference(4);
+      return \u0275\u0275resetView(_r0.next());
+    });
+    \u0275\u0275text(1, "Continue");
+    \u0275\u0275elementEnd();
   }
-  set name(value) {
-    this._name = value;
-    this._updateRadioButtonNames();
+}
+var _WeighInDialogComponent = class _WeighInDialogComponent {
+  get totalWeight() {
+    return this._totalWeight;
   }
-  /** Whether the labels should appear after or before the radio-buttons. Defaults to 'after' */
-  get labelPosition() {
-    return this._labelPosition;
+  set totalWeight(value) {
+    this._totalWeight = value;
+    this.updateValues();
   }
-  set labelPosition(v) {
-    this._labelPosition = v === "before" ? "before" : "after";
-    this._markRadiosForCheck();
+  get additionalWeight() {
+    return this._additionalWeight;
   }
-  /**
-   * Value for the radio-group. Should equal the value of the selected radio button if there is
-   * a corresponding radio button with a matching value. If there is not such a corresponding
-   * radio button, this value persists to be applied in case a new radio button is added with a
-   * matching value.
-   */
-  get value() {
-    return this._value;
+  set additionalWeight(value) {
+    this._additionalWeight = value;
+    this.updateValues();
   }
-  set value(newValue) {
-    if (this._value !== newValue) {
-      this._value = newValue;
-      this._updateSelectedRadioFromValue();
-      this._checkSelectedRadioButton();
+  get remainingWeight() {
+    return this._remainingWeight;
+  }
+  set remainingWeight(value) {
+    this._remainingWeight = value;
+    this.updateValues();
+  }
+  constructor(data) {
+    this.data = data;
+    this.option = "total";
+    this.totalWeightEnabled = true;
+    this.additionalWeightEnabled = true;
+    this.remainingWeightEnabled = false;
+    this.spool = data.spool;
+    this._remainingWeight = data.spool.remainingFilamentWeight;
+  }
+  updateValues() {
+    const spool = this.spool.spoolWeight ? this.spool.spoolWeight : 0;
+    if (this.option == "total") {
+      const total = this._totalWeight ? this._totalWeight : 0;
+      const additional = this._additionalWeight ? this._additionalWeight : 0;
+      this._remainingWeight = total - spool - additional;
+    } else {
+      const remaining2 = this._remainingWeight ? this._remainingWeight : 0;
+      this._totalWeight = spool + remaining2;
+    }
+    const original = this.spool.remainingFilamentWeight ? this.spool.remainingFilamentWeight : 0;
+    const remaining = this._remainingWeight ? this._remainingWeight : 0;
+    this.spentWeight = original - remaining;
+  }
+  change($event) {
+    if ($event.previouslySelectedIndex === 0 && $event.selectedIndex === 1) {
+      this._totalWeight = void 0;
+      this._additionalWeight = void 0;
+      this._remainingWeight = void 0;
+      if (this.option === "total") {
+        this.totalWeightEnabled = true;
+        this.additionalWeightEnabled = true;
+        this.remainingWeightEnabled = false;
+      } else {
+        this.totalWeightEnabled = false;
+        this.additionalWeightEnabled = false;
+        this.remainingWeightEnabled = true;
+      }
     }
   }
-  _checkSelectedRadioButton() {
-    if (this._selected && !this._selected.checked) {
-      this._selected.checked = true;
+};
+_WeighInDialogComponent.\u0275fac = function WeighInDialogComponent_Factory(t) {
+  return new (t || _WeighInDialogComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
+};
+_WeighInDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _WeighInDialogComponent, selectors: [["app-weight-in-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 68, vars: 13, consts: [["mat-dialog-title", ""], [3, "linear", "selectionChange"], ["stepper", ""], ["label", "Weigh-in type"], [1, "column"], [1, "column", 3, "ngModel", "ngModelChange"], ["value", "total", 1, "padded"], ["value", "spent", 1, "padded"], ["label", "Weights"], ["type", "number", "matInput", "", 3, "ngModel", "disabled", "ngModelChange"], [1, "symbol"], ["type", "number", "matInput", "", "disabled", "true", 3, "ngModel"], ["label", "Summary"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", "", "mat-dialog-close", "update"], ["mat-button", "", 3, "click"]], template: function WeighInDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h1", 0);
+    \u0275\u0275text(1, "Weigh-in spool");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content")(3, "mat-vertical-stepper", 1, 2);
+    \u0275\u0275listener("selectionChange", function WeighInDialogComponent_Template_mat_vertical_stepper_selectionChange_3_listener($event) {
+      return ctx.change($event);
+    });
+    \u0275\u0275elementStart(5, "mat-step", 3)(6, "div", 4)(7, "label");
+    \u0275\u0275text(8, "How do you want to enter the new filament weight?");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(9, "br");
+    \u0275\u0275elementStart(10, "mat-radio-group", 5);
+    \u0275\u0275listener("ngModelChange", function WeighInDialogComponent_Template_mat_radio_group_ngModelChange_10_listener($event) {
+      return ctx.option = $event;
+    });
+    \u0275\u0275elementStart(11, "mat-radio-button", 6);
+    \u0275\u0275text(12, "I know the total weight (with optionally additional weight from spool adapter or dessicant) ");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(13, "mat-radio-button", 7);
+    \u0275\u0275text(14, "I know the spent filament (from slicer or print finish summary) ");
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275elementStart(15, "mat-step", 8)(16, "div", 4)(17, "label");
+    \u0275\u0275text(18, "Insert the new weights");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(19, "br");
+    \u0275\u0275elementStart(20, "mat-form-field")(21, "mat-label");
+    \u0275\u0275text(22, "Total weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(23, "input", 9);
+    \u0275\u0275listener("ngModelChange", function WeighInDialogComponent_Template_input_ngModelChange_23_listener($event) {
+      return ctx.totalWeight = $event;
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(24, "div", 10);
+    \u0275\u0275text(25, "-");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(26, "mat-form-field")(27, "mat-label");
+    \u0275\u0275text(28, "Spool weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(29, "input", 11);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(30, "div", 10);
+    \u0275\u0275text(31, "-");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(32, "mat-form-field")(33, "mat-label");
+    \u0275\u0275text(34, "Additional weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(35, "input", 9);
+    \u0275\u0275listener("ngModelChange", function WeighInDialogComponent_Template_input_ngModelChange_35_listener($event) {
+      return ctx.additionalWeight = $event;
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(36, "div", 10);
+    \u0275\u0275text(37, "=");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(38, "mat-form-field")(39, "label");
+    \u0275\u0275text(40, "Remaining filament");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(41, "input", 9);
+    \u0275\u0275listener("ngModelChange", function WeighInDialogComponent_Template_input_ngModelChange_41_listener($event) {
+      return ctx.remainingWeight = $event;
+    });
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275elementStart(42, "mat-step", 12)(43, "div", 4)(44, "label");
+    \u0275\u0275text(45, "Review your changes");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(46, "br");
+    \u0275\u0275elementStart(47, "mat-form-field")(48, "mat-label");
+    \u0275\u0275text(49, "Original filament weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(50, "input", 11);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(51, "div", 10);
+    \u0275\u0275text(52, "-");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(53, "mat-form-field")(54, "mat-label");
+    \u0275\u0275text(55, "Spent filament weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(56, "input", 11);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(57, "div", 10);
+    \u0275\u0275text(58, "=");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(59, "mat-form-field")(60, "mat-label");
+    \u0275\u0275text(61, "New filament weight");
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(62, "input", 11);
+    \u0275\u0275elementEnd()()()()();
+    \u0275\u0275elementStart(63, "mat-dialog-actions")(64, "button", 13);
+    \u0275\u0275text(65, "Cancel");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(66, WeighInDialogComponent_Conditional_66_Template, 2, 0, "button", 14)(67, WeighInDialogComponent_Conditional_67_Template, 2, 0);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const _r0 = \u0275\u0275reference(4);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("linear", true);
+    \u0275\u0275advance(7);
+    \u0275\u0275property("ngModel", ctx.option);
+    \u0275\u0275advance(13);
+    \u0275\u0275property("ngModel", ctx.totalWeight)("disabled", !ctx.totalWeightEnabled);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngModel", ctx.spool.spoolWeight);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngModel", ctx.additionalWeight)("disabled", !ctx.additionalWeightEnabled);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngModel", ctx.remainingWeight)("disabled", !ctx.remainingWeightEnabled);
+    \u0275\u0275advance(9);
+    \u0275\u0275property("ngModel", ctx.spool.remainingFilamentWeight);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngModel", ctx.spentWeight);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngModel", ctx.remainingWeight);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(66, _r0.selectedIndex === 2 ? 66 : 67);
+  }
+}, dependencies: [
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+  MatButton,
+  FormsModule,
+  DefaultValueAccessor,
+  NumberValueAccessor,
+  NgControlStatus,
+  NgModel,
+  MatFormField,
+  MatInput,
+  MatLabel,
+  MatRadioButton,
+  MatRadioGroup,
+  MatStep,
+  MatStepper
+], styles: ["\n\n.column[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n}\n.symbol[_ngcontent-%COMP%] {\n  padding: 0 50px 20px 50px;\n  font-size: large;\n  font-weight: bold;\n}\n.padded[_ngcontent-%COMP%] {\n  padding: 5px 0 5px 0;\n}\n/*# sourceMappingURL=weigh-in-dialog.component.css.map */"] });
+var WeighInDialogComponent = _WeighInDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(WeighInDialogComponent, { className: "WeighInDialogComponent", filePath: "src/app/components/weight-in-dialog/weigh-in-dialog.component.ts", lineNumber: 39 });
+})();
+
+// src/app/classes/nvl.pipe.ts
+var _NvlPipe = class _NvlPipe {
+  transform(value, ...args) {
+    if (value) {
+      for (const element of value) {
+        if (element) {
+          return element;
+        }
+      }
     }
+    return void 0;
   }
-  /**
-   * The currently selected radio button. If set to a new radio button, the radio group value
-   * will be updated to match the new selected button.
-   */
-  get selected() {
-    return this._selected;
+};
+_NvlPipe.\u0275fac = function NvlPipe_Factory(t) {
+  return new (t || _NvlPipe)();
+};
+_NvlPipe.\u0275pipe = /* @__PURE__ */ \u0275\u0275definePipe({ name: "nvl", type: _NvlPipe, pure: true, standalone: true });
+var NvlPipe = _NvlPipe;
+
+// src/app/components/spool-card/spool-card.component.ts
+function SpoolCardComponent_Conditional_0_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon");
+    \u0275\u0275text(1, "gesture");
+    \u0275\u0275elementEnd();
   }
-  set selected(selected) {
-    this._selected = selected;
-    this.value = selected ? selected.value : null;
-    this._checkSelectedRadioButton();
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleMapInterpolate1("color: ", ctx_r1.spool.color, ";");
   }
-  /** Whether the radio group is disabled */
-  get disabled() {
-    return this._disabled;
+}
+function SpoolCardComponent_Conditional_0_Conditional_9_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275pipe(1, "percent");
   }
-  set disabled(value) {
-    this._disabled = value;
-    this._markRadiosForCheck();
+  if (rf & 2) {
+    const ctx_r4 = \u0275\u0275nextContext(3);
+    \u0275\u0275textInterpolate1(" (", \u0275\u0275pipeBind1(1, 1, ctx_r4.spool.remainingFilamentWeight / ctx_r4.spool.initialFilamentWeight), ") ");
   }
-  /** Whether the radio group is required */
-  get required() {
-    return this._required;
+}
+function SpoolCardComponent_Conditional_0_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275template(1, SpoolCardComponent_Conditional_0_Conditional_9_Conditional_1_Template, 2, 3);
   }
-  set required(value) {
-    this._required = value;
-    this._markRadiosForCheck();
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275textInterpolate1(" Remaining: ", ctx_r2.spool.remainingFilamentWeight, "g ");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(1, ctx_r2.spool.initialFilamentWeight ? 1 : -1);
   }
-  constructor(_changeDetector) {
-    this._changeDetector = _changeDetector;
-    this._value = null;
-    this._name = `mat-radio-group-${nextUniqueId5++}`;
-    this._selected = null;
-    this._isInitialized = false;
-    this._labelPosition = "after";
-    this._disabled = false;
-    this._required = false;
-    this._controlValueAccessorChangeFn = () => {
-    };
-    this.onTouched = () => {
-    };
-    this.change = new EventEmitter();
+}
+function SpoolCardComponent_Conditional_0_Conditional_10_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "mat-card-actions")(1, "button", 1);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r5 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r5.weighIn());
+    });
+    \u0275\u0275text(2, "Weigh-in");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "button", 2);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r7 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r7.edit());
+    });
+    \u0275\u0275elementStart(4, "mat-icon");
+    \u0275\u0275text(5, "edit");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "button", 3);
+    \u0275\u0275listener("click", function SpoolCardComponent_Conditional_0_Conditional_10_Template_button_click_6_listener() {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r8 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r8.remove());
+    });
+    \u0275\u0275elementStart(7, "mat-icon");
+    \u0275\u0275text(8, "delete");
+    \u0275\u0275elementEnd()()();
   }
-  /**
-   * Initialize properties once content children are available.
-   * This allows us to propagate relevant attributes to associated buttons.
-   */
-  ngAfterContentInit() {
-    this._isInitialized = true;
-    this._buttonChanges = this._radios.changes.subscribe(() => {
-      if (this.selected && !this._radios.find((radio) => radio === this.selected)) {
-        this._selected = null;
+}
+var _c016 = (a0, a1) => [a0, a1];
+function SpoolCardComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-card")(1, "mat-card-header")(2, "mat-card-title");
+    \u0275\u0275template(3, SpoolCardComponent_Conditional_0_Conditional_3_Template, 2, 3, "mat-icon", 0);
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "nvl");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "mat-card-subtitle");
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "mat-card-content");
+    \u0275\u0275template(9, SpoolCardComponent_Conditional_0_Conditional_9_Template, 2, 2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(10, SpoolCardComponent_Conditional_0_Conditional_10_Template, 9, 0, "mat-card-actions");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(3, ctx_r0.spool.color ? 3 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 6, \u0275\u0275pureFunction2(8, _c016, ctx_r0.spool.name, ctx_r0.spool.id)), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate2("", ctx_r0.spool.brand, " ", ctx_r0.spool.material, "");
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(9, ctx_r0.spool.remainingFilamentWeight ? 9 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(10, !ctx_r0.readOnly ? 10 : -1);
+  }
+}
+var _SpoolCardComponent = class _SpoolCardComponent {
+  constructor(dialog) {
+    this.dialog = dialog;
+    this.readOnly = false;
+    this.cardRemoved = new EventEmitter();
+    this.cardUpdated = new EventEmitter();
+  }
+  edit() {
+    const spool = __spreadValues({}, this.spool);
+    const dialog = this.dialog.open(EditDialog, { data: { spool }, disableClose: true });
+    dialog.afterClosed().subscribe({
+      next: (r) => {
+        if (r === "update") {
+          this.update(spool);
+        }
       }
     });
   }
-  ngOnDestroy() {
-    this._buttonChanges?.unsubscribe();
+  remove() {
+    this.cardRemoved.next();
   }
-  /**
-   * Mark this group as being "touched" (for ngModel). Meant to be called by the contained
-   * radio buttons upon their blur.
-   */
-  _touch() {
-    if (this.onTouched) {
-      this.onTouched();
-    }
+  update(spool) {
+    this.cardUpdated.next(spool);
   }
-  _updateRadioButtonNames() {
-    if (this._radios) {
-      this._radios.forEach((radio) => {
-        radio.name = this.name;
-        radio._markForCheck();
-      });
-    }
-  }
-  /** Updates the `selected` radio button from the internal _value state. */
-  _updateSelectedRadioFromValue() {
-    const isAlreadySelected = this._selected !== null && this._selected.value === this._value;
-    if (this._radios && !isAlreadySelected) {
-      this._selected = null;
-      this._radios.forEach((radio) => {
-        radio.checked = this.value === radio.value;
-        if (radio.checked) {
-          this._selected = radio;
+  weighIn() {
+    const spool = __spreadValues({}, this.spool);
+    const dialog = this.dialog.open(WeighInDialogComponent, { data: { spool }, disableClose: true });
+    dialog.afterClosed().subscribe({
+      next: (r) => {
+        if (r === "update") {
+          this.update(spool);
         }
-      });
-    }
-  }
-  /** Dispatch change event with current selection and group value. */
-  _emitChangeEvent() {
-    if (this._isInitialized) {
-      this.change.emit(new MatRadioChange(this._selected, this._value));
-    }
-  }
-  _markRadiosForCheck() {
-    if (this._radios) {
-      this._radios.forEach((radio) => radio._markForCheck());
-    }
-  }
-  /**
-   * Sets the model value. Implemented as part of ControlValueAccessor.
-   * @param value
-   */
-  writeValue(value) {
-    this.value = value;
-    this._changeDetector.markForCheck();
-  }
-  /**
-   * Registers a callback to be triggered when the model value changes.
-   * Implemented as part of ControlValueAccessor.
-   * @param fn Callback to be registered.
-   */
-  registerOnChange(fn) {
-    this._controlValueAccessorChangeFn = fn;
-  }
-  /**
-   * Registers a callback to be triggered when the control is touched.
-   * Implemented as part of ControlValueAccessor.
-   * @param fn Callback to be registered.
-   */
-  registerOnTouched(fn) {
-    this.onTouched = fn;
-  }
-  /**
-   * Sets the disabled state of the control. Implemented as a part of ControlValueAccessor.
-   * @param isDisabled Whether the control should be disabled.
-   */
-  setDisabledState(isDisabled) {
-    this.disabled = isDisabled;
-    this._changeDetector.markForCheck();
+      }
+    });
   }
 };
-_MatRadioGroup.\u0275fac = function MatRadioGroup_Factory(t) {
-  return new (t || _MatRadioGroup)(\u0275\u0275directiveInject(ChangeDetectorRef));
+_SpoolCardComponent.\u0275fac = function SpoolCardComponent_Factory(t) {
+  return new (t || _SpoolCardComponent)(\u0275\u0275directiveInject(MatDialog));
 };
-_MatRadioGroup.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
-  type: _MatRadioGroup,
-  selectors: [["mat-radio-group"]],
-  contentQueries: function MatRadioGroup_ContentQueries(rf, ctx, dirIndex) {
-    if (rf & 1) {
-      \u0275\u0275contentQuery(dirIndex, MatRadioButton, 5);
-    }
-    if (rf & 2) {
-      let _t;
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._radios = _t);
-    }
-  },
-  hostAttrs: ["role", "radiogroup", 1, "mat-mdc-radio-group"],
-  inputs: {
-    color: "color",
-    name: "name",
-    labelPosition: "labelPosition",
-    value: "value",
-    selected: "selected",
-    disabled: [InputFlags.HasDecoratorInputTransform, "disabled", "disabled", booleanAttribute],
-    required: [InputFlags.HasDecoratorInputTransform, "required", "required", booleanAttribute]
-  },
-  outputs: {
-    change: "change"
-  },
-  exportAs: ["matRadioGroup"],
-  standalone: true,
-  features: [\u0275\u0275ProvidersFeature([MAT_RADIO_GROUP_CONTROL_VALUE_ACCESSOR, {
-    provide: MAT_RADIO_GROUP,
-    useExisting: _MatRadioGroup
-  }]), \u0275\u0275InputTransformsFeature]
-});
-var MatRadioGroup = _MatRadioGroup;
+_SpoolCardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolCardComponent, selectors: [["app-spool-card"]], inputs: { spool: "spool", readOnly: "readOnly" }, outputs: { cardRemoved: "cardRemoved", cardUpdated: "cardUpdated" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [[3, "style"], ["mat-button", "", "color", "primary", 3, "click"], ["mat-icon-button", "", 3, "click"], ["mat-icon-button", "", "color", "warn", 3, "click"]], template: function SpoolCardComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, SpoolCardComponent_Conditional_0_Template, 11, 11, "mat-card");
+  }
+  if (rf & 2) {
+    \u0275\u0275conditional(0, ctx.spool ? 0 : -1);
+  }
+}, dependencies: [
+  MatCardTitle,
+  MatCard,
+  NgxColorsModule,
+  FormsModule,
+  MatIcon,
+  MatCardHeader,
+  MatCardContent,
+  MatCardActions,
+  MatCardSubtitle,
+  MatButton,
+  PercentPipe,
+  MatIconButton,
+  NvlPipe
+], styles: ["\n\n/*# sourceMappingURL=spool-card.component.css.map */"] });
+var SpoolCardComponent = _SpoolCardComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRadioGroup, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SpoolCardComponent, { className: "SpoolCardComponent", filePath: "src/app/components/spool-card/spool-card.component.ts", lineNumber: 44 });
+})();
+
+// src/app/components/write-dialog/write-dialog.component.ts
+function WriteDialogComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "app-debug-nfc");
+  }
+}
+var _WriteDialogComponent = class _WriteDialogComponent {
+  constructor(data) {
+    this.data = data;
+    this.environment = environment;
+    this.spool = data.spool;
+  }
+};
+_WriteDialogComponent.\u0275fac = function WriteDialogComponent_Factory(t) {
+  return new (t || _WriteDialogComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA));
+};
+_WriteDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _WriteDialogComponent, selectors: [["app-write-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 10, vars: 3, consts: [["mat-dialog-title", ""], [3, "readOnly", "spool"], ["mat-button", "", "mat-dialog-close", "cancel"]], template: function WriteDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275text(1, "Writing...");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content");
+    \u0275\u0275text(3, " Please tap this spool's tag with your phone: ");
+    \u0275\u0275element(4, "app-spool-card", 1)(5, "mat-spinner");
+    \u0275\u0275template(6, WriteDialogComponent_Conditional_6_Template, 1, 0, "app-debug-nfc");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "mat-dialog-actions")(8, "button", 2);
+    \u0275\u0275text(9, "Cancel");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(4);
+    \u0275\u0275property("readOnly", true)("spool", ctx.spool);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(6, ctx.environment.isDev ? 6 : -1);
+  }
+}, dependencies: [
+  MatProgressSpinner,
+  DebugNfcComponent,
+  MatButton,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+  SpoolCardComponent
+], styles: ["\n\n/*# sourceMappingURL=write-dialog.component.css.map */"] });
+var WriteDialogComponent = _WriteDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(WriteDialogComponent, { className: "WriteDialogComponent", filePath: "src/app/components/write-dialog/write-dialog.component.ts", lineNumber: 36 });
+})();
+
+// src/app/classes/emulated-ndef-reader.ts
+var EmulatedNdefReader = class {
+  constructor(emulatorService) {
+    this.emulatorService = emulatorService;
+    this.state = "idle";
+    this.onreading = (e) => null;
+    this.onreadingerror = (e) => null;
+    emulatorService.getEvents().subscribe({ next: (tag) => this.handleTap(tag) });
+    emulatorService.getErrors().subscribe({ next: (err) => this.handleError(err) });
+  }
+  addEventListener(type, callback, options) {
+    throw new Error("Method not implemented.");
+  }
+  dispatchEvent(event) {
+    throw new Error("Method not implemented.");
+  }
+  removeEventListener(type, callback, options) {
+    throw new Error("Method not implemented.");
+  }
+  scan() {
+    if (this.state === "idle") {
+      this.state = "scanning";
+      return Promise.resolve();
+    } else {
+      return Promise.reject(new Error("Already scanning!"));
+    }
+  }
+  write(message, options) {
+    return Promise.resolve();
+  }
+  makeReadOnly(options) {
+    return Promise.resolve();
+  }
+  handleTap(event) {
+    if (this.state === "scanning" && this.onreading) {
+      this.onreading(event);
+    }
+  }
+  handleError(err) {
+    if (this.state === "scanning" && this.onreadingerror) {
+      this.onreadingerror(new Event("error scanning: " + err.message));
+    }
+  }
+};
+
+// node_modules/@angular/material/fesm2022/snack-bar.mjs
+function SimpleSnackBar_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 1)(1, "button", 2);
+    \u0275\u0275listener("click", function SimpleSnackBar_Conditional_2_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.action());
+    });
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r0.data.action, " ");
+  }
+}
+var _c017 = ["label"];
+function MatSnackBarContainer_ng_template_4_Template(rf, ctx) {
+}
+var MAX_TIMEOUT = Math.pow(2, 31) - 1;
+var MatSnackBarRef = class {
+  constructor(containerInstance, _overlayRef) {
+    this._overlayRef = _overlayRef;
+    this._afterDismissed = new Subject();
+    this._afterOpened = new Subject();
+    this._onAction = new Subject();
+    this._dismissedByAction = false;
+    this.containerInstance = containerInstance;
+    containerInstance._onExit.subscribe(() => this._finishDismiss());
+  }
+  /** Dismisses the snack bar. */
+  dismiss() {
+    if (!this._afterDismissed.closed) {
+      this.containerInstance.exit();
+    }
+    clearTimeout(this._durationTimeoutId);
+  }
+  /** Marks the snackbar action clicked. */
+  dismissWithAction() {
+    if (!this._onAction.closed) {
+      this._dismissedByAction = true;
+      this._onAction.next();
+      this._onAction.complete();
+      this.dismiss();
+    }
+    clearTimeout(this._durationTimeoutId);
+  }
+  /**
+   * Marks the snackbar action clicked.
+   * @deprecated Use `dismissWithAction` instead.
+   * @breaking-change 8.0.0
+   */
+  closeWithAction() {
+    this.dismissWithAction();
+  }
+  /** Dismisses the snack bar after some duration */
+  _dismissAfter(duration) {
+    this._durationTimeoutId = setTimeout(() => this.dismiss(), Math.min(duration, MAX_TIMEOUT));
+  }
+  /** Marks the snackbar as opened */
+  _open() {
+    if (!this._afterOpened.closed) {
+      this._afterOpened.next();
+      this._afterOpened.complete();
+    }
+  }
+  /** Cleans up the DOM after closing. */
+  _finishDismiss() {
+    this._overlayRef.dispose();
+    if (!this._onAction.closed) {
+      this._onAction.complete();
+    }
+    this._afterDismissed.next({
+      dismissedByAction: this._dismissedByAction
+    });
+    this._afterDismissed.complete();
+    this._dismissedByAction = false;
+  }
+  /** Gets an observable that is notified when the snack bar is finished closing. */
+  afterDismissed() {
+    return this._afterDismissed;
+  }
+  /** Gets an observable that is notified when the snack bar has opened and appeared. */
+  afterOpened() {
+    return this.containerInstance._onEnter;
+  }
+  /** Gets an observable that is notified when the snack bar action is called. */
+  onAction() {
+    return this._onAction;
+  }
+};
+var MAT_SNACK_BAR_DATA = new InjectionToken("MatSnackBarData");
+var MatSnackBarConfig = class {
+  constructor() {
+    this.politeness = "assertive";
+    this.announcementMessage = "";
+    this.duration = 0;
+    this.data = null;
+    this.horizontalPosition = "center";
+    this.verticalPosition = "bottom";
+  }
+};
+var _MatSnackBarLabel = class _MatSnackBarLabel {
+};
+_MatSnackBarLabel.\u0275fac = function MatSnackBarLabel_Factory(t) {
+  return new (t || _MatSnackBarLabel)();
+};
+_MatSnackBarLabel.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatSnackBarLabel,
+  selectors: [["", "matSnackBarLabel", ""]],
+  hostAttrs: [1, "mat-mdc-snack-bar-label", "mdc-snackbar__label"],
+  standalone: true
+});
+var MatSnackBarLabel = _MatSnackBarLabel;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarLabel, [{
     type: Directive,
     args: [{
-      selector: "mat-radio-group",
-      exportAs: "matRadioGroup",
-      providers: [MAT_RADIO_GROUP_CONTROL_VALUE_ACCESSOR, {
-        provide: MAT_RADIO_GROUP,
-        useExisting: MatRadioGroup
-      }],
+      selector: `[matSnackBarLabel]`,
+      standalone: true,
       host: {
-        "role": "radiogroup",
-        "class": "mat-mdc-radio-group"
-      },
-      standalone: true
+        "class": "mat-mdc-snack-bar-label mdc-snackbar__label"
+      }
     }]
-  }], () => [{
-    type: ChangeDetectorRef
-  }], {
-    change: [{
-      type: Output
-    }],
-    _radios: [{
-      type: ContentChildren,
-      args: [forwardRef(() => MatRadioButton), {
-        descendants: true
-      }]
-    }],
-    color: [{
-      type: Input
-    }],
-    name: [{
-      type: Input
-    }],
-    labelPosition: [{
-      type: Input
-    }],
-    value: [{
-      type: Input
-    }],
-    selected: [{
-      type: Input
-    }],
-    disabled: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    required: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }]
-  });
+  }], null, null);
 })();
-var _MatRadioButton = class _MatRadioButton {
-  /** Whether this radio button is checked. */
-  get checked() {
-    return this._checked;
-  }
-  set checked(value) {
-    if (this._checked !== value) {
-      this._checked = value;
-      if (value && this.radioGroup && this.radioGroup.value !== this.value) {
-        this.radioGroup.selected = this;
-      } else if (!value && this.radioGroup && this.radioGroup.value === this.value) {
-        this.radioGroup.selected = null;
+var _MatSnackBarActions = class _MatSnackBarActions {
+};
+_MatSnackBarActions.\u0275fac = function MatSnackBarActions_Factory(t) {
+  return new (t || _MatSnackBarActions)();
+};
+_MatSnackBarActions.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatSnackBarActions,
+  selectors: [["", "matSnackBarActions", ""]],
+  hostAttrs: [1, "mat-mdc-snack-bar-actions", "mdc-snackbar__actions"],
+  standalone: true
+});
+var MatSnackBarActions = _MatSnackBarActions;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarActions, [{
+    type: Directive,
+    args: [{
+      selector: `[matSnackBarActions]`,
+      standalone: true,
+      host: {
+        "class": "mat-mdc-snack-bar-actions mdc-snackbar__actions"
       }
-      if (value) {
-        this._radioDispatcher.notify(this.id, this.name);
+    }]
+  }], null, null);
+})();
+var _MatSnackBarAction = class _MatSnackBarAction {
+};
+_MatSnackBarAction.\u0275fac = function MatSnackBarAction_Factory(t) {
+  return new (t || _MatSnackBarAction)();
+};
+_MatSnackBarAction.\u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+  type: _MatSnackBarAction,
+  selectors: [["", "matSnackBarAction", ""]],
+  hostAttrs: [1, "mat-mdc-snack-bar-action", "mdc-snackbar__action"],
+  standalone: true
+});
+var MatSnackBarAction = _MatSnackBarAction;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarAction, [{
+    type: Directive,
+    args: [{
+      selector: `[matSnackBarAction]`,
+      standalone: true,
+      host: {
+        "class": "mat-mdc-snack-bar-action mdc-snackbar__action"
       }
-      this._changeDetector.markForCheck();
-    }
+    }]
+  }], null, null);
+})();
+var _SimpleSnackBar = class _SimpleSnackBar {
+  constructor(snackBarRef, data) {
+    this.snackBarRef = snackBarRef;
+    this.data = data;
   }
-  /** The value of this radio button. */
-  get value() {
-    return this._value;
+  /** Performs the action on the snack bar. */
+  action() {
+    this.snackBarRef.dismissWithAction();
   }
-  set value(value) {
-    if (this._value !== value) {
-      this._value = value;
-      if (this.radioGroup !== null) {
-        if (!this.checked) {
-          this.checked = this.radioGroup.value === value;
-        }
-        if (this.checked) {
-          this.radioGroup.selected = this;
-        }
-      }
-    }
-  }
-  /** Whether the label should appear after or before the radio button. Defaults to 'after' */
-  get labelPosition() {
-    return this._labelPosition || this.radioGroup && this.radioGroup.labelPosition || "after";
-  }
-  set labelPosition(value) {
-    this._labelPosition = value;
-  }
-  /** Whether the radio button is disabled. */
-  get disabled() {
-    return this._disabled || this.radioGroup !== null && this.radioGroup.disabled;
-  }
-  set disabled(value) {
-    this._setDisabled(value);
-  }
-  /** Whether the radio button is required. */
-  get required() {
-    return this._required || this.radioGroup && this.radioGroup.required;
-  }
-  set required(value) {
-    this._required = value;
-  }
-  /** Theme color of the radio button. */
-  get color() {
-    return this._color || this.radioGroup && this.radioGroup.color || this._providerOverride && this._providerOverride.color || "accent";
-  }
-  set color(newValue) {
-    this._color = newValue;
-  }
-  /** ID of the native input element inside `<mat-radio-button>` */
-  get inputId() {
-    return `${this.id || this._uniqueId}-input`;
-  }
-  constructor(radioGroup, _elementRef, _changeDetector, _focusMonitor, _radioDispatcher, animationMode, _providerOverride, tabIndex) {
-    this._elementRef = _elementRef;
-    this._changeDetector = _changeDetector;
-    this._focusMonitor = _focusMonitor;
-    this._radioDispatcher = _radioDispatcher;
-    this._providerOverride = _providerOverride;
-    this._uniqueId = `mat-radio-${++nextUniqueId5}`;
-    this.id = this._uniqueId;
-    this.disableRipple = false;
-    this.tabIndex = 0;
-    this.change = new EventEmitter();
-    this._checked = false;
-    this._value = null;
-    this._removeUniqueSelectionListener = () => {
-    };
-    this.radioGroup = radioGroup;
-    this._noopAnimations = animationMode === "NoopAnimations";
-    if (tabIndex) {
-      this.tabIndex = numberAttribute(tabIndex, 0);
-    }
-  }
-  /** Focuses the radio button. */
-  focus(options, origin) {
-    if (origin) {
-      this._focusMonitor.focusVia(this._inputElement, origin, options);
-    } else {
-      this._inputElement.nativeElement.focus(options);
-    }
-  }
-  /**
-   * Marks the radio button as needing checking for change detection.
-   * This method is exposed because the parent radio group will directly
-   * update bound properties of the radio button.
-   */
-  _markForCheck() {
-    this._changeDetector.markForCheck();
-  }
-  ngOnInit() {
-    if (this.radioGroup) {
-      this.checked = this.radioGroup.value === this._value;
-      if (this.checked) {
-        this.radioGroup.selected = this;
-      }
-      this.name = this.radioGroup.name;
-    }
-    this._removeUniqueSelectionListener = this._radioDispatcher.listen((id, name) => {
-      if (id !== this.id && name === this.name) {
-        this.checked = false;
-      }
-    });
-  }
-  ngDoCheck() {
-    this._updateTabIndex();
-  }
-  ngAfterViewInit() {
-    this._updateTabIndex();
-    this._focusMonitor.monitor(this._elementRef, true).subscribe((focusOrigin) => {
-      if (!focusOrigin && this.radioGroup) {
-        this.radioGroup._touch();
-      }
-    });
-  }
-  ngOnDestroy() {
-    this._focusMonitor.stopMonitoring(this._elementRef);
-    this._removeUniqueSelectionListener();
-  }
-  /** Dispatch change event with current value. */
-  _emitChangeEvent() {
-    this.change.emit(new MatRadioChange(this, this._value));
-  }
-  _isRippleDisabled() {
-    return this.disableRipple || this.disabled;
-  }
-  _onInputClick(event) {
-    event.stopPropagation();
-  }
-  /** Triggered when the radio button receives an interaction from the user. */
-  _onInputInteraction(event) {
-    event.stopPropagation();
-    if (!this.checked && !this.disabled) {
-      const groupValueChanged = this.radioGroup && this.value !== this.radioGroup.value;
-      this.checked = true;
-      this._emitChangeEvent();
-      if (this.radioGroup) {
-        this.radioGroup._controlValueAccessorChangeFn(this.value);
-        if (groupValueChanged) {
-          this.radioGroup._emitChangeEvent();
-        }
-      }
-    }
-  }
-  /** Triggered when the user clicks on the touch target. */
-  _onTouchTargetClick(event) {
-    this._onInputInteraction(event);
-    if (!this.disabled) {
-      this._inputElement.nativeElement.focus();
-    }
-  }
-  /** Sets the disabled state and marks for check if a change occurred. */
-  _setDisabled(value) {
-    if (this._disabled !== value) {
-      this._disabled = value;
-      this._changeDetector.markForCheck();
-    }
-  }
-  /** Gets the tabindex for the underlying input element. */
-  _updateTabIndex() {
-    const group2 = this.radioGroup;
-    let value;
-    if (!group2 || !group2.selected || this.disabled) {
-      value = this.tabIndex;
-    } else {
-      value = group2.selected === this ? this.tabIndex : -1;
-    }
-    if (value !== this._previousTabIndex) {
-      const input2 = this._inputElement?.nativeElement;
-      if (input2) {
-        input2.setAttribute("tabindex", value + "");
-        this._previousTabIndex = value;
-      }
-    }
+  /** If the action button should be shown. */
+  get hasAction() {
+    return !!this.data.action;
   }
 };
-_MatRadioButton.\u0275fac = function MatRadioButton_Factory(t) {
-  return new (t || _MatRadioButton)(\u0275\u0275directiveInject(MAT_RADIO_GROUP, 8), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(FocusMonitor), \u0275\u0275directiveInject(UniqueSelectionDispatcher), \u0275\u0275directiveInject(ANIMATION_MODULE_TYPE, 8), \u0275\u0275directiveInject(MAT_RADIO_DEFAULT_OPTIONS, 8), \u0275\u0275injectAttribute("tabindex"));
+_SimpleSnackBar.\u0275fac = function SimpleSnackBar_Factory(t) {
+  return new (t || _SimpleSnackBar)(\u0275\u0275directiveInject(MatSnackBarRef), \u0275\u0275directiveInject(MAT_SNACK_BAR_DATA));
 };
-_MatRadioButton.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-  type: _MatRadioButton,
-  selectors: [["mat-radio-button"]],
-  viewQuery: function MatRadioButton_Query(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275viewQuery(_c016, 5);
-      \u0275\u0275viewQuery(_c112, 7, ElementRef);
-    }
-    if (rf & 2) {
-      let _t;
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._inputElement = _t.first);
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._rippleTrigger = _t.first);
-    }
-  },
-  hostAttrs: [1, "mat-mdc-radio-button"],
-  hostVars: 15,
-  hostBindings: function MatRadioButton_HostBindings(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275listener("focus", function MatRadioButton_focus_HostBindingHandler() {
-        return ctx._inputElement.nativeElement.focus();
-      });
-    }
-    if (rf & 2) {
-      \u0275\u0275attribute("id", ctx.id)("tabindex", null)("aria-label", null)("aria-labelledby", null)("aria-describedby", null);
-      \u0275\u0275classProp("mat-primary", ctx.color === "primary")("mat-accent", ctx.color === "accent")("mat-warn", ctx.color === "warn")("mat-mdc-radio-checked", ctx.checked)("_mat-animation-noopable", ctx._noopAnimations);
-    }
-  },
-  inputs: {
-    id: "id",
-    name: "name",
-    ariaLabel: [InputFlags.None, "aria-label", "ariaLabel"],
-    ariaLabelledby: [InputFlags.None, "aria-labelledby", "ariaLabelledby"],
-    ariaDescribedby: [InputFlags.None, "aria-describedby", "ariaDescribedby"],
-    disableRipple: [InputFlags.HasDecoratorInputTransform, "disableRipple", "disableRipple", booleanAttribute],
-    tabIndex: [InputFlags.HasDecoratorInputTransform, "tabIndex", "tabIndex", (value) => value == null ? 0 : numberAttribute(value)],
-    checked: [InputFlags.HasDecoratorInputTransform, "checked", "checked", booleanAttribute],
-    value: "value",
-    labelPosition: "labelPosition",
-    disabled: [InputFlags.HasDecoratorInputTransform, "disabled", "disabled", booleanAttribute],
-    required: [InputFlags.HasDecoratorInputTransform, "required", "required", booleanAttribute],
-    color: "color"
-  },
-  outputs: {
-    change: "change"
-  },
-  exportAs: ["matRadioButton"],
+_SimpleSnackBar.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _SimpleSnackBar,
+  selectors: [["simple-snack-bar"]],
+  hostAttrs: [1, "mat-mdc-simple-snack-bar"],
+  exportAs: ["matSnackBar"],
   standalone: true,
-  features: [\u0275\u0275InputTransformsFeature, \u0275\u0275StandaloneFeature],
-  ngContentSelectors: _c29,
-  decls: 13,
-  vars: 16,
-  consts: [["mat-internal-form-field", "", 3, "labelPosition"], ["formField", ""], [1, "mdc-radio"], [1, "mat-mdc-radio-touch-target", 3, "click"], ["type", "radio", 1, "mdc-radio__native-control", 3, "id", "checked", "disabled", "required", "change"], ["input", ""], [1, "mdc-radio__background"], [1, "mdc-radio__outer-circle"], [1, "mdc-radio__inner-circle"], ["mat-ripple", "", 1, "mat-radio-ripple", "mat-mdc-focus-indicator", 3, "matRippleTrigger", "matRippleDisabled", "matRippleCentered"], [1, "mat-ripple-element", "mat-radio-persistent-ripple"], [1, "mdc-label", 3, "for"]],
-  template: function MatRadioButton_Template(rf, ctx) {
+  features: [\u0275\u0275StandaloneFeature],
+  decls: 3,
+  vars: 2,
+  consts: [["matSnackBarLabel", ""], ["matSnackBarActions", ""], ["mat-button", "", "matSnackBarAction", "", 3, "click"]],
+  template: function SimpleSnackBar_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275projectionDef();
-      \u0275\u0275elementStart(0, "div", 0, 1)(2, "div", 2)(3, "div", 3);
-      \u0275\u0275listener("click", function MatRadioButton_Template_div_click_3_listener($event) {
-        return ctx._onTouchTargetClick($event);
-      });
+      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275text(1);
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(4, "input", 4, 5);
-      \u0275\u0275listener("change", function MatRadioButton_Template_input_change_4_listener($event) {
-        return ctx._onInputInteraction($event);
-      });
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(6, "div", 6);
-      \u0275\u0275element(7, "div", 7)(8, "div", 8);
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(9, "div", 9);
-      \u0275\u0275element(10, "div", 10);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(11, "label", 11);
-      \u0275\u0275projection(12);
-      \u0275\u0275elementEnd()();
+      \u0275\u0275template(2, SimpleSnackBar_Conditional_2_Template, 3, 1, "div", 1);
     }
     if (rf & 2) {
-      \u0275\u0275property("labelPosition", ctx.labelPosition);
-      \u0275\u0275advance(2);
-      \u0275\u0275classProp("mdc-radio--disabled", ctx.disabled);
-      \u0275\u0275advance(2);
-      \u0275\u0275property("id", ctx.inputId)("checked", ctx.checked)("disabled", ctx.disabled)("required", ctx.required);
-      \u0275\u0275attribute("name", ctx.name)("value", ctx.value)("aria-label", ctx.ariaLabel)("aria-labelledby", ctx.ariaLabelledby)("aria-describedby", ctx.ariaDescribedby);
-      \u0275\u0275advance(5);
-      \u0275\u0275property("matRippleTrigger", ctx._rippleTrigger.nativeElement)("matRippleDisabled", ctx._isRippleDisabled())("matRippleCentered", true);
-      \u0275\u0275advance(2);
-      \u0275\u0275property("for", ctx.inputId);
+      \u0275\u0275advance();
+      \u0275\u0275textInterpolate1(" ", ctx.data.message, "\n");
+      \u0275\u0275advance();
+      \u0275\u0275conditional(2, ctx.hasAction ? 2 : -1);
     }
   },
-  dependencies: [MatRipple, _MatInternalFormField],
-  styles: ['.mdc-radio{display:inline-block;position:relative;flex:0 0 auto;box-sizing:content-box;width:20px;height:20px;cursor:pointer;will-change:opacity,transform,border-color,color}.mdc-radio[hidden]{display:none}.mdc-radio__background{display:inline-block;position:relative;box-sizing:border-box;width:20px;height:20px}.mdc-radio__background::before{position:absolute;transform:scale(0, 0);border-radius:50%;opacity:0;pointer-events:none;content:"";transition:opacity 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__outer-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;border-width:2px;border-style:solid;border-radius:50%;transition:border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__inner-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;transform:scale(0, 0);border-width:10px;border-style:solid;border-radius:50%;transition:transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit;z-index:1}.mdc-radio--touch{margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-radio--touch .mdc-radio__native-control{top:calc((40px - 48px) / 2);right:calc((40px - 48px) / 2);left:calc((40px - 48px) / 2);width:48px;height:48px}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{pointer-events:none;border:2px solid rgba(0,0,0,0);border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:100%;width:100%}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{border-color:CanvasText}}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{content:"";border:2px solid rgba(0,0,0,0);border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{border-color:CanvasText}}.mdc-radio__native-control:checked+.mdc-radio__background,.mdc-radio__native-control:disabled+.mdc-radio__background{transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__outer-circle{transition:border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio--disabled{cursor:default;pointer-events:none}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle{transform:scale(0.5);transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:disabled+.mdc-radio__background,[aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background{cursor:default}.mdc-radio__native-control:focus+.mdc-radio__background::before{transform:scale(1);opacity:.12;transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mat-mdc-radio-button{-webkit-tap-highlight-color:rgba(0,0,0,0)}.mat-mdc-radio-button .mdc-radio{padding:calc((var(--mdc-radio-state-layer-size) - 20px) / 2)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-unselected-icon-opacity)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{top:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);left:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control{top:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);right:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);left:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{background-color:var(--mat-radio-ripple-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:not([disabled]):not(:focus)~.mdc-radio__background::before{opacity:.04;transform:scale(1)}.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button .mdc-radio--disabled+label{color:var(--mat-radio-disabled-label-color)}.mat-mdc-radio-button .mat-radio-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none;border-radius:50%}.mat-mdc-radio-button .mat-radio-ripple .mat-ripple-element{opacity:.14}.mat-mdc-radio-button .mat-radio-ripple::before{border-radius:50%}.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__background::before,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__outer-circle,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__inner-circle{transition:none !important}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:focus:enabled:not(:checked)~.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-focus-icon-color, black)}.mat-mdc-radio-button.cdk-focused .mat-mdc-focus-indicator::before{content:""}.mat-mdc-radio-touch-target{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}[dir=rtl] .mat-mdc-radio-touch-target{left:0;right:50%;transform:translate(50%, -50%)}'],
+  dependencies: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+  styles: [".mat-mdc-simple-snack-bar{display:flex}"],
   encapsulation: 2,
   changeDetection: 0
 });
-var MatRadioButton = _MatRadioButton;
+var SimpleSnackBar = _SimpleSnackBar;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRadioButton, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SimpleSnackBar, [{
     type: Component,
     args: [{
-      selector: "mat-radio-button",
-      host: {
-        "class": "mat-mdc-radio-button",
-        "[attr.id]": "id",
-        "[class.mat-primary]": 'color === "primary"',
-        "[class.mat-accent]": 'color === "accent"',
-        "[class.mat-warn]": 'color === "warn"',
-        "[class.mat-mdc-radio-checked]": "checked",
-        "[class._mat-animation-noopable]": "_noopAnimations",
-        // Needs to be removed since it causes some a11y issues (see #21266).
-        "[attr.tabindex]": "null",
-        "[attr.aria-label]": "null",
-        "[attr.aria-labelledby]": "null",
-        "[attr.aria-describedby]": "null",
-        // Note: under normal conditions focus shouldn't land on this element, however it may be
-        // programmatically set, for example inside of a focus trap, in this case we want to forward
-        // the focus to the native element.
-        "(focus)": "_inputElement.nativeElement.focus()"
-      },
-      exportAs: "matRadioButton",
+      selector: "simple-snack-bar",
+      exportAs: "matSnackBar",
       encapsulation: ViewEncapsulation$1.None,
       changeDetection: ChangeDetectionStrategy.OnPush,
+      imports: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
       standalone: true,
-      imports: [MatRipple, _MatInternalFormField],
-      template: '<div mat-internal-form-field [labelPosition]="labelPosition" #formField>\n  <div class="mdc-radio" [class.mdc-radio--disabled]="disabled">\n    <!-- Render this element first so the input is on top. -->\n    <div class="mat-mdc-radio-touch-target" (click)="_onTouchTargetClick($event)"></div>\n    <input #input class="mdc-radio__native-control" type="radio"\n           [id]="inputId"\n           [checked]="checked"\n           [disabled]="disabled"\n           [attr.name]="name"\n           [attr.value]="value"\n           [required]="required"\n           [attr.aria-label]="ariaLabel"\n           [attr.aria-labelledby]="ariaLabelledby"\n           [attr.aria-describedby]="ariaDescribedby"\n           (change)="_onInputInteraction($event)">\n    <div class="mdc-radio__background">\n      <div class="mdc-radio__outer-circle"></div>\n      <div class="mdc-radio__inner-circle"></div>\n    </div>\n    <div mat-ripple class="mat-radio-ripple mat-mdc-focus-indicator"\n         [matRippleTrigger]="_rippleTrigger.nativeElement"\n         [matRippleDisabled]="_isRippleDisabled()"\n         [matRippleCentered]="true">\n      <div class="mat-ripple-element mat-radio-persistent-ripple"></div>\n    </div>\n  </div>\n  <label class="mdc-label" [for]="inputId">\n    <ng-content></ng-content>\n  </label>\n</div>\n',
-      styles: ['.mdc-radio{display:inline-block;position:relative;flex:0 0 auto;box-sizing:content-box;width:20px;height:20px;cursor:pointer;will-change:opacity,transform,border-color,color}.mdc-radio[hidden]{display:none}.mdc-radio__background{display:inline-block;position:relative;box-sizing:border-box;width:20px;height:20px}.mdc-radio__background::before{position:absolute;transform:scale(0, 0);border-radius:50%;opacity:0;pointer-events:none;content:"";transition:opacity 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__outer-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;border-width:2px;border-style:solid;border-radius:50%;transition:border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__inner-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;transform:scale(0, 0);border-width:10px;border-style:solid;border-radius:50%;transition:transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit;z-index:1}.mdc-radio--touch{margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-radio--touch .mdc-radio__native-control{top:calc((40px - 48px) / 2);right:calc((40px - 48px) / 2);left:calc((40px - 48px) / 2);width:48px;height:48px}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{pointer-events:none;border:2px solid rgba(0,0,0,0);border-radius:6px;box-sizing:content-box;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:100%;width:100%}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring{border-color:CanvasText}}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{content:"";border:2px solid rgba(0,0,0,0);border-radius:8px;display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:calc(100% + 4px);width:calc(100% + 4px)}@media screen and (forced-colors: active){.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__focus-ring::after,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__focus-ring::after{border-color:CanvasText}}.mdc-radio__native-control:checked+.mdc-radio__background,.mdc-radio__native-control:disabled+.mdc-radio__background{transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__outer-circle{transition:border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio--disabled{cursor:default;pointer-events:none}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle{transform:scale(0.5);transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:disabled+.mdc-radio__background,[aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background{cursor:default}.mdc-radio__native-control:focus+.mdc-radio__background::before{transform:scale(1);opacity:.12;transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mat-mdc-radio-button{-webkit-tap-highlight-color:rgba(0,0,0,0)}.mat-mdc-radio-button .mdc-radio{padding:calc((var(--mdc-radio-state-layer-size) - 20px) / 2)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-disabled-selected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{opacity:var(--mdc-radio-disabled-selected-icon-opacity)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{opacity:var(--mdc-radio-disabled-unselected-icon-opacity)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle,.mat-mdc-radio-button .mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-focus-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-selected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-hover-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-icon-color)}.mat-mdc-radio-button .mdc-radio:not(:disabled):active .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-pressed-icon-color)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{top:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);left:calc(-1 * (var(--mdc-radio-state-layer-size) - 20px) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control{top:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);right:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);left:calc((var(--mdc-radio-state-layer-size) - var(--mdc-radio-state-layer-size)) / 2);width:var(--mdc-radio-state-layer-size);height:var(--mdc-radio-state-layer-size)}.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before{background-color:var(--mat-radio-ripple-color)}.mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:not([disabled]):not(:focus)~.mdc-radio__background::before{opacity:.04;transform:scale(1)}.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element{background-color:var(--mat-radio-checked-ripple-color)}.mat-mdc-radio-button .mdc-radio--disabled+label{color:var(--mat-radio-disabled-label-color)}.mat-mdc-radio-button .mat-radio-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none;border-radius:50%}.mat-mdc-radio-button .mat-radio-ripple .mat-ripple-element{opacity:.14}.mat-mdc-radio-button .mat-radio-ripple::before{border-radius:50%}.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__background::before,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__outer-circle,.mat-mdc-radio-button._mat-animation-noopable .mdc-radio__inner-circle{transition:none !important}.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:focus:enabled:not(:checked)~.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unselected-focus-icon-color, black)}.mat-mdc-radio-button.cdk-focused .mat-mdc-focus-indicator::before{content:""}.mat-mdc-radio-touch-target{position:absolute;top:50%;height:48px;left:50%;width:48px;transform:translate(-50%, -50%)}[dir=rtl] .mat-mdc-radio-touch-target{left:0;right:50%;transform:translate(50%, -50%)}']
+      host: {
+        "class": "mat-mdc-simple-snack-bar"
+      },
+      template: '<div matSnackBarLabel>\n  {{data.message}}\n</div>\n\n@if (hasAction) {\n  <div matSnackBarActions>\n    <button mat-button matSnackBarAction (click)="action()">\n      {{data.action}}\n    </button>\n  </div>\n}\n',
+      styles: [".mat-mdc-simple-snack-bar{display:flex}"]
     }]
   }], () => [{
-    type: MatRadioGroup,
+    type: MatSnackBarRef
+  }, {
+    type: void 0,
     decorators: [{
-      type: Optional
-    }, {
       type: Inject,
-      args: [MAT_RADIO_GROUP]
+      args: [MAT_SNACK_BAR_DATA]
     }]
+  }], null);
+})();
+var matSnackBarAnimations = {
+  /** Animation that shows and hides a snack bar. */
+  snackBarState: trigger("state", [state("void, hidden", style({
+    transform: "scale(0.8)",
+    opacity: 0
+  })), state("visible", style({
+    transform: "scale(1)",
+    opacity: 1
+  })), transition("* => visible", animate("150ms cubic-bezier(0, 0, 0.2, 1)")), transition("* => void, * => hidden", animate("75ms cubic-bezier(0.4, 0.0, 1, 1)", style({
+    opacity: 0
+  })))])
+};
+var uniqueId3 = 0;
+var _MatSnackBarContainer = class _MatSnackBarContainer extends BasePortalOutlet {
+  constructor(_ngZone, _elementRef, _changeDetectorRef, _platform, snackBarConfig) {
+    super();
+    this._ngZone = _ngZone;
+    this._elementRef = _elementRef;
+    this._changeDetectorRef = _changeDetectorRef;
+    this._platform = _platform;
+    this.snackBarConfig = snackBarConfig;
+    this._document = inject(DOCUMENT2);
+    this._trackedModals = /* @__PURE__ */ new Set();
+    this._announceDelay = 150;
+    this._destroyed = false;
+    this._onAnnounce = new Subject();
+    this._onExit = new Subject();
+    this._onEnter = new Subject();
+    this._animationState = "void";
+    this._liveElementId = `mat-snack-bar-container-live-${uniqueId3++}`;
+    this.attachDomPortal = (portal) => {
+      this._assertNotAttached();
+      const result = this._portalOutlet.attachDomPortal(portal);
+      this._afterPortalAttached();
+      return result;
+    };
+    if (snackBarConfig.politeness === "assertive" && !snackBarConfig.announcementMessage) {
+      this._live = "assertive";
+    } else if (snackBarConfig.politeness === "off") {
+      this._live = "off";
+    } else {
+      this._live = "polite";
+    }
+    if (this._platform.FIREFOX) {
+      if (this._live === "polite") {
+        this._role = "status";
+      }
+      if (this._live === "assertive") {
+        this._role = "alert";
+      }
+    }
+  }
+  /** Attach a component portal as content to this snack bar container. */
+  attachComponentPortal(portal) {
+    this._assertNotAttached();
+    const result = this._portalOutlet.attachComponentPortal(portal);
+    this._afterPortalAttached();
+    return result;
+  }
+  /** Attach a template portal as content to this snack bar container. */
+  attachTemplatePortal(portal) {
+    this._assertNotAttached();
+    const result = this._portalOutlet.attachTemplatePortal(portal);
+    this._afterPortalAttached();
+    return result;
+  }
+  /** Handle end of animations, updating the state of the snackbar. */
+  onAnimationEnd(event) {
+    const {
+      fromState,
+      toState
+    } = event;
+    if (toState === "void" && fromState !== "void" || toState === "hidden") {
+      this._completeExit();
+    }
+    if (toState === "visible") {
+      const onEnter2 = this._onEnter;
+      this._ngZone.run(() => {
+        onEnter2.next();
+        onEnter2.complete();
+      });
+    }
+  }
+  /** Begin animation of snack bar entrance into view. */
+  enter() {
+    if (!this._destroyed) {
+      this._animationState = "visible";
+      this._changeDetectorRef.markForCheck();
+      this._changeDetectorRef.detectChanges();
+      this._screenReaderAnnounce();
+    }
+  }
+  /** Begin animation of the snack bar exiting from view. */
+  exit() {
+    this._ngZone.run(() => {
+      this._animationState = "hidden";
+      this._changeDetectorRef.markForCheck();
+      this._elementRef.nativeElement.setAttribute("mat-exit", "");
+      clearTimeout(this._announceTimeoutId);
+    });
+    return this._onExit;
+  }
+  /** Makes sure the exit callbacks have been invoked when the element is destroyed. */
+  ngOnDestroy() {
+    this._destroyed = true;
+    this._clearFromModals();
+    this._completeExit();
+  }
+  /**
+   * Removes the element in a microtask. Helps prevent errors where we end up
+   * removing an element which is in the middle of an animation.
+   */
+  _completeExit() {
+    queueMicrotask(() => {
+      this._onExit.next();
+      this._onExit.complete();
+    });
+  }
+  /**
+   * Called after the portal contents have been attached. Can be
+   * used to modify the DOM once it's guaranteed to be in place.
+   */
+  _afterPortalAttached() {
+    const element = this._elementRef.nativeElement;
+    const panelClasses = this.snackBarConfig.panelClass;
+    if (panelClasses) {
+      if (Array.isArray(panelClasses)) {
+        panelClasses.forEach((cssClass) => element.classList.add(cssClass));
+      } else {
+        element.classList.add(panelClasses);
+      }
+    }
+    this._exposeToModals();
+    const label = this._label.nativeElement;
+    const labelClass = "mdc-snackbar__label";
+    label.classList.toggle(labelClass, !label.querySelector(`.${labelClass}`));
+  }
+  /**
+   * Some browsers won't expose the accessibility node of the live element if there is an
+   * `aria-modal` and the live element is outside of it. This method works around the issue by
+   * pointing the `aria-owns` of all modals to the live element.
+   */
+  _exposeToModals() {
+    const id = this._liveElementId;
+    const modals = this._document.querySelectorAll('body > .cdk-overlay-container [aria-modal="true"]');
+    for (let i = 0; i < modals.length; i++) {
+      const modal = modals[i];
+      const ariaOwns = modal.getAttribute("aria-owns");
+      this._trackedModals.add(modal);
+      if (!ariaOwns) {
+        modal.setAttribute("aria-owns", id);
+      } else if (ariaOwns.indexOf(id) === -1) {
+        modal.setAttribute("aria-owns", ariaOwns + " " + id);
+      }
+    }
+  }
+  /** Clears the references to the live element from any modals it was added to. */
+  _clearFromModals() {
+    this._trackedModals.forEach((modal) => {
+      const ariaOwns = modal.getAttribute("aria-owns");
+      if (ariaOwns) {
+        const newValue = ariaOwns.replace(this._liveElementId, "").trim();
+        if (newValue.length > 0) {
+          modal.setAttribute("aria-owns", newValue);
+        } else {
+          modal.removeAttribute("aria-owns");
+        }
+      }
+    });
+    this._trackedModals.clear();
+  }
+  /** Asserts that no content is already attached to the container. */
+  _assertNotAttached() {
+    if (this._portalOutlet.hasAttached() && (typeof ngDevMode === "undefined" || ngDevMode)) {
+      throw Error("Attempting to attach snack bar content after content is already attached");
+    }
+  }
+  /**
+   * Starts a timeout to move the snack bar content to the live region so screen readers will
+   * announce it.
+   */
+  _screenReaderAnnounce() {
+    if (!this._announceTimeoutId) {
+      this._ngZone.runOutsideAngular(() => {
+        this._announceTimeoutId = setTimeout(() => {
+          const inertElement = this._elementRef.nativeElement.querySelector("[aria-hidden]");
+          const liveElement = this._elementRef.nativeElement.querySelector("[aria-live]");
+          if (inertElement && liveElement) {
+            let focusedElement = null;
+            if (this._platform.isBrowser && document.activeElement instanceof HTMLElement && inertElement.contains(document.activeElement)) {
+              focusedElement = document.activeElement;
+            }
+            inertElement.removeAttribute("aria-hidden");
+            liveElement.appendChild(inertElement);
+            focusedElement?.focus();
+            this._onAnnounce.next();
+            this._onAnnounce.complete();
+          }
+        }, this._announceDelay);
+      });
+    }
+  }
+};
+_MatSnackBarContainer.\u0275fac = function MatSnackBarContainer_Factory(t) {
+  return new (t || _MatSnackBarContainer)(\u0275\u0275directiveInject(NgZone), \u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(Platform), \u0275\u0275directiveInject(MatSnackBarConfig));
+};
+_MatSnackBarContainer.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+  type: _MatSnackBarContainer,
+  selectors: [["mat-snack-bar-container"]],
+  viewQuery: function MatSnackBarContainer_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuery(CdkPortalOutlet, 7);
+      \u0275\u0275viewQuery(_c017, 7);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._portalOutlet = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx._label = _t.first);
+    }
+  },
+  hostAttrs: [1, "mdc-snackbar", "mat-mdc-snack-bar-container", "mdc-snackbar--open"],
+  hostVars: 1,
+  hostBindings: function MatSnackBarContainer_HostBindings(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275syntheticHostListener("@state.done", function MatSnackBarContainer_animation_state_done_HostBindingHandler($event) {
+        return ctx.onAnimationEnd($event);
+      });
+    }
+    if (rf & 2) {
+      \u0275\u0275syntheticHostProperty("@state", ctx._animationState);
+    }
+  },
+  standalone: true,
+  features: [\u0275\u0275InheritDefinitionFeature, \u0275\u0275StandaloneFeature],
+  decls: 6,
+  vars: 3,
+  consts: [[1, "mdc-snackbar__surface"], [1, "mat-mdc-snack-bar-label"], ["label", ""], ["aria-hidden", "true"], ["cdkPortalOutlet", ""]],
+  template: function MatSnackBarContainer_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1, 2)(3, "div", 3);
+      \u0275\u0275template(4, MatSnackBarContainer_ng_template_4_Template, 0, 0, "ng-template", 4);
+      \u0275\u0275elementEnd();
+      \u0275\u0275element(5, "div");
+      \u0275\u0275elementEnd()();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(5);
+      \u0275\u0275attribute("aria-live", ctx._live)("role", ctx._role)("id", ctx._liveElementId);
+    }
+  },
+  dependencies: [CdkPortalOutlet],
+  styles: ['.mdc-snackbar{display:none;position:fixed;right:0;bottom:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;pointer-events:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-snackbar--opening,.mdc-snackbar--open,.mdc-snackbar--closing{display:flex}.mdc-snackbar--open .mdc-snackbar__label,.mdc-snackbar--open .mdc-snackbar__actions{visibility:visible}.mdc-snackbar__surface{padding-left:0;padding-right:8px;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;transform:scale(0.8);opacity:0}.mdc-snackbar__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-snackbar__surface::before{border-color:CanvasText}}[dir=rtl] .mdc-snackbar__surface,.mdc-snackbar__surface[dir=rtl]{padding-left:8px;padding-right:0}.mdc-snackbar--open .mdc-snackbar__surface{transform:scale(1);opacity:1;pointer-events:auto}.mdc-snackbar--closing .mdc-snackbar__surface{transform:scale(1)}.mdc-snackbar__label{padding-left:16px;padding-right:8px;width:100%;flex-grow:1;box-sizing:border-box;margin:0;visibility:hidden;padding-top:14px;padding-bottom:14px}[dir=rtl] .mdc-snackbar__label,.mdc-snackbar__label[dir=rtl]{padding-left:8px;padding-right:16px}.mdc-snackbar__label::before{display:inline;content:attr(data-mdc-snackbar-label-text)}.mdc-snackbar__actions{display:flex;flex-shrink:0;align-items:center;box-sizing:border-box;visibility:hidden}.mdc-snackbar__action+.mdc-snackbar__dismiss{margin-left:8px;margin-right:0}[dir=rtl] .mdc-snackbar__action+.mdc-snackbar__dismiss,.mdc-snackbar__action+.mdc-snackbar__dismiss[dir=rtl]{margin-left:0;margin-right:8px}.mat-mdc-snack-bar-container{margin:8px;position:static}.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:344px}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:100%}}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container{width:100vw}}.mat-mdc-snack-bar-container .mdc-snackbar__surface{max-width:672px}.mat-mdc-snack-bar-container .mdc-snackbar__surface{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{background-color:var(--mdc-snackbar-container-color)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{border-radius:var(--mdc-snackbar-container-shape)}.mat-mdc-snack-bar-container .mdc-snackbar__label{color:var(--mdc-snackbar-supporting-text-color)}.mat-mdc-snack-bar-container .mdc-snackbar__label{font-size:var(--mdc-snackbar-supporting-text-size);font-family:var(--mdc-snackbar-supporting-text-font);font-weight:var(--mdc-snackbar-supporting-text-weight);line-height:var(--mdc-snackbar-supporting-text-line-height)}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled){color:var(--mat-snack-bar-button-color);--mat-text-button-state-layer-color:currentColor;--mat-text-button-ripple-color:currentColor}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) .mat-ripple-element{opacity:.1}.mat-mdc-snack-bar-container .mdc-snackbar__label::before{display:none}.mat-mdc-snack-bar-handset,.mat-mdc-snack-bar-container,.mat-mdc-snack-bar-label{flex:1 1 auto}.mat-mdc-snack-bar-handset .mdc-snackbar__surface{width:100%}'],
+  encapsulation: 2,
+  data: {
+    animation: [matSnackBarAnimations.snackBarState]
+  }
+});
+var MatSnackBarContainer = _MatSnackBarContainer;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarContainer, [{
+    type: Component,
+    args: [{
+      selector: "mat-snack-bar-container",
+      changeDetection: ChangeDetectionStrategy.Default,
+      encapsulation: ViewEncapsulation$1.None,
+      animations: [matSnackBarAnimations.snackBarState],
+      standalone: true,
+      imports: [CdkPortalOutlet],
+      host: {
+        "class": "mdc-snackbar mat-mdc-snack-bar-container mdc-snackbar--open",
+        "[@state]": "_animationState",
+        "(@state.done)": "onAnimationEnd($event)"
+      },
+      template: '<div class="mdc-snackbar__surface">\n  <!--\n    This outer label wrapper will have the class `mdc-snackbar__label` applied if\n    the attached template/component does not contain it.\n  -->\n  <div class="mat-mdc-snack-bar-label" #label>\n    <!-- Initialy holds the snack bar content, will be empty after announcing to screen readers. -->\n    <div aria-hidden="true">\n      <ng-template cdkPortalOutlet />\n    </div>\n\n    <!-- Will receive the snack bar content from the non-live div, move will happen a short delay after opening -->\n    <div [attr.aria-live]="_live" [attr.role]="_role" [attr.id]="_liveElementId"></div>\n  </div>\n</div>\n',
+      styles: ['.mdc-snackbar{display:none;position:fixed;right:0;bottom:0;left:0;align-items:center;justify-content:center;box-sizing:border-box;pointer-events:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.mdc-snackbar--opening,.mdc-snackbar--open,.mdc-snackbar--closing{display:flex}.mdc-snackbar--open .mdc-snackbar__label,.mdc-snackbar--open .mdc-snackbar__actions{visibility:visible}.mdc-snackbar__surface{padding-left:0;padding-right:8px;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;transform:scale(0.8);opacity:0}.mdc-snackbar__surface::before{position:absolute;box-sizing:border-box;width:100%;height:100%;top:0;left:0;border:1px solid rgba(0,0,0,0);border-radius:inherit;content:"";pointer-events:none}@media screen and (forced-colors: active){.mdc-snackbar__surface::before{border-color:CanvasText}}[dir=rtl] .mdc-snackbar__surface,.mdc-snackbar__surface[dir=rtl]{padding-left:8px;padding-right:0}.mdc-snackbar--open .mdc-snackbar__surface{transform:scale(1);opacity:1;pointer-events:auto}.mdc-snackbar--closing .mdc-snackbar__surface{transform:scale(1)}.mdc-snackbar__label{padding-left:16px;padding-right:8px;width:100%;flex-grow:1;box-sizing:border-box;margin:0;visibility:hidden;padding-top:14px;padding-bottom:14px}[dir=rtl] .mdc-snackbar__label,.mdc-snackbar__label[dir=rtl]{padding-left:8px;padding-right:16px}.mdc-snackbar__label::before{display:inline;content:attr(data-mdc-snackbar-label-text)}.mdc-snackbar__actions{display:flex;flex-shrink:0;align-items:center;box-sizing:border-box;visibility:hidden}.mdc-snackbar__action+.mdc-snackbar__dismiss{margin-left:8px;margin-right:0}[dir=rtl] .mdc-snackbar__action+.mdc-snackbar__dismiss,.mdc-snackbar__action+.mdc-snackbar__dismiss[dir=rtl]{margin-left:0;margin-right:8px}.mat-mdc-snack-bar-container{margin:8px;position:static}.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:344px}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container .mdc-snackbar__surface{min-width:100%}}@media(max-width: 480px),(max-width: 344px){.mat-mdc-snack-bar-container{width:100vw}}.mat-mdc-snack-bar-container .mdc-snackbar__surface{max-width:672px}.mat-mdc-snack-bar-container .mdc-snackbar__surface{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{background-color:var(--mdc-snackbar-container-color)}.mat-mdc-snack-bar-container .mdc-snackbar__surface{border-radius:var(--mdc-snackbar-container-shape)}.mat-mdc-snack-bar-container .mdc-snackbar__label{color:var(--mdc-snackbar-supporting-text-color)}.mat-mdc-snack-bar-container .mdc-snackbar__label{font-size:var(--mdc-snackbar-supporting-text-size);font-family:var(--mdc-snackbar-supporting-text-font);font-weight:var(--mdc-snackbar-supporting-text-weight);line-height:var(--mdc-snackbar-supporting-text-line-height)}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled){color:var(--mat-snack-bar-button-color);--mat-text-button-state-layer-color:currentColor;--mat-text-button-ripple-color:currentColor}.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) .mat-ripple-element{opacity:.1}.mat-mdc-snack-bar-container .mdc-snackbar__label::before{display:none}.mat-mdc-snack-bar-handset,.mat-mdc-snack-bar-container,.mat-mdc-snack-bar-label{flex:1 1 auto}.mat-mdc-snack-bar-handset .mdc-snackbar__surface{width:100%}']
+    }]
+  }], () => [{
+    type: NgZone
   }, {
     type: ElementRef
   }, {
     type: ChangeDetectorRef
   }, {
-    type: FocusMonitor
+    type: Platform
   }, {
-    type: UniqueSelectionDispatcher
-  }, {
-    type: void 0,
-    decorators: [{
-      type: Optional
-    }, {
-      type: Inject,
-      args: [ANIMATION_MODULE_TYPE]
-    }]
-  }, {
-    type: void 0,
-    decorators: [{
-      type: Optional
-    }, {
-      type: Inject,
-      args: [MAT_RADIO_DEFAULT_OPTIONS]
-    }]
-  }, {
-    type: void 0,
-    decorators: [{
-      type: Attribute,
-      args: ["tabindex"]
-    }]
+    type: MatSnackBarConfig
   }], {
-    id: [{
-      type: Input
-    }],
-    name: [{
-      type: Input
-    }],
-    ariaLabel: [{
-      type: Input,
-      args: ["aria-label"]
-    }],
-    ariaLabelledby: [{
-      type: Input,
-      args: ["aria-labelledby"]
-    }],
-    ariaDescribedby: [{
-      type: Input,
-      args: ["aria-describedby"]
-    }],
-    disableRipple: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    tabIndex: [{
-      type: Input,
-      args: [{
-        transform: (value) => value == null ? 0 : numberAttribute(value)
-      }]
-    }],
-    checked: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    value: [{
-      type: Input
-    }],
-    labelPosition: [{
-      type: Input
-    }],
-    disabled: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    required: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    color: [{
-      type: Input
-    }],
-    change: [{
-      type: Output
-    }],
-    _inputElement: [{
+    _portalOutlet: [{
       type: ViewChild,
-      args: ["input"]
+      args: [CdkPortalOutlet, {
+        static: true
+      }]
     }],
-    _rippleTrigger: [{
+    _label: [{
       type: ViewChild,
-      args: ["formField", {
-        read: ElementRef,
+      args: ["label", {
         static: true
       }]
     }]
   });
 })();
-var _MatRadioModule = class _MatRadioModule {
-};
-_MatRadioModule.\u0275fac = function MatRadioModule_Factory(t) {
-  return new (t || _MatRadioModule)();
-};
-_MatRadioModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
-  type: _MatRadioModule
+function MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY() {
+  return new MatSnackBarConfig();
+}
+var MAT_SNACK_BAR_DEFAULT_OPTIONS = new InjectionToken("mat-snack-bar-default-options", {
+  providedIn: "root",
+  factory: MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY
 });
-_MatRadioModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
-  imports: [MatCommonModule, CommonModule, MatRippleModule, MatRadioButton, MatCommonModule]
+var _MatSnackBar = class _MatSnackBar {
+  /** Reference to the currently opened snackbar at *any* level. */
+  get _openedSnackBarRef() {
+    const parent = this._parentSnackBar;
+    return parent ? parent._openedSnackBarRef : this._snackBarRefAtThisLevel;
+  }
+  set _openedSnackBarRef(value) {
+    if (this._parentSnackBar) {
+      this._parentSnackBar._openedSnackBarRef = value;
+    } else {
+      this._snackBarRefAtThisLevel = value;
+    }
+  }
+  constructor(_overlay, _live, _injector, _breakpointObserver, _parentSnackBar, _defaultConfig) {
+    this._overlay = _overlay;
+    this._live = _live;
+    this._injector = _injector;
+    this._breakpointObserver = _breakpointObserver;
+    this._parentSnackBar = _parentSnackBar;
+    this._defaultConfig = _defaultConfig;
+    this._snackBarRefAtThisLevel = null;
+    this.simpleSnackBarComponent = SimpleSnackBar;
+    this.snackBarContainerComponent = MatSnackBarContainer;
+    this.handsetCssClass = "mat-mdc-snack-bar-handset";
+  }
+  /**
+   * Creates and dispatches a snack bar with a custom component for the content, removing any
+   * currently opened snack bars.
+   *
+   * @param component Component to be instantiated.
+   * @param config Extra configuration for the snack bar.
+   */
+  openFromComponent(component, config2) {
+    return this._attach(component, config2);
+  }
+  /**
+   * Creates and dispatches a snack bar with a custom template for the content, removing any
+   * currently opened snack bars.
+   *
+   * @param template Template to be instantiated.
+   * @param config Extra configuration for the snack bar.
+   */
+  openFromTemplate(template, config2) {
+    return this._attach(template, config2);
+  }
+  /**
+   * Opens a snackbar with a message and an optional action.
+   * @param message The message to show in the snackbar.
+   * @param action The label for the snackbar action.
+   * @param config Additional configuration options for the snackbar.
+   */
+  open(message, action = "", config2) {
+    const _config = __spreadValues(__spreadValues({}, this._defaultConfig), config2);
+    _config.data = {
+      message,
+      action
+    };
+    if (_config.announcementMessage === message) {
+      _config.announcementMessage = void 0;
+    }
+    return this.openFromComponent(this.simpleSnackBarComponent, _config);
+  }
+  /**
+   * Dismisses the currently-visible snack bar.
+   */
+  dismiss() {
+    if (this._openedSnackBarRef) {
+      this._openedSnackBarRef.dismiss();
+    }
+  }
+  ngOnDestroy() {
+    if (this._snackBarRefAtThisLevel) {
+      this._snackBarRefAtThisLevel.dismiss();
+    }
+  }
+  /**
+   * Attaches the snack bar container component to the overlay.
+   */
+  _attachSnackBarContainer(overlayRef, config2) {
+    const userInjector = config2 && config2.viewContainerRef && config2.viewContainerRef.injector;
+    const injector = Injector.create({
+      parent: userInjector || this._injector,
+      providers: [{
+        provide: MatSnackBarConfig,
+        useValue: config2
+      }]
+    });
+    const containerPortal = new ComponentPortal(this.snackBarContainerComponent, config2.viewContainerRef, injector);
+    const containerRef = overlayRef.attach(containerPortal);
+    containerRef.instance.snackBarConfig = config2;
+    return containerRef.instance;
+  }
+  /**
+   * Places a new component or a template as the content of the snack bar container.
+   */
+  _attach(content, userConfig) {
+    const config2 = __spreadValues(__spreadValues(__spreadValues({}, new MatSnackBarConfig()), this._defaultConfig), userConfig);
+    const overlayRef = this._createOverlay(config2);
+    const container = this._attachSnackBarContainer(overlayRef, config2);
+    const snackBarRef = new MatSnackBarRef(container, overlayRef);
+    if (content instanceof TemplateRef) {
+      const portal = new TemplatePortal(content, null, {
+        $implicit: config2.data,
+        snackBarRef
+      });
+      snackBarRef.instance = container.attachTemplatePortal(portal);
+    } else {
+      const injector = this._createInjector(config2, snackBarRef);
+      const portal = new ComponentPortal(content, void 0, injector);
+      const contentRef = container.attachComponentPortal(portal);
+      snackBarRef.instance = contentRef.instance;
+    }
+    this._breakpointObserver.observe(Breakpoints.HandsetPortrait).pipe(takeUntil(overlayRef.detachments())).subscribe((state2) => {
+      overlayRef.overlayElement.classList.toggle(this.handsetCssClass, state2.matches);
+    });
+    if (config2.announcementMessage) {
+      container._onAnnounce.subscribe(() => {
+        this._live.announce(config2.announcementMessage, config2.politeness);
+      });
+    }
+    this._animateSnackBar(snackBarRef, config2);
+    this._openedSnackBarRef = snackBarRef;
+    return this._openedSnackBarRef;
+  }
+  /** Animates the old snack bar out and the new one in. */
+  _animateSnackBar(snackBarRef, config2) {
+    snackBarRef.afterDismissed().subscribe(() => {
+      if (this._openedSnackBarRef == snackBarRef) {
+        this._openedSnackBarRef = null;
+      }
+      if (config2.announcementMessage) {
+        this._live.clear();
+      }
+    });
+    if (this._openedSnackBarRef) {
+      this._openedSnackBarRef.afterDismissed().subscribe(() => {
+        snackBarRef.containerInstance.enter();
+      });
+      this._openedSnackBarRef.dismiss();
+    } else {
+      snackBarRef.containerInstance.enter();
+    }
+    if (config2.duration && config2.duration > 0) {
+      snackBarRef.afterOpened().subscribe(() => snackBarRef._dismissAfter(config2.duration));
+    }
+  }
+  /**
+   * Creates a new overlay and places it in the correct location.
+   * @param config The user-specified snack bar config.
+   */
+  _createOverlay(config2) {
+    const overlayConfig = new OverlayConfig();
+    overlayConfig.direction = config2.direction;
+    let positionStrategy = this._overlay.position().global();
+    const isRtl = config2.direction === "rtl";
+    const isLeft = config2.horizontalPosition === "left" || config2.horizontalPosition === "start" && !isRtl || config2.horizontalPosition === "end" && isRtl;
+    const isRight = !isLeft && config2.horizontalPosition !== "center";
+    if (isLeft) {
+      positionStrategy.left("0");
+    } else if (isRight) {
+      positionStrategy.right("0");
+    } else {
+      positionStrategy.centerHorizontally();
+    }
+    if (config2.verticalPosition === "top") {
+      positionStrategy.top("0");
+    } else {
+      positionStrategy.bottom("0");
+    }
+    overlayConfig.positionStrategy = positionStrategy;
+    return this._overlay.create(overlayConfig);
+  }
+  /**
+   * Creates an injector to be used inside of a snack bar component.
+   * @param config Config that was used to create the snack bar.
+   * @param snackBarRef Reference to the snack bar.
+   */
+  _createInjector(config2, snackBarRef) {
+    const userInjector = config2 && config2.viewContainerRef && config2.viewContainerRef.injector;
+    return Injector.create({
+      parent: userInjector || this._injector,
+      providers: [{
+        provide: MatSnackBarRef,
+        useValue: snackBarRef
+      }, {
+        provide: MAT_SNACK_BAR_DATA,
+        useValue: config2.data
+      }]
+    });
+  }
+};
+_MatSnackBar.\u0275fac = function MatSnackBar_Factory(t) {
+  return new (t || _MatSnackBar)(\u0275\u0275inject(Overlay), \u0275\u0275inject(LiveAnnouncer), \u0275\u0275inject(Injector), \u0275\u0275inject(BreakpointObserver), \u0275\u0275inject(_MatSnackBar, 12), \u0275\u0275inject(MAT_SNACK_BAR_DEFAULT_OPTIONS));
+};
+_MatSnackBar.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+  token: _MatSnackBar,
+  factory: _MatSnackBar.\u0275fac,
+  providedIn: "root"
 });
-var MatRadioModule = _MatRadioModule;
+var MatSnackBar = _MatSnackBar;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRadioModule, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBar, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: Overlay
+  }, {
+    type: LiveAnnouncer
+  }, {
+    type: Injector
+  }, {
+    type: BreakpointObserver
+  }, {
+    type: MatSnackBar,
+    decorators: [{
+      type: Optional
+    }, {
+      type: SkipSelf
+    }]
+  }, {
+    type: MatSnackBarConfig,
+    decorators: [{
+      type: Inject,
+      args: [MAT_SNACK_BAR_DEFAULT_OPTIONS]
+    }]
+  }], null);
+})();
+var DIRECTIVES2 = [MatSnackBarContainer, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction];
+var _MatSnackBarModule = class _MatSnackBarModule {
+};
+_MatSnackBarModule.\u0275fac = function MatSnackBarModule_Factory(t) {
+  return new (t || _MatSnackBarModule)();
+};
+_MatSnackBarModule.\u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+  type: _MatSnackBarModule
+});
+_MatSnackBarModule.\u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+  providers: [MatSnackBar],
+  imports: [OverlayModule, PortalModule, MatButtonModule, MatCommonModule, SimpleSnackBar, MatCommonModule]
+});
+var MatSnackBarModule = _MatSnackBarModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatSnackBarModule, [{
     type: NgModule,
     args: [{
-      imports: [MatCommonModule, CommonModule, MatRippleModule, MatRadioGroup, MatRadioButton],
-      exports: [MatCommonModule, MatRadioGroup, MatRadioButton]
+      imports: [OverlayModule, PortalModule, MatButtonModule, MatCommonModule, SimpleSnackBar, ...DIRECTIVES2],
+      exports: [MatCommonModule, ...DIRECTIVES2],
+      providers: [MatSnackBar]
     }]
   }], null, null);
+})();
+
+// src/app/services/toast.service.ts
+var _ToastService = class _ToastService {
+  constructor(zone, snackbar) {
+    this.zone = zone;
+    this.snackbar = snackbar;
+  }
+  showToast(message, timeout) {
+    this.zone.run(() => {
+      this.snackbar.open(message, "Dismiss", timeout ? { duration: timeout } : void 0);
+    });
+  }
+};
+_ToastService.\u0275fac = function ToastService_Factory(t) {
+  return new (t || _ToastService)(\u0275\u0275inject(NgZone), \u0275\u0275inject(MatSnackBar));
+};
+_ToastService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ToastService, factory: _ToastService.\u0275fac, providedIn: "root" });
+var ToastService = _ToastService;
+
+// src/app/services/nfc.service.ts
+var _NfcService = class _NfcService {
+  constructor(nfcEmulator, toastService) {
+    this.nfcEmulator = nfcEmulator;
+    this.toastService = toastService;
+    this.converter = new MessageConverter();
+    this.statusSubject = new BehaviorSubject("idle");
+    this.readSubject = new Subject();
+    this.ndef = environment.isDev ? new EmulatedNdefReader(this.nfcEmulator) : new NDEFReader();
+    this.ndef.onreading = (tag) => this.handleReadWrite(tag);
+    this.ndef.onreadingerror = (err) => this.handleError(err);
+    this.startScan();
+  }
+  spool$() {
+    return this.readSubject;
+  }
+  status$() {
+    return this.statusSubject;
+  }
+  updateSpool(spool) {
+    if (!this.writing) {
+      this.statusSubject.next("writing");
+      this.writing = {
+        id: spool.id,
+        message: { records: this.converter.spoolToMessage(spool).records.map((r) => r) },
+        subject: new AsyncSubject()
+      };
+      return this.writing.subject;
+    } else {
+      return throwError(new Error("Already writing"));
+    }
+  }
+  handleReadWrite(tag) {
+    if (!this.writing) {
+      this.readSubject.next(this.converter.messageToSpool(tag.serialNumber, tag.message));
+    }
+    if (this.writing) {
+      if (tag.serialNumber === this.writing.id) {
+        this.ndef.write(this.writing.message, { overwrite: true }).then(() => {
+          this.statusSubject.next("reading");
+          this.writing?.subject.next();
+          this.writing?.subject.complete();
+          this.writing = void 0;
+        }).catch((e) => {
+          console.log(e);
+          this.writing?.subject.error(new Error("Could not write tag, try again?"));
+        }).finally();
+      } else {
+        this.toastService.showToast("Not the correct tag, try again", 1e3);
+      }
+    }
+  }
+  handleError(error) {
+    console.log(error);
+    this.toastService.showToast("Error reading tag, try again?", 1e3);
+  }
+  startScan() {
+    this.ndef.scan().then(() => {
+      this.toastService.showToast("Starting scan...", 1e3);
+      this.statusSubject.next("reading");
+    }).catch((e) => {
+      this.toastService.showToast("Scan could not be started: " + e, 1e3);
+      console.log("Scan could not be started", e);
+      this.statusSubject.next("error");
+    });
+  }
+  cancelWrite() {
+    if (this.writing) {
+      this.statusSubject.next("reading");
+      this.writing = void 0;
+    }
+  }
+};
+_NfcService.\u0275fac = function NfcService_Factory(t) {
+  return new (t || _NfcService)(\u0275\u0275inject(NfcEmulatorService), \u0275\u0275inject(ToastService));
+};
+_NfcService.\u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _NfcService, factory: _NfcService.\u0275fac, providedIn: "root" });
+var NfcService = _NfcService;
+
+// src/app/components/permission-dialog/permission-dialog.component.ts
+var _PermissionDialogComponent = class _PermissionDialogComponent {
+  constructor(nfcService, dialogRef) {
+    this.nfcService = nfcService;
+    this.dialogRef = dialogRef;
+  }
+  scan() {
+    const reader = new NDEFReader();
+    const abort = new AbortController();
+    reader.scan({ signal: abort.signal }).then(() => {
+      abort.abort();
+      this.dialogRef.close();
+      this.nfcService.startScan();
+    });
+  }
+};
+_PermissionDialogComponent.\u0275fac = function PermissionDialogComponent_Factory(t) {
+  return new (t || _PermissionDialogComponent)(\u0275\u0275directiveInject(NfcService), \u0275\u0275directiveInject(MatDialogRef));
+};
+_PermissionDialogComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PermissionDialogComponent, selectors: [["app-permission-dialog"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 0, consts: [["mat-dialog-title", ""], ["mat-button", "", 3, "click"]], template: function PermissionDialogComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 0);
+    \u0275\u0275text(1, "NFC Permission");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "mat-dialog-content");
+    \u0275\u0275text(3, " You have to give permission to use the NFC reader on your phone. Click the button to request the permission.\n");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "mat-dialog-actions")(5, "button", 1);
+    \u0275\u0275listener("click", function PermissionDialogComponent_Template_button_click_5_listener() {
+      return ctx.scan();
+    });
+    \u0275\u0275text(6, "Scan");
+    \u0275\u0275elementEnd()();
+  }
+}, dependencies: [
+  MatButton,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogTitle
+], styles: ["\n\n/*# sourceMappingURL=permission-dialog.component.css.map */"] });
+var PermissionDialogComponent = _PermissionDialogComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PermissionDialogComponent, { className: "PermissionDialogComponent", filePath: "src/app/components/permission-dialog/permission-dialog.component.ts", lineNumber: 25 });
 })();
 
 // src/app/components/spool-wizard/spool-wizard.component.ts
@@ -71461,10 +71787,10 @@ function SpoolWizardComponent_For_30_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const brand_r18 = ctx.$implicit;
-    \u0275\u0275property("value", brand_r18);
+    const brand_r19 = ctx.$implicit;
+    \u0275\u0275property("value", brand_r19);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(brand_r18);
+    \u0275\u0275textInterpolate(brand_r19);
   }
 }
 function SpoolWizardComponent_For_38_Template(rf, ctx) {
@@ -71474,20 +71800,20 @@ function SpoolWizardComponent_For_38_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const material_r23 = ctx.$implicit;
-    \u0275\u0275property("value", material_r23);
+    const material_r24 = ctx.$implicit;
+    \u0275\u0275property("value", material_r24);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(material_r23);
+    \u0275\u0275textInterpolate(material_r24);
   }
 }
 function SpoolWizardComponent_Conditional_50_Template(rf, ctx) {
   if (rf & 1) {
-    const _r29 = \u0275\u0275getCurrentView();
+    const _r30 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 31);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_50_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r29);
-      const ctx_r28 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r28.totalWeightEnabled = false);
+      \u0275\u0275restoreView(_r30);
+      const ctx_r29 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r29.totalWeightEnabled = false);
     });
     \u0275\u0275text(1, "lock_open");
     \u0275\u0275elementEnd();
@@ -71495,12 +71821,12 @@ function SpoolWizardComponent_Conditional_50_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_51_Template(rf, ctx) {
   if (rf & 1) {
-    const _r31 = \u0275\u0275getCurrentView();
+    const _r32 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 32);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_51_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r31);
-      const ctx_r30 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r30.totalWeightEnabled = true);
+      \u0275\u0275restoreView(_r32);
+      const ctx_r31 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r31.totalWeightEnabled = true);
     });
     \u0275\u0275text(1, "lock");
     \u0275\u0275elementEnd();
@@ -71508,12 +71834,12 @@ function SpoolWizardComponent_Conditional_51_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_58_Template(rf, ctx) {
   if (rf & 1) {
-    const _r33 = \u0275\u0275getCurrentView();
+    const _r34 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 31);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_58_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r33);
-      const ctx_r32 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r32.spoolWeightEnabled = false);
+      \u0275\u0275restoreView(_r34);
+      const ctx_r33 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r33.spoolWeightEnabled = false);
     });
     \u0275\u0275text(1, "lock_open");
     \u0275\u0275elementEnd();
@@ -71521,12 +71847,12 @@ function SpoolWizardComponent_Conditional_58_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_59_Template(rf, ctx) {
   if (rf & 1) {
-    const _r35 = \u0275\u0275getCurrentView();
+    const _r36 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 32);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_59_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r35);
-      const ctx_r34 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r34.spoolWeightEnabled = true);
+      \u0275\u0275restoreView(_r36);
+      const ctx_r35 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r35.spoolWeightEnabled = true);
     });
     \u0275\u0275text(1, "lock");
     \u0275\u0275elementEnd();
@@ -71534,12 +71860,12 @@ function SpoolWizardComponent_Conditional_59_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_66_Template(rf, ctx) {
   if (rf & 1) {
-    const _r37 = \u0275\u0275getCurrentView();
+    const _r38 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 31);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_66_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r37);
-      const ctx_r36 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r36.spentFilamentWeightEnabled = false);
+      \u0275\u0275restoreView(_r38);
+      const ctx_r37 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r37.spentFilamentWeightEnabled = false);
     });
     \u0275\u0275text(1, "lock_open");
     \u0275\u0275elementEnd();
@@ -71547,12 +71873,12 @@ function SpoolWizardComponent_Conditional_66_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_67_Template(rf, ctx) {
   if (rf & 1) {
-    const _r39 = \u0275\u0275getCurrentView();
+    const _r40 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 32);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_67_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r39);
-      const ctx_r38 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r38.spentFilamentWeightEnabled = true);
+      \u0275\u0275restoreView(_r40);
+      const ctx_r39 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r39.spentFilamentWeightEnabled = true);
     });
     \u0275\u0275text(1, "lock");
     \u0275\u0275elementEnd();
@@ -71560,12 +71886,12 @@ function SpoolWizardComponent_Conditional_67_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_74_Template(rf, ctx) {
   if (rf & 1) {
-    const _r41 = \u0275\u0275getCurrentView();
+    const _r42 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 31);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_74_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r41);
-      const ctx_r40 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r40.remainingFilamentWeightEnabled = false);
+      \u0275\u0275restoreView(_r42);
+      const ctx_r41 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r41.remainingFilamentWeightEnabled = false);
     });
     \u0275\u0275text(1, "lock_open");
     \u0275\u0275elementEnd();
@@ -71573,12 +71899,12 @@ function SpoolWizardComponent_Conditional_74_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_75_Template(rf, ctx) {
   if (rf & 1) {
-    const _r43 = \u0275\u0275getCurrentView();
+    const _r44 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "mat-icon", 32);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_75_Template_mat_icon_click_0_listener() {
-      \u0275\u0275restoreView(_r43);
-      const ctx_r42 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r42.remainingFilamentWeightEnabled = true);
+      \u0275\u0275restoreView(_r44);
+      const ctx_r43 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r43.remainingFilamentWeightEnabled = true);
     });
     \u0275\u0275text(1, "lock");
     \u0275\u0275elementEnd();
@@ -71586,14 +71912,28 @@ function SpoolWizardComponent_Conditional_75_Template(rf, ctx) {
 }
 function SpoolWizardComponent_Conditional_102_Template(rf, ctx) {
   if (rf & 1) {
-    const _r45 = \u0275\u0275getCurrentView();
+    const _r46 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "button", 33);
     \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_102_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r45);
-      const ctx_r44 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r44.confirm());
+      \u0275\u0275restoreView(_r46);
+      const ctx_r45 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r45.confirm());
     });
     \u0275\u0275text(1, "Confirm and Write");
+    \u0275\u0275elementEnd();
+  }
+}
+function SpoolWizardComponent_Conditional_103_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r48 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 33);
+    \u0275\u0275listener("click", function SpoolWizardComponent_Conditional_103_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r48);
+      \u0275\u0275nextContext();
+      const _r0 = \u0275\u0275reference(4);
+      return \u0275\u0275resetView(_r0.next());
+    });
+    \u0275\u0275text(1, "Continue");
     \u0275\u0275elementEnd();
   }
 }
@@ -71646,7 +71986,7 @@ var _SpoolWizardComponent = class _SpoolWizardComponent {
       this.spool.brand = this.brand;
       this.spool.material = this.material;
       this.spool.spoolWeight = this.spoolWeight;
-      this.spool.initialFilamentWeight = this.spentFilamentWeight;
+      this.spool.initialFilamentWeight = this.spentFilamentWeight && this.remainingFilamentWeight ? this.spentFilamentWeight + this.remainingFilamentWeight : void 0;
       this.spool.remainingFilamentWeight = this.remainingFilamentWeight;
       this.spool.flowFactor = this.flowFactor;
       this.spool.temperature = this.temperature;
@@ -71708,7 +72048,7 @@ var _SpoolWizardComponent = class _SpoolWizardComponent {
 _SpoolWizardComponent.\u0275fac = function SpoolWizardComponent_Factory(t) {
   return new (t || _SpoolWizardComponent)(\u0275\u0275directiveInject(MAT_DIALOG_DATA), \u0275\u0275directiveInject(MatDialogRef));
 };
-_SpoolWizardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolWizardComponent, selectors: [["app-spool-wizard"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 103, vars: 25, consts: [["mat-dialog-title", ""], [3, "linear", "selectionChange"], ["stepper", ""], ["label", "Wizard type"], ["step0", ""], [1, "column"], [1, "column", 3, "ngModel", "ngModelChange"], ["value", "new", 1, "padded"], ["value", "used", 1, "padded"], ["value", "manual", 1, "padded"], ["label", "Material"], ["step1", ""], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["label", "Weights"], ["step2", ""], ["type", "number", "matInput", "", 3, "ngModel", "disabled", "ngModelChange"], ["matSuffix", "", "class", "unlocked"], [1, "symbol"], ["label", "Optional"], ["step3", ""], ["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", ""], [3, "value"], ["matSuffix", "", 1, "unlocked", 3, "click"], ["matSuffix", "", 1, "locked", 3, "click"], ["mat-button", "", 3, "click"]], template: function SpoolWizardComponent_Template(rf, ctx) {
+_SpoolWizardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SpoolWizardComponent, selectors: [["app-spool-wizard"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 104, vars: 25, consts: [["mat-dialog-title", ""], [3, "linear", "selectionChange"], ["stepper", ""], ["label", "Wizard type"], ["step0", ""], [1, "column"], [1, "column", 3, "ngModel", "ngModelChange"], ["value", "new", 1, "padded"], ["value", "used", 1, "padded"], ["value", "manual", 1, "padded"], ["label", "Material"], ["step1", ""], ["brandAuto", ""], ["matInput", "", "type", "text", "placeholder", "No brand", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["materialAuto", ""], ["matInput", "", "type", "text", "placeholder", "No material", 3, "matAutocomplete", "ngModel", "ngModelChange"], ["label", "Weights"], ["step2", ""], ["type", "number", "matInput", "", 3, "ngModel", "disabled", "ngModelChange"], ["matSuffix", "", "class", "unlocked"], [1, "symbol"], ["label", "Optional"], ["step3", ""], ["type", "text", "matInput", "", 3, "ngModel", "ngModelChange"], ["matSuffix", "", "ngx-colors-trigger", "", "format", "hex", "colorPickerControls", "no-alpha", 3, "ngModel", "hideTextInput", "ngModelChange"], ["matInput", "", "type", "text", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", "step", "0.01", 3, "ngModel", "ngModelChange"], ["type", "number", "matInput", "", 3, "ngModel", "ngModelChange"], ["mat-button", "", "mat-dialog-close", "cancel"], ["mat-button", ""], [3, "value"], ["matSuffix", "", 1, "unlocked", 3, "click"], ["matSuffix", "", 1, "locked", 3, "click"], ["mat-button", "", 3, "click"]], template: function SpoolWizardComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "h1", 0);
     \u0275\u0275text(1, "New Spool Wizard");
@@ -71857,7 +72197,7 @@ _SpoolWizardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ 
     \u0275\u0275elementStart(99, "mat-dialog-actions")(100, "button", 28);
     \u0275\u0275text(101, "Cancel");
     \u0275\u0275elementEnd();
-    \u0275\u0275template(102, SpoolWizardComponent_Conditional_102_Template, 2, 0, "button", 29);
+    \u0275\u0275template(102, SpoolWizardComponent_Conditional_102_Template, 2, 0, "button", 29)(103, SpoolWizardComponent_Conditional_103_Template, 2, 0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -71903,7 +72243,7 @@ _SpoolWizardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ 
     \u0275\u0275advance(4);
     \u0275\u0275property("ngModel", ctx.temperature);
     \u0275\u0275advance(4);
-    \u0275\u0275conditional(102, _r0.selectedIndex === 3 ? 102 : -1);
+    \u0275\u0275conditional(102, _r0.selectedIndex === 3 ? 102 : 103);
   }
 }, dependencies: [
   MatDialogClose,
@@ -71939,16 +72279,16 @@ var SpoolWizardComponent = _SpoolWizardComponent;
 
 // src/app/app.component.ts
 var _forTrack02 = ($index, $item) => $item.id;
-function AppComponent_Conditional_16_For_2_Template(rf, ctx) {
+function AppComponent_Conditional_20_For_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r10 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "mat-grid-tile")(1, "app-spool-card", 6);
-    \u0275\u0275listener("cardRemoved", function AppComponent_Conditional_16_For_2_Template_app_spool_card_cardRemoved_1_listener() {
+    \u0275\u0275elementStart(0, "mat-grid-tile")(1, "app-spool-card", 8);
+    \u0275\u0275listener("cardRemoved", function AppComponent_Conditional_20_For_2_Template_app_spool_card_cardRemoved_1_listener() {
       const restoredCtx = \u0275\u0275restoreView(_r10);
       const spool_r4 = restoredCtx.$implicit;
       const ctx_r9 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r9.removeSpool(spool_r4.id));
-    })("cardUpdated", function AppComponent_Conditional_16_For_2_Template_app_spool_card_cardUpdated_1_listener($event) {
+    })("cardUpdated", function AppComponent_Conditional_20_For_2_Template_app_spool_card_cardUpdated_1_listener($event) {
       \u0275\u0275restoreView(_r10);
       const ctx_r11 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r11.updateSpool($event));
@@ -71961,10 +72301,10 @@ function AppComponent_Conditional_16_For_2_Template(rf, ctx) {
     \u0275\u0275property("spool", spool_r4);
   }
 }
-function AppComponent_Conditional_16_Template(rf, ctx) {
+function AppComponent_Conditional_20_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "mat-grid-list", 4);
-    \u0275\u0275repeaterCreate(1, AppComponent_Conditional_16_For_2_Template, 2, 1, "mat-grid-tile", null, _forTrack02);
+    \u0275\u0275elementStart(0, "mat-grid-list", 6);
+    \u0275\u0275repeaterCreate(1, AppComponent_Conditional_20_For_2_Template, 2, 1, "mat-grid-tile", null, _forTrack02);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -71973,14 +72313,14 @@ function AppComponent_Conditional_16_Template(rf, ctx) {
     \u0275\u0275repeater(ctx_r0.spools);
   }
 }
-function AppComponent_Conditional_17_Template(rf, ctx) {
+function AppComponent_Conditional_21_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "h2");
     \u0275\u0275text(1, "There are no scanned spools yet, tap a spool tag to populate this list");
     \u0275\u0275elementEnd();
   }
 }
-function AppComponent_app_debug_nfc_18_Template(rf, ctx) {
+function AppComponent_app_debug_nfc_22_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "app-debug-nfc");
   }
@@ -72028,7 +72368,18 @@ var _AppComponent = class _AppComponent {
       width: this.environment.isDev ? "600px" : void 0,
       height: this.environment.isDev ? "500px" : void 0
     });
+    dialog.afterClosed().subscribe((r) => {
+      if (r === "cancel") {
+        this.nfcService.cancelWrite();
+        dialog.close();
+      }
+    });
     this.nfcService.updateSpool(spool).subscribe({
+      next: () => {
+        const index = this.spools.findIndex((s) => s.id === spool.id);
+        this.spools[index] = spool;
+        this.toastService.showToast("Spool updated", 1e3);
+      },
       error: (e) => {
         console.log(e);
         dialog.close();
@@ -72036,9 +72387,6 @@ var _AppComponent = class _AppComponent {
       },
       complete: () => {
         dialog.close();
-        const index = this.spools.findIndex((s) => s.id === spool.id);
-        this.spools[index] = spool;
-        this.toastService.showToast("Spool updated", 1e3);
       }
     });
   }
@@ -72056,11 +72404,16 @@ var _AppComponent = class _AppComponent {
       }
     });
   }
+  get csvUrl() {
+    const header = "id,name,brand,material,color,initialFilament,spool,remainingFilament,flowFactor,temperature";
+    const data = this.spools.map((s) => `${s.id},${s.name ? s.name : ""},${s.brand ? s.brand : ""},${s.material ? s.material : ""},${s.color ? s.color : ""},${s.initialFilamentWeight ? s.initialFilamentWeight : ""},${s.spoolWeight ? s.spoolWeight : ""},${s.remainingFilamentWeight ? s.remainingFilamentWeight : ""},${s.flowFactor ? s.flowFactor : ""},${s.temperature ? s.temperature : ""}`).join("\n");
+    return `data:application/octet-stream;charset=utf-16;base64,${btoa(header + "\n" + data)}`;
+  }
 };
 _AppComponent.\u0275fac = function AppComponent_Factory(t) {
   return new (t || _AppComponent)(\u0275\u0275directiveInject(NfcService), \u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(ToastService));
 };
-_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 19, vars: 5, consts: [["color", "primary"], [1, "spacer"], [2, "font-size", "small"], ["mat-button", "", 3, "click"], ["cols", "2"], [4, "ngIf"], [3, "spool", "cardRemoved", "cardUpdated"]], template: function AppComponent_Template(rf, ctx) {
+_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 23, vars: 6, consts: [["color", "primary"], [1, "spacer"], [2, "font-size", "small"], ["mat-button", "", "download", "spool-meter-export.csv", 3, "href"], ["color", "accent"], ["mat-button", "", 3, "click"], ["cols", "2"], [4, "ngIf"], [3, "spool", "cardRemoved", "cardUpdated"]], template: function AppComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-toolbar", 0)(1, "span");
     \u0275\u0275text(2, "Spool-meter");
@@ -72070,32 +72423,38 @@ _AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _A
     \u0275\u0275text(5);
     \u0275\u0275pipe(6, "async");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "button", 3);
-    \u0275\u0275listener("click", function AppComponent_Template_button_click_7_listener() {
+    \u0275\u0275text(7, " \xA0 ");
+    \u0275\u0275elementStart(8, "a", 3)(9, "mat-icon", 4);
+    \u0275\u0275text(10, "download");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(11, "button", 5);
+    \u0275\u0275listener("click", function AppComponent_Template_button_click_11_listener() {
       return ctx.showHelp();
     });
-    \u0275\u0275elementStart(8, "mat-icon");
-    \u0275\u0275text(9, "help");
+    \u0275\u0275elementStart(12, "mat-icon");
+    \u0275\u0275text(13, "help");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(10, "mat-card")(11, "mat-card-title")(12, "mat-icon");
-    \u0275\u0275text(13, "radar");
+    \u0275\u0275elementStart(14, "mat-card")(15, "mat-card-title")(16, "mat-icon");
+    \u0275\u0275text(17, "radar");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "span");
-    \u0275\u0275text(15, "Scanned spools:");
+    \u0275\u0275elementStart(18, "span");
+    \u0275\u0275text(19, "Scanned spools:");
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(16, AppComponent_Conditional_16_Template, 3, 0, "mat-grid-list", 4)(17, AppComponent_Conditional_17_Template, 2, 0);
+    \u0275\u0275template(20, AppComponent_Conditional_20_Template, 3, 0, "mat-grid-list", 6)(21, AppComponent_Conditional_21_Template, 2, 0);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(18, AppComponent_app_debug_nfc_18_Template, 1, 0, "app-debug-nfc", 5);
+    \u0275\u0275template(22, AppComponent_app_debug_nfc_22_Template, 1, 0, "app-debug-nfc", 7);
   }
   if (rf & 2) {
     \u0275\u0275advance(5);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 3, ctx.nfcService.status$()));
-    \u0275\u0275advance(11);
-    \u0275\u0275conditional(16, ctx.spools.length ? 16 : 17);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 4, ctx.nfcService.status$()));
+    \u0275\u0275advance(3);
+    \u0275\u0275property("href", ctx.csvUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance(12);
+    \u0275\u0275conditional(20, ctx.spools.length ? 20 : 21);
     \u0275\u0275advance(2);
     \u0275\u0275property("ngIf", ctx.environment.isDev);
   }
-}, dependencies: [FormsModule, DebugNfcComponent, NgIf, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent], styles: ["\n\n.spacer[_ngcontent-%COMP%] {\n  flex: 1 1 auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
+}, dependencies: [FormsModule, DebugNfcComponent, NgIf, MatInputModule, MatFormFieldModule, MatGridList, MatGridTile, MatToolbar, MatButton, MatIcon, MatCard, MatCardTitle, AsyncPipe, SpoolCardComponent, MatAnchor], styles: ["\n\n.spacer[_ngcontent-%COMP%] {\n  flex: 1 1 auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 var AppComponent = _AppComponent;
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 33 });

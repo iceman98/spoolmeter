@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": [],
-  "sourcesContent": [],
-  "mappings": "",
+  "sources": ["src/app/components/edit-dialog/edit-dialog.sass"],
+  "sourcesContent": [".column\n  display: flex\n  flex-direction: column\n  align-items: flex-start\n"],
+  "mappings": ";AAAA,CAAA;AACE,WAAA;AACA,kBAAA;AACA,eAAA;;",
   "names": []
 }
