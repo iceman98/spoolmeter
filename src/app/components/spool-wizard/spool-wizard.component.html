@@ -139,5 +139,7 @@
   <button mat-button mat-dialog-close="cancel">Cancel</button>
   @if (stepper.selectedIndex === 3) {
     <button mat-button (click)="confirm()">Confirm and Write</button>
+  } @else {
+    <button mat-button (click)="stepper.next()">Continue</button>
   }
 </mat-dialog-actions>
