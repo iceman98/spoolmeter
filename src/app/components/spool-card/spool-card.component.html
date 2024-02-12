@@ -2,22 +2,30 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        {{ spool.name }}
-        <mat-icon style="color: {{spool.color}};">gesture</mat-icon>
+        @if (spool.color) {
+          <mat-icon style="color: {{spool.color}};">gesture</mat-icon>
+        }
+        {{ [spool.name, spool.id]|nvl }}
       </mat-card-title>
-      <mat-card-subtitle>{{ spool.id }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ spool.brand }} {{ spool.material }}</mat-card-subtitle>
     </mat-card-header>
-
     <mat-card-content>
-      @if (spool.material) {
-        Mat: {{ spool.material }}
+      @if (spool.remainingFilamentWeight) {
+        Remaining: {{ spool.remainingFilamentWeight }}g
+        @if (spool.initialFilamentWeight) {
+          ({{ spool.remainingFilamentWeight / spool.initialFilamentWeight |percent }})
+        }
       }
     </mat-card-content>
-
     @if (!readOnly) {
       <mat-card-actions>
-        <button mat-button (click)="edit()">Edit</button>
-        <button mat-button (click)="remove()">Remove</button>
+        <button mat-button (click)="weighIn()" color="primary">Weigh-in</button>
+        <button mat-icon-button (click)="edit()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="remove()" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-card-actions>
     }
 

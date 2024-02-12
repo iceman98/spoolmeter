@@ -12,9 +12,12 @@ import {MatSuffix} from "@angular/material/form-field";
 import {NgxColorsModule} from "ngx-colors";
 import {FormsModule} from "@angular/forms";
 import {MatIcon} from "@angular/material/icon";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {EditDialog} from "../edit-dialog/edit-dialog.component";
+import {PercentPipe} from "@angular/common";
+import {WeighInDialogComponent} from "../weight-in-dialog/weigh-in-dialog.component";
+import {NvlPipe} from "../../classes/nvl.pipe";
 
 @Component({
   selector: 'app-spool-card',
@@ -30,7 +33,10 @@ import {EditDialog} from "../edit-dialog/edit-dialog.component";
     MatCardContent,
     MatCardActions,
     MatCardSubtitle,
-    MatButton
+    MatButton,
+    PercentPipe,
+    MatIconButton,
+    NvlPipe
   ],
   templateUrl: './spool-card.component.html',
   styleUrl: './spool-card.component.sass'
@@ -68,8 +74,20 @@ export class SpoolCardComponent {
     this.cardRemoved.next();
   }
 
-  protected update(spool: Spool) {
+  private update(spool: Spool) {
     this.cardUpdated.next(spool);
+  }
+
+  protected weighIn() {
+    const spool = {...this.spool} as Spool;
+    const dialog = this.dialog.open(WeighInDialogComponent, {data: {spool}, disableClose: true});
+    dialog.afterClosed().subscribe({
+      next: r => {
+        if (r === "update") {
+          this.update(spool);
+        }
+      }
+    });
   }
 
 }
