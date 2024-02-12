@@ -1,0 +1,92 @@
+<h1 mat-dialog-title>Weigh-in spool</h1>
+<mat-dialog-content>
+
+  <mat-vertical-stepper [linear]="true" (selectionChange)="change($event)" #stepper>
+    <mat-step label="Weigh-in type">
+      <!-- Step 0 -->
+      <div class="column">
+        <label>How do you want to enter the new filament weight?</label>
+        <br>
+        <mat-radio-group [(ngModel)]="option" class="column">
+          <mat-radio-button value="total" class="padded">I know the total weight (with optionally additional weight from
+            spool adapter or dessicant)
+          </mat-radio-button>
+          <mat-radio-button value="spent" class="padded">I know the spent filament (from slicer or print finish
+            summary)
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-step>
+
+    <mat-step label="Weights">
+      <div class="column">
+        <label>Insert the new weights</label>
+        <br>
+
+        <mat-form-field>
+          <mat-label>Total weight</mat-label>
+          <input type="number" matInput [(ngModel)]="totalWeight" [disabled]="!totalWeightEnabled">
+        </mat-form-field>
+
+        <div class="symbol">-</div>
+
+        <mat-form-field>
+          <mat-label>Spool weight</mat-label>
+          <input type="number" matInput [ngModel]="spool.spoolWeight" disabled="true">
+        </mat-form-field>
+
+        <div class="symbol">-</div>
+
+        <mat-form-field>
+          <mat-label>Additional weight</mat-label>
+          <input type="number" matInput [(ngModel)]="additionalWeight" [disabled]="!additionalWeightEnabled">
+        </mat-form-field>
+
+        <div class="symbol">=</div>
+
+        <mat-form-field>
+          <label>Remaining filament</label>
+          <input type="number" matInput [(ngModel)]="remainingWeight" [disabled]="!remainingWeightEnabled">
+        </mat-form-field>
+
+      </div>
+    </mat-step>
+
+    <mat-step label="Summary">
+      <div class="column">
+        <label>Review your changes</label>
+        <br>
+
+        <mat-form-field>
+          <mat-label>Original filament weight</mat-label>
+          <input type="number" matInput [ngModel]="spool.remainingFilamentWeight" disabled="true">
+        </mat-form-field>
+
+        <div class="symbol">-</div>
+
+        <mat-form-field>
+          <mat-label>Spent filament weight</mat-label>
+          <input type="number" matInput [ngModel]="spentWeight" disabled="true">
+        </mat-form-field>
+
+        <div class="symbol">=</div>
+
+        <mat-form-field>
+          <mat-label>New filament weight</mat-label>
+          <input type="number" matInput [ngModel]="remainingWeight" disabled="true">
+        </mat-form-field>
+
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close="cancel">Cancel</button>
+  @if (stepper.selectedIndex === 2) {
+    <button mat-button mat-dialog-close="update">Confirm and write</button>
+  } @else {
+    <button mat-button (click)="stepper.next()">Continue</button>
+  }
+</mat-dialog-actions>
