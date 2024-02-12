@@ -78,7 +78,19 @@ export class AppComponent {
       height: this.environment.isDev ? "500px" : undefined
     });
 
+    dialog.afterClosed().subscribe(r => {
+      if (r === "cancel") {
+        this.nfcService.cancelWrite();
+        dialog.close();
+      }
+    });
+
     this.nfcService.updateSpool(spool).subscribe({
+      next: () => {
+        const index = this.spools.findIndex(s => s.id === spool.id);
+        this.spools[index] = spool;
+        this.toastService.showToast("Spool updated", 1000);
+      },
       error: e => {
         console.log(e);
         dialog.close();
@@ -86,9 +98,6 @@ export class AppComponent {
       },
       complete: () => {
         dialog.close();
-        const index = this.spools.findIndex(s => s.id === spool.id);
-        this.spools[index] = spool;
-        this.toastService.showToast("Spool updated", 1000);
       }
     });
   }

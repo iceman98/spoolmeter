@@ -54,7 +54,7 @@ export class NfcService {
     }
   }
 
-  handleReadWrite(tag: NDEFReadingEvent) {
+  private handleReadWrite(tag: NDEFReadingEvent) {
     if (!this.writing) {
       this.readSubject.next(this.converter.messageToSpool(tag.serialNumber, tag.message));
     }
@@ -64,6 +64,7 @@ export class NfcService {
         this.ndef.write(this.writing.message, {overwrite: true})
           .then(() => {
             this.statusSubject.next("reading");
+            this.writing?.subject.next();
             this.writing?.subject.complete();
             this.writing = undefined;
           })
@@ -78,7 +79,7 @@ export class NfcService {
     }
   }
 
-  handleError(error: Event) {
+  private handleError(error: Event) {
     console.log(error);
     this.toastService.showToast("Error reading tag, try again?", 1000);
   }
@@ -94,6 +95,13 @@ export class NfcService {
         console.log("Scan could not be started", e);
         this.statusSubject.next("error");
       });
+  }
+
+  public cancelWrite() {
+    if (this.writing) {
+      this.statusSubject.next("reading");
+      this.writing = undefined;
+    }
   }
 
 }

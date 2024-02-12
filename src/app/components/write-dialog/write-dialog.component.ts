@@ -42,4 +42,5 @@ export class WriteDialogComponent {
   protected spool: Spool;
 
   protected readonly environment = environment;
+
 }
